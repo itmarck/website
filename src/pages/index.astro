@@ -1,5 +1,4 @@
 ---
-import PostPreview from '@/components/blog/PostPreview.astro'
 import { siteConfig } from '@/site-config'
 import Card from '../components/Card.astro'
 import Label from '../components/Label.astro'
@@ -7,11 +6,6 @@ import ProjectCard from '../components/ProjectCard.astro'
 import Section from '../components/Section.astro'
 import SkillLayout from '../components/SkillLayout.astro'
 import PageLayout from '../layouts/BaseLayout.astro'
-
-import { Image } from 'astro:assets'
-import astro from '../assets/about-astro.png'
-
-import { getAllPosts, sortMDByDate } from '@/utils'
 
 const company = 'Disney'
 const location = 'Perú'
@@ -21,10 +15,6 @@ const languages = ['español', 'english']
 const frontend = ['react', 'vue', 'typescript', 'javascript', 'css']
 const backend = ['node', 'mysql', 'mongodb']
 const others = ['linux', 'flutter', 'ui ux', 'deployment', 'git']
-
-const MAX_POSTS = 10
-const allPosts = await getAllPosts()
-const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 ---
 
 <PageLayout meta={{}}>

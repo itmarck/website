@@ -1,8 +1,8 @@
 ---
-title: "A working draft title"
-description: "This post is for testing the draft post functionality"
-publishDate: "10 Sept 2023"
-tags: ["test"]
+title: 'Algo sobre Git'
+description: 'Lo más probable es que sea un draft sobre Git rebase'
+publishDate: 25 Aug 2024
+tags: ['test']
 draft: true
 ---
 

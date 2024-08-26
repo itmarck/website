@@ -1,19 +1,18 @@
-import { defineConfig } from 'astro/config'
 import mdx from '@astrojs/mdx'
-import tailwind from '@astrojs/tailwind'
 import sitemap from '@astrojs/sitemap'
-import { remarkReadingTime } from './src/utils/remarkReadingTime.ts'
-import remarkUnwrapImages from 'remark-unwrap-images'
-import rehypeExternalLinks from 'rehype-external-links'
-import expressiveCode from 'astro-expressive-code'
-import { expressiveCodeOptions } from './src/site.config'
-import icon from 'astro-icon'
-
+import tailwind from '@astrojs/tailwind'
 import vercel from '@astrojs/vercel/serverless'
+import expressiveCode from 'astro-expressive-code'
+import icon from 'astro-icon'
+import { defineConfig } from 'astro/config'
+import rehypeExternalLinks from 'rehype-external-links'
+import remarkUnwrapImages from 'remark-unwrap-images'
+import { expressiveCodeOptions } from './src/site.config'
+import { remarkReadingTime } from './src/utils/remarkReadingTime.ts'
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://example.me',
+	site: 'https://itmarck.com',
 	integrations: [
 		expressiveCode(expressiveCodeOptions),
 		tailwind({

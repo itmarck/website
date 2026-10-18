@@ -136,6 +136,7 @@ export function start(canvas) {
   // (and the mobile URL bar), which stretched the field and pushed the sphere off its ring.
   let w = 1
   let h = 1
+  let scroller = null // element that scrolls the page, if not the window (see setScroller)
 
   function draw(time) {
     m.x += (m.tx - m.x) * 0.06
@@ -144,7 +145,7 @@ export function start(canvas) {
     gl.uniform1f(U.time, 40 + time / 1000)
     gl.uniform2f(U.mouse, m.x, m.y)
     gl.uniform1f(U.energy, Math.min(m.energy, 1.2))
-    gl.uniform1f(U.drift, scrollY * 0.0006)
+    gl.uniform1f(U.drift, (scroller?.scrollTop || scrollY) * 0.0006)
     gl.uniform2f(U.rot, (m.x - 0.5) * 1.2, (m.y - 0.5) * 0.8)
     const r = orb?.getBoundingClientRect()
     const k = canvas.width / w // exact CSS px → canvas px (scale, after rounding)
@@ -205,7 +206,8 @@ export function start(canvas) {
   )
   // follows the canvas itself, so a scrollbar or URL bar appearing also resizes the field
   new ResizeObserver(resize).observe(canvas)
-  if (reduced) addEventListener('scroll', () => draw(0), { passive: true })
+  // capture: scroll doesn't bubble, and the page may scroll inside an element
+  if (reduced) document.addEventListener('scroll', () => draw(0), { passive: true, capture: true })
   document.addEventListener('visibilitychange', () =>
     document.hidden ? cancelAnimationFrame(raf) : play(),
   )
@@ -219,6 +221,9 @@ export function start(canvas) {
     pause: (paused) => {
       held = paused
       paused ? cancelAnimationFrame(raf) : play()
+    },
+    setScroller: (el) => {
+      scroller = el
     },
     setOrb: (el) => {
       orb = el

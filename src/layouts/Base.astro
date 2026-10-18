@@ -69,8 +69,8 @@ const nav = [
 			</ul>
 		</div>
 
-		<div class="app">
-			<slot />
+		<div class="app" tabindex="-1">
+			<div class="page"><slot /></div>
 		</div>
 
 		<script>
@@ -290,6 +290,32 @@ const nav = [
 		position: relative;
 		z-index: 1;
 		padding: var(--gap) var(--gap) var(--gap) var(--rail);
+	}
+	/* cards enter from 40px below; clip that transient overflow so a page that fits
+	   doesn't flash a scrollbar during the entrance */
+	.page {
+		overflow-y: clip;
+	}
+	/* Except on touch screens, the page scrolls inside .app instead of the window: a window scrollbar sits
+	   outside anything the ink can paint, an element's scrollbar floats over the ink. Its space is
+	   always reserved, so content never jumps. Touch devices keep native page scrolling. */
+	@media not (pointer: coarse) {
+		:global(html),
+		:global(body) {
+			height: 100%;
+			overflow: hidden;
+		}
+		.app {
+			height: 100%;
+			overflow-y: auto;
+			scrollbar-gutter: stable;
+			scroll-behavior: smooth;
+			/* sticky offsets already start below this scroller's top padding */
+			--sticky-top: 0px;
+		}
+		.app:focus {
+			outline: none;
+		}
 	}
 
 	@media (max-width: 900px) {

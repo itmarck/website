@@ -96,7 +96,10 @@ const building = [
 			minmax(min-content, 1fr) minmax(min-content, 1.3fr)
 			minmax(min-content, 0.45fr) minmax(min-content, 0.65fr);
 		gap: var(--gap);
+		/* one screen tall so the fr rows share it, but never shorter than its content: when the window is
+		   short the rows would otherwise spill out of the box and get clipped (no scroll to reach them) */
 		height: max(700px, calc(100svh - var(--gap) * 2));
+		min-height: min-content;
 	}
 	.small {
 		font-size: var(--step-xs);

@@ -19,6 +19,10 @@ const orbSize = new ResizeObserver(placeOrb)
 
 document.addEventListener('astro:page-load', () => {
   ink ??= start(document.getElementById('ink'))
+  const app = document.querySelector('.app')
+  ink?.setScroller(app)
+  // keyboard scrolling (arrows, space, page keys) follows focus; the page scrolls inside .app now
+  if (document.activeElement === document.body) app.focus({ preventScroll: true })
   ink?.setOrb(document.querySelector('.orb'))
   orbSize.disconnect()
   const orb = document.querySelector('.orb')

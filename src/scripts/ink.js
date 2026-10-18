@@ -132,6 +132,10 @@ export function start(canvas) {
   gl.uniform1f(U.dim, 1)
 
   const m = { x: 0.6, y: 0.5, tx: 0.6, ty: 0.5, energy: 0 }
+  // Visible canvas size in CSS px. Not innerWidth/innerHeight: those include the scrollbar
+  // (and the mobile URL bar), which stretched the field and pushed the sphere off its ring.
+  let w = 1
+  let h = 1
 
   function draw(time) {
     m.x += (m.tx - m.x) * 0.06
@@ -143,24 +147,29 @@ export function start(canvas) {
     gl.uniform1f(U.drift, scrollY * 0.0006)
     gl.uniform2f(U.rot, (m.x - 0.5) * 1.2, (m.y - 0.5) * 0.8)
     const r = orb?.getBoundingClientRect()
+    const k = canvas.width / w // exact CSS px → canvas px (scale, after rounding)
     if (r)
       gl.uniform4f(
         U.sphere,
-        (r.left + r.width / 2) * scale,
-        (innerHeight - r.top - r.height / 2) * scale,
-        (r.width / 2) * scale,
-        r.bottom > 0 && r.top < innerHeight ? 1 : 0,
+        (r.left + r.width / 2) * k,
+        (h - r.top - r.height / 2) * k,
+        (r.width / 2) * k,
+        r.bottom > 0 && r.top < h ? 1 : 0,
       )
     else gl.uniform4f(U.sphere, 0, 0, 1, 0)
     gl.drawArrays(gl.TRIANGLES, 0, 3)
   }
 
   function resize() {
-    canvas.width = Math.round(innerWidth * scale)
-    canvas.height = Math.round(innerHeight * scale)
+    w = canvas.clientWidth || 1
+    h = canvas.clientHeight || 1
+    canvas.width = Math.round(w * scale)
+    canvas.height = Math.round(h * scale)
     gl.viewport(0, 0, canvas.width, canvas.height)
     gl.uniform2f(U.res, canvas.width, canvas.height)
-    draw(0)
+    // resizing clears the canvas, so repaint now, at the current moment: draw(0) jumped back
+    // to the start of the animation for a frame, which flickered while resizing
+    draw(reduced ? 0 : performance.now())
   }
 
   let raf = 0
@@ -186,15 +195,16 @@ export function start(canvas) {
   addEventListener(
     'pointermove',
     (e) => {
-      const x = e.clientX / innerWidth
-      const y = 1 - e.clientY / innerHeight
+      const x = e.clientX / w
+      const y = 1 - e.clientY / h
       m.energy += Math.min(0.25, Math.hypot(x - m.tx, y - m.ty) * 4)
       m.tx = x
       m.ty = y
     },
     { passive: true },
   )
-  addEventListener('resize', resize, { passive: true })
+  // follows the canvas itself, so a scrollbar or URL bar appearing also resizes the field
+  new ResizeObserver(resize).observe(canvas)
   if (reduced) addEventListener('scroll', () => draw(0), { passive: true })
   document.addEventListener('visibilitychange', () =>
     document.hidden ? cancelAnimationFrame(raf) : play(),
@@ -203,7 +213,6 @@ export function start(canvas) {
   COLORS.forEach((c, i) => {
     gl.uniform3fv(U[`c${i}`], rgb(c))
   })
-  resize()
   play()
   return {
     // stop drawing while something covers the page (e.g. a blurred modal), resume after

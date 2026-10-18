@@ -31,9 +31,9 @@ One family, Geist (300/400/500/700/800). Five steps: `--step-xs` (labels), `--st
 - `.tile`: solid surface. `.window`: transparent, outlined, shows the ink.
 - `.pill`: primary action with a nested round icon; `.pill--ghost` secondary.
 - `.chip`: small toggle or link; `aria-pressed="true"` fills it.
-- `.go`: on tiles that are themselves links, a ringed arrow that fills and turns on hover.
-- Hovers never resize or move an element. They change color or outline, or rotate an arrow in place.
-- Contact: a native popover centered over a veil of `--ink-1` (a tint, not a blur, so the live ink stays cheap), in `Base.astro`. Any `popovertarget="contact"` button opens it.
+- `.go`: on tiles that are themselves links, a ringed arrow cue. It hides itself when the tile is too narrow.
+- Hovers never resize or move an element. Linked tiles and list rows turn slightly translucent so the ink shows through; text and outlines change color; pill arrows rotate in place.
+- Contact: a native popover centered over a strong blur with a faint ink tint (the ink pauses while it is open), in `Base.astro`. Any `popovertarget="contact"` button opens it.
 - `.rise`: entrance on scroll (needs the page script).
 
 ## Motion

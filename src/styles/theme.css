@@ -125,6 +125,7 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  white-space: nowrap;
   font-size: var(--step-xs);
   font-weight: 500;
 }
@@ -136,17 +137,13 @@ button {
   place-items: center;
   font-style: normal;
   box-shadow: inset 0 0 0 1.5px currentColor;
-  transition:
-    background var(--dur-fast) var(--ease-hover),
-    color var(--dur-fast) var(--ease-hover),
-    transform var(--dur) var(--ease-hover);
 }
-a:hover .go i,
-a:focus-visible .go i {
-  background: var(--text);
-  color: var(--text-on-color);
-  box-shadow: none;
-  transform: rotate(-45deg);
+/* Tiles that are links: on hover the surface turns slightly translucent and the ink shows through. */
+a.tile {
+  transition: background-color var(--dur-fast) var(--ease-hover);
+}
+a.tile:hover {
+  background-color: color-mix(in srgb, var(--surface) 72%, transparent);
 }
 .pill {
   display: inline-flex;
@@ -211,11 +208,13 @@ a:focus-visible .go i {
   opacity: 0;
   transform: translateY(40px);
   filter: blur(6px);
+  /* staggered entrance; background-color is listed (with no delay) so linked tiles keep their hover fade */
+  --rise-delay: calc(var(--i, 0) * 70ms);
   transition:
-    opacity var(--dur-slow) var(--ease),
-    transform var(--dur-slow) var(--ease),
-    filter var(--dur-slow) var(--ease);
-  transition-delay: calc(var(--i, 0) * 70ms);
+    opacity var(--dur-slow) var(--ease) var(--rise-delay),
+    transform var(--dur-slow) var(--ease) var(--rise-delay),
+    filter var(--dur-slow) var(--ease) var(--rise-delay),
+    background-color var(--dur-fast) var(--ease-hover);
 }
 .js .rise.is-in {
   opacity: 1;

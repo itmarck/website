@@ -3,32 +3,27 @@ import { start } from './ink.js'
 
 let ink
 
-// The about card is cut where the orb sits, so the shader's sphere shows through; the ring frames it.
+// The about card is cut (mask) around the orb plus its 8px gap, so the shader's sphere shows through.
 function placeOrb() {
   const orb = document.querySelector('.orb')
   if (!orb) return
-  const body = orb.parentElement
-  const ring = document.querySelector('.orb-ring')
+  const body = orb.closest('.about__body')
   const b = body.getBoundingClientRect()
   const o = orb.getBoundingClientRect()
-  const a = body.parentElement.getBoundingClientRect()
   body.style.setProperty('--orb-x', `${o.left - b.left + o.width / 2}px`)
   body.style.setProperty('--orb-y', `${o.top - b.top + o.height / 2}px`)
-  body.style.setProperty('--orb-r', `${o.width / 2 + 16}px`)
-  Object.assign(ring.style, {
-    left: `${o.left - a.left - 8}px`,
-    top: `${o.top - a.top - 8}px`,
-    width: `${o.width + 16}px`,
-    height: `${o.width + 16}px`,
-  })
+  body.style.setProperty('--orb-r', `${o.width / 2 + 8}px`)
 }
-addEventListener('resize', placeOrb, { passive: true })
+// The orb follows its card (container queries), not the window: re-measure whenever it or its slot resizes.
+const orbSize = new ResizeObserver(placeOrb)
 
 document.addEventListener('astro:page-load', () => {
   ink ??= start(document.getElementById('ink'))
   ink?.setOrb(document.querySelector('.orb'))
-  placeOrb()
-  document.fonts.ready.then(placeOrb)
+  orbSize.disconnect()
+  const orb = document.querySelector('.orb')
+  // the slot too: the orb can re-center in a taller slot without changing its own size
+  if (orb) for (const el of [orb, orb.parentElement]) orbSize.observe(el)
   document
     .getElementById('contact')
     ?.addEventListener('toggle', (e) => ink?.pause(e.newState === 'open'))

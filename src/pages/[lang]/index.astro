@@ -19,14 +19,13 @@ const building = [
 				{t.about.tab}
 			</div>
 			<div class="about__body">
-				<div class="orb" aria-hidden="true"></div>
+				<div class="orb-slot"><div class="orb" aria-hidden="true"></div></div>
 				<h1><span>{t.about.hello}</span>Marcelo Velásquez</h1>
-				<p class="about__role">{t.about.role}</p>
-				<div class="badge" aria-hidden="true">
-					<svg viewBox="0 0 120 120"><defs><path id="ring" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"></path></defs><circle cx="60" cy="60" r="58" fill="var(--surface)"></circle><text font-size="11" font-weight="500" letter-spacing="2" fill="currentColor"><textPath href="#ring">{t.about.badge}</textPath></text></svg>
-				</div>
+				<p class="about__role">
+					<span class="badge" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><path id="ring" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"></path></defs><circle cx="60" cy="60" r="58" fill="var(--surface)"></circle><text font-size="11" font-weight="500" letter-spacing="2" fill="currentColor"><textPath href="#ring">{t.about.badge}</textPath></text></svg></span>
+					{t.about.role}
+				</p>
 			</div>
-			<div class="orb-ring" aria-hidden="true"></div>
 		</article>
 
 		<div class="title rise" style="--i:1"><h2>{t.portfolio}</h2></div>
@@ -56,32 +55,32 @@ const building = [
 			<span class="small">{t.path.title}</span>
 			<b>Disney</b>
 			<span class="small soft">{t.path.note}</span>
-			<span class="go more">{t.path.more} <i aria-hidden="true">→</i></span>
+			<span class="path__more"><span class="go">{t.path.more} <i aria-hidden="true">→</i></span></span>
 		</a>
 
-		<div class="side rise" style="--i:5">
-			<div class="tile stack">
+		<div class="tile stack rise" style="--i:5">
 				<h2 class="small soft">{t.stack.title}</h2>
-				<p>{t.stack.items}</p>
-			</div>
-			<section class="window reach">
-				<div class="reach__top">
-					<h2 class="small">{t.reach.title}</h2>
-					<button class="reach__copy" type="button" data-copy={email} data-done={t.about.copied}>{t.about.copy}</button>
-				</div>
-				<p class="reach__fit"><span class="reach__mail">{email}</span></p>
-				<div class="reach__links">
-					<a class="chip icon" href={github} aria-label="GitHub" title="GitHub">
-						<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.72 1.23 1.88.87 2.34.67.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z" fill="currentColor"></path></svg>
-					</a>
-					<a class="chip icon" href={linkedin} aria-label="LinkedIn" title="LinkedIn">
-						<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M0 1.15C0 .51.53 0 1.18 0h13.64C15.47 0 16 .51 16 1.15v13.7c0 .64-.53 1.15-1.18 1.15H1.18C.53 16 0 15.49 0 14.85zm4.94 12.24V6.17H2.54v7.22zm-1.2-8.21c.84 0 1.36-.55 1.36-1.25-.01-.71-.52-1.25-1.34-1.25S2.4 3.22 2.4 3.93c0 .7.52 1.25 1.33 1.25zm4.9 8.21V9.36c0-.22.02-.43.08-.59.18-.43.57-.88 1.24-.88.87 0 1.21.66 1.21 1.64v3.86h2.4V9.25c0-2.22-1.18-3.25-2.76-3.25-1.27 0-1.85.7-2.16 1.19V6.17h-2.4c.03.68 0 7.22 0 7.22z" fill="currentColor"></path></svg>
-					</a>
-				</div>
-			</section>
+			<p>{t.stack.items}</p>
 		</div>
+		<section class="window reach rise" style="--i:6">
+			<div class="reach__top">
+				<h2 class="small">{t.reach.title}</h2>
+				<button class="reach__copy" type="button" data-copy={email} data-done={t.about.copied}>{t.about.copy}</button>
+			</div>
+			<p class="reach__fit"><span class="reach__mail">{email}</span></p>
+			<div class="reach__links">
+				<a class="chip icon" href={github} aria-label="GitHub" title="GitHub">
+					<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.72 1.23 1.88.87 2.34.67.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z" fill="currentColor"></path></svg>
+					<span>GitHub</span>
+				</a>
+				<a class="chip icon" href={linkedin} aria-label="LinkedIn" title="LinkedIn">
+					<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M0 1.15C0 .51.53 0 1.18 0h13.64C15.47 0 16 .51 16 1.15v13.7c0 .64-.53 1.15-1.18 1.15H1.18C.53 16 0 15.49 0 14.85zm4.94 12.24V6.17H2.54v7.22zm-1.2-8.21c.84 0 1.36-.55 1.36-1.25-.01-.71-.52-1.25-1.34-1.25S2.4 3.22 2.4 3.93c0 .7.52 1.25 1.33 1.25zm4.9 8.21V9.36c0-.22.02-.43.08-.59.18-.43.57-.88 1.24-.88.87 0 1.21.66 1.21 1.64v3.86h2.4V9.25c0-2.22-1.18-3.25-2.76-3.25-1.27 0-1.85.7-2.16 1.19V6.17h-2.4c.03.68 0 7.22 0 7.22z" fill="currentColor"></path></svg>
+					<span>LinkedIn</span>
+				</a>
+			</div>
+		</section>
 
-		<div class="lime rise" style="--i:6">
+		<div class="lime rise" style="--i:7">
 			<span class="num">{t.networks.n}</span><span>{t.networks.label}</span>
 			<small>ABC · Freeform · National Geographic · FX · Disney Now</small>
 		</div>
@@ -93,7 +92,9 @@ const building = [
 		display: grid;
 		grid-template-columns: repeat(12, minmax(0, 1fr));
 		/* rows fill the screen but grow when their content needs it */
-		grid-template-rows: minmax(min-content, 1fr) minmax(min-content, 1.3fr) minmax(min-content, 1fr);
+		grid-template-rows:
+			minmax(min-content, 1fr) minmax(min-content, 1.3fr)
+			minmax(min-content, 0.45fr) minmax(min-content, 0.65fr);
 		gap: var(--gap);
 		height: max(700px, calc(100svh - var(--gap) * 2));
 	}
@@ -108,7 +109,7 @@ const building = [
 	.about {
 		position: relative;
 		grid-column: 1 / 6;
-		grid-row: 1 / 4;
+		grid-row: 1 / 5;
 		display: flex;
 		flex-direction: column;
 	}
@@ -154,21 +155,23 @@ const building = [
 		mask: var(--hole);
 	}
 	/* the orb takes whatever height the card has left and shrinks first when space runs out */
-	.orb {
+	/* The slot takes the card's free height; the orb is the largest circle that fits in it.
+	   24px leaves room for the ring (8px gap + 3px stroke per side), so the ring never
+	   gets closer to the card edge than the text. Fluid at any size, no breakpoints. */
+	.orb-slot {
 		flex: 1 1 0;
-		align-self: center;
 		min-height: 96px;
-		max-height: min(36vh, 100%);
-		aspect-ratio: 1;
-		margin-top: 8px;
-		border-radius: 50%;
+		container-type: size;
+		display: grid;
+		place-items: center;
 	}
-	.orb-ring {
-		position: absolute;
-		z-index: 2;
+	/* the white ring is the orb's own outline: it sits just past the hole, so the mask keeps it */
+	.orb {
+		width: min(100cqw - 24px, 100cqh - 24px);
+		aspect-ratio: 1;
 		border-radius: 50%;
-		box-shadow: 0 0 0 3px var(--text);
-		pointer-events: none;
+		outline: 3px solid var(--text);
+		outline-offset: 8px;
 	}
 	h1 {
 		margin-top: 24px;
@@ -184,17 +187,18 @@ const building = [
 	}
 	.about__role {
 		margin-top: 32px;
-		max-width: min(40ch, calc(100% - 140px));
 		line-height: 1.6;
 		color: var(--text-soft);
 	}
+	/* The badge floats in the paragraph's corner; shape-outside lets the text curve around it
+	   only on the lines it touches, instead of reserving a whole column (fluid, no breakpoints). */
 	.badge {
-		position: absolute;
-		right: 32px;
-		bottom: 32px;
-		width: 112px;
-		height: 112px;
-		z-index: 2;
+		position: relative;
+		float: right;
+		width: min(112px, 30%);
+		aspect-ratio: 1;
+		margin: 0 0 8px 12px;
+		shape-outside: circle(50%);
 	}
 	.badge svg {
 		width: 100%;
@@ -259,9 +263,9 @@ const building = [
 			background var(--dur-fast) var(--ease-hover),
 			box-shadow var(--dur-fast) var(--ease-hover);
 	}
-	/* rows stay put: they deepen, get an outline and their details light up */
+	/* rows stay put: they turn translucent (the ink shows through), get an outline and their details light up */
 	.building li a:hover {
-		background: rgba(2, 4, 11, 0.9);
+		background: rgba(2, 4, 11, 0.38);
 		box-shadow: inset 0 0 0 1px var(--edge);
 	}
 	.building li a:hover span {
@@ -313,14 +317,18 @@ const building = [
 		margin-top: 6px;
 	}
 
+	/* vertical tile beside the Stack/contact column */
 	.path {
 		grid-column: 6 / 8;
-		grid-row: 3;
+		grid-row: 3 / 5;
 		background: var(--surface-raised);
 		padding: 22px;
 		display: flex;
 		flex-direction: column;
 		gap: 4px;
+	}
+	.path:hover {
+		background-color: color-mix(in srgb, var(--surface-raised) 72%, transparent);
 	}
 	.path b {
 		margin-top: auto;
@@ -329,18 +337,23 @@ const building = [
 		letter-spacing: -0.04em;
 		line-height: 1;
 	}
-	.path .more {
+	/* "See more" hides itself when it doesn't fit: a zero-width first item keeps line one,
+	   so a too-wide cue wraps to line two, which the fixed height clips (same trick as the email) */
+	.path__more {
+		display: flex;
+		flex-wrap: wrap;
+		height: 32px;
 		margin-top: 12px;
+		overflow: hidden;
+	}
+	.path__more::before {
+		content: '';
+		height: 32px;
 	}
 
-	.side {
+	.stack {
 		grid-column: 8 / 10;
 		grid-row: 3;
-		display: grid;
-		grid-template-rows: auto 1fr;
-		gap: var(--gap);
-	}
-	.stack {
 		padding: 18px 22px;
 	}
 	.stack p {
@@ -349,6 +362,8 @@ const building = [
 		line-height: 1.35;
 	}
 	.reach {
+		grid-column: 8 / 10;
+		grid-row: 4;
 		padding: 18px 22px;
 		display: flex;
 		flex-direction: column;
@@ -385,9 +400,14 @@ const building = [
 	.reach__copy:hover {
 		color: var(--text);
 	}
+	/* icons only; the names join them when the row itself has room (container query, not viewport) */
 	.reach__links {
 		display: flex;
 		gap: 6px;
+		container-type: inline-size;
+	}
+	.chip.icon span {
+		display: none;
 	}
 	.chip.icon {
 		width: 40px;
@@ -399,10 +419,20 @@ const building = [
 		width: 17px;
 		height: 17px;
 	}
+	@container (min-width: 230px) {
+		.chip.icon {
+			width: auto;
+			gap: 8px;
+			padding: 0 16px 0 13px;
+		}
+		.chip.icon span {
+			display: inline;
+		}
+	}
 
 	.lime {
 		grid-column: 10 / 13;
-		grid-row: 3;
+		grid-row: 3 / 5;
 		border-radius: var(--radius);
 		background: var(--tile-c);
 		color: var(--text-on-color);
@@ -423,18 +453,6 @@ const building = [
 		.about {
 			min-height: 88svh;
 		}
-		.orb {
-			flex: none;
-			width: 62%;
-			max-height: none;
-		}
-		.badge {
-			width: 84px;
-			height: 84px;
-			right: 14px;
-			bottom: auto;
-			top: 14px;
-		}
 		.title {
 			padding: 28px 8px 8px;
 		}
@@ -447,9 +465,6 @@ const building = [
 		}
 		.about__body {
 			padding: 32px 24px;
-		}
-		.about__role {
-			max-width: none;
 		}
 	}
 </style>

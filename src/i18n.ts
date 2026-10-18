@@ -21,7 +21,7 @@ const en = {
   },
   portfolio: 'Portfolio',
   building: { title: 'Building now', more: 'All projects' },
-  path: { title: 'Experience', note: 'Through Globant, since 2021', more: 'See experience' },
+  path: { title: 'Experience', note: 'Through Globant, since 2021', more: 'See more' },
   stack: { title: 'Stack', items: 'TypeScript · Flutter · Node · Linux' },
   reach: { title: 'Get in touch', mail: 'Open email app', close: 'Close' },
   modal: {
@@ -140,7 +140,7 @@ const es: Copy = {
   },
   portfolio: 'Portafolio',
   building: { title: 'Construyendo ahora', more: 'Todos los proyectos' },
-  path: { title: 'Experiencia', note: 'Vía Globant, desde 2021', more: 'Ver experiencia' },
+  path: { title: 'Experiencia', note: 'Vía Globant, desde 2021', more: 'Ver más' },
   stack: { title: 'Stack', items: 'TypeScript · Flutter · Node · Linux' },
   reach: { title: 'Hablemos', mail: 'Abrir correo', close: 'Cerrar' },
   modal: {

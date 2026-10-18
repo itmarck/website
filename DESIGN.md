@@ -31,13 +31,14 @@ One family, Geist (300/400/500/700/800). Five steps: `--step-xs` (labels), `--st
 - `.tile`: solid surface. `.window`: transparent, outlined, shows the ink.
 - `.pill`: primary action with a nested round icon; `.pill--ghost` secondary.
 - `.chip`: small toggle or link; `aria-pressed="true"` fills it.
-- `.corner`: small corner bracket on tiles. On hover of a tile that is itself a link (`a.corner`) the bracket stretches; other tiles have no hover, and tiles themselves never move on hover, only a part inside them (an arrow, a row).
+- `.go`: on tiles that are themselves links, a ringed arrow that fills and turns on hover.
+- Hovers never resize or move an element. They change color or outline, or rotate an arrow in place.
 - Contact: a native popover centered over a veil of `--ink-1` (a tint, not a blur, so the live ink stays cheap), in `Base.astro`. Any `popovertarget="contact"` button opens it.
 - `.rise`: entrance on scroll (needs the page script).
 
 ## Motion
 
-Curves: `--ease` only. Durations `--dur-fast` (hover), `--dur` (press, tilt), `--dur-slow` (entrances). Animate transform and opacity only. Everything stops under `prefers-reduced-motion`, and the ink draws one still frame.
+Curves: `--ease` for entrances and opening, `--ease-hover` (gentle in and out) for every hover. Durations `--dur-fast` (hover fades), `--dur` (arrow turns, press), `--dur-slow` (entrances). Animate transform and opacity only. Everything stops under `prefers-reduced-motion`, and the ink draws one still frame.
 
 ## Content
 

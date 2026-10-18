@@ -155,7 +155,10 @@ const x = t.experience
 	}
 	@supports (animation-timeline: view()) {
 		.line span {
-			animation: fill linear both;
+			/* Longhands: Lightning CSS would fold view() into the shorthand, which browsers reject. */
+			animation-name: fill;
+			animation-timing-function: linear;
+			animation-fill-mode: both;
 			animation-timeline: view();
 			animation-range: entry 10% cover 70%;
 		}

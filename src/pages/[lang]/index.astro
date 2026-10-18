@@ -1,13 +1,13 @@
 ---
+import { copy, email, github, type Lang, linkedin } from '../../i18n'
 import Base from '../../layouts/Base.astro'
-import { copy, email, github, linkedin, type Lang } from '../../i18n'
 
 export const getStaticPaths = () => Object.keys(copy).map((lang) => ({ params: { lang } }))
 
 const t = copy[Astro.params.lang as Lang]
 const building = [
-	{ name: 'Minima', meta: t.projects.minima.meta },
-	{ name: 'Wingman', meta: t.projects.wingman.meta },
+  { name: 'Minima', meta: t.projects.minima.meta },
+  { name: 'Wingman', meta: t.projects.wingman.meta },
 ]
 ---
 

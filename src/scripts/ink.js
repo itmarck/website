@@ -78,112 +78,142 @@ if (u_sphere.w > 0.5) {
   }
 }
 gl_FragColor = vec4(col, 1.0);
-}`;
+}`
 
 const VERT = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}'
 const rgb = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255)
 
 // canvas: the fixed <canvas>. setOrb(el) makes the shader fill el's box with a lit sphere (null hides it).
 export function start(canvas) {
-	let orb = null
-	const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
-	let scale = matchMedia('(max-width: 900px)').matches ? 0.42 : 0.55
-	const gl = canvas.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'low-power' })
-	if (!gl) return null
+  let orb = null
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
+  let scale = matchMedia('(max-width: 900px)').matches ? 0.42 : 0.55
+  const gl = canvas.getContext('webgl', {
+    antialias: false,
+    alpha: false,
+    powerPreference: 'low-power',
+  })
+  if (!gl) return null
 
-	const shader = (type, src) => {
-		const s = gl.createShader(type)
-		gl.shaderSource(s, src)
-		gl.compileShader(s)
-		return s
-	}
-	const prog = gl.createProgram()
-	gl.attachShader(prog, shader(gl.VERTEX_SHADER, VERT))
-	gl.attachShader(prog, shader(gl.FRAGMENT_SHADER, FRAG))
-	gl.linkProgram(prog)
-	if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return null
-	gl.useProgram(prog)
-	gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer())
-	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW)
-	gl.enableVertexAttribArray(0)
-	gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0)
-	const U = {}
-	for (const n of ['res', 'time', 'mouse', 'energy', 'drift', 'c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'sphere', 'rot', 'dim'])
-		U[n] = gl.getUniformLocation(prog, 'u_' + n)
-	gl.uniform1f(U.dim, 1)
+  const shader = (type, src) => {
+    const s = gl.createShader(type)
+    gl.shaderSource(s, src)
+    gl.compileShader(s)
+    return s
+  }
+  const prog = gl.createProgram()
+  gl.attachShader(prog, shader(gl.VERTEX_SHADER, VERT))
+  gl.attachShader(prog, shader(gl.FRAGMENT_SHADER, FRAG))
+  gl.linkProgram(prog)
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return null
+  gl.useProgram(prog)
+  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer())
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW)
+  gl.enableVertexAttribArray(0)
+  gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0)
+  const U = {}
+  for (const n of [
+    'res',
+    'time',
+    'mouse',
+    'energy',
+    'drift',
+    'c0',
+    'c1',
+    'c2',
+    'c3',
+    'c4',
+    'c5',
+    'sphere',
+    'rot',
+    'dim',
+  ])
+    U[n] = gl.getUniformLocation(prog, `u_${n}`)
+  gl.uniform1f(U.dim, 1)
 
-	const m = { x: 0.6, y: 0.5, tx: 0.6, ty: 0.5, energy: 0 }
+  const m = { x: 0.6, y: 0.5, tx: 0.6, ty: 0.5, energy: 0 }
 
-	function draw(time) {
-		m.x += (m.tx - m.x) * 0.06
-		m.y += (m.ty - m.y) * 0.06
-		m.energy *= 0.94
-		gl.uniform1f(U.time, 40 + time / 1000)
-		gl.uniform2f(U.mouse, m.x, m.y)
-		gl.uniform1f(U.energy, Math.min(m.energy, 1.2))
-		gl.uniform1f(U.drift, scrollY * 0.0006)
-		gl.uniform2f(U.rot, (m.x - 0.5) * 1.2, (m.y - 0.5) * 0.8)
-		const r = orb?.getBoundingClientRect()
-		if (r) gl.uniform4f(U.sphere, (r.left + r.width / 2) * scale, (innerHeight - r.top - r.height / 2) * scale, (r.width / 2) * scale, r.bottom > 0 && r.top < innerHeight ? 1 : 0)
-		else gl.uniform4f(U.sphere, 0, 0, 1, 0)
-		gl.drawArrays(gl.TRIANGLES, 0, 3)
-	}
+  function draw(time) {
+    m.x += (m.tx - m.x) * 0.06
+    m.y += (m.ty - m.y) * 0.06
+    m.energy *= 0.94
+    gl.uniform1f(U.time, 40 + time / 1000)
+    gl.uniform2f(U.mouse, m.x, m.y)
+    gl.uniform1f(U.energy, Math.min(m.energy, 1.2))
+    gl.uniform1f(U.drift, scrollY * 0.0006)
+    gl.uniform2f(U.rot, (m.x - 0.5) * 1.2, (m.y - 0.5) * 0.8)
+    const r = orb?.getBoundingClientRect()
+    if (r)
+      gl.uniform4f(
+        U.sphere,
+        (r.left + r.width / 2) * scale,
+        (innerHeight - r.top - r.height / 2) * scale,
+        (r.width / 2) * scale,
+        r.bottom > 0 && r.top < innerHeight ? 1 : 0,
+      )
+    else gl.uniform4f(U.sphere, 0, 0, 1, 0)
+    gl.drawArrays(gl.TRIANGLES, 0, 3)
+  }
 
-	function resize() {
-		canvas.width = Math.round(innerWidth * scale)
-		canvas.height = Math.round(innerHeight * scale)
-		gl.viewport(0, 0, canvas.width, canvas.height)
-		gl.uniform2f(U.res, canvas.width, canvas.height)
-		draw(0)
-	}
+  function resize() {
+    canvas.width = Math.round(innerWidth * scale)
+    canvas.height = Math.round(innerHeight * scale)
+    gl.viewport(0, 0, canvas.width, canvas.height)
+    gl.uniform2f(U.res, canvas.width, canvas.height)
+    draw(0)
+  }
 
-	let raf = 0
-	let last = 0
-	let slow = 0
-	function loop(t) {
-		raf = requestAnimationFrame(loop)
-		slow = t - last > 26 ? slow + 1 : Math.max(0, slow - 1)
-		last = t
-		if (slow > 50 && scale > 0.28) {
-			scale *= 0.8
-			slow = 0
-			resize()
-		}
-		draw(t)
-	}
-	let held = false
-	const play = () => {
-		cancelAnimationFrame(raf)
-		if (!reduced && !held) raf = requestAnimationFrame(loop)
-	}
+  let raf = 0
+  let last = 0
+  let slow = 0
+  function loop(t) {
+    raf = requestAnimationFrame(loop)
+    slow = t - last > 26 ? slow + 1 : Math.max(0, slow - 1)
+    last = t
+    if (slow > 50 && scale > 0.28) {
+      scale *= 0.8
+      slow = 0
+      resize()
+    }
+    draw(t)
+  }
+  let held = false
+  const play = () => {
+    cancelAnimationFrame(raf)
+    if (!reduced && !held) raf = requestAnimationFrame(loop)
+  }
 
-	addEventListener(
-		'pointermove',
-		(e) => {
-			const x = e.clientX / innerWidth
-			const y = 1 - e.clientY / innerHeight
-			m.energy += Math.min(0.25, Math.hypot(x - m.tx, y - m.ty) * 4)
-			m.tx = x
-			m.ty = y
-		},
-		{ passive: true },
-	)
-	addEventListener('resize', resize, { passive: true })
-	if (reduced) addEventListener('scroll', () => draw(0), { passive: true })
-	document.addEventListener('visibilitychange', () => (document.hidden ? cancelAnimationFrame(raf) : play()))
+  addEventListener(
+    'pointermove',
+    (e) => {
+      const x = e.clientX / innerWidth
+      const y = 1 - e.clientY / innerHeight
+      m.energy += Math.min(0.25, Math.hypot(x - m.tx, y - m.ty) * 4)
+      m.tx = x
+      m.ty = y
+    },
+    { passive: true },
+  )
+  addEventListener('resize', resize, { passive: true })
+  if (reduced) addEventListener('scroll', () => draw(0), { passive: true })
+  document.addEventListener('visibilitychange', () =>
+    document.hidden ? cancelAnimationFrame(raf) : play(),
+  )
 
-	COLORS.forEach((c, i) => gl.uniform3fv(U['c' + i], rgb(c)))
-	resize()
-	play()
-	return {
-		// stop drawing while something covers the page (e.g. a blurred modal), resume after
-		pause: (paused) => {
-			held = paused
-			paused ? cancelAnimationFrame(raf) : play()
-		},
-		setOrb: (el) => {
-			orb = el
-			draw(performance.now())
-		},
-	}
+  COLORS.forEach((c, i) => {
+    gl.uniform3fv(U[`c${i}`], rgb(c))
+  })
+  resize()
+  play()
+  return {
+    // stop drawing while something covers the page (e.g. a blurred modal), resume after
+    pause: (paused) => {
+      held = paused
+      paused ? cancelAnimationFrame(raf) : play()
+    },
+    setOrb: (el) => {
+      orb = el
+      draw(performance.now())
+    },
+  }
 }

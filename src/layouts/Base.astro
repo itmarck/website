@@ -1,19 +1,19 @@
 ---
 import { ClientRouter } from 'astro:transitions'
 import '../styles/theme.css'
-import { email, github, linkedin, type Copy } from '../i18n'
+import { type Copy, email, github, linkedin } from '../i18n'
 
 interface Props {
-	t: Copy
-	path?: '' | 'projects/' | 'experience/'
-	title?: string
+  t: Copy
+  path?: '' | 'projects/' | 'experience/'
+  title?: string
 }
 const { t, path = '', title } = Astro.props
 const site = Astro.site?.href ?? '/'
 const other = t.switchTo.href.slice(1, 3)
 const nav = [
-	{ href: `/${t.lang}/projects/`, label: t.nav.projects, current: path === 'projects/' },
-	{ href: `/${t.lang}/experience/`, label: t.nav.experience, current: path === 'experience/' },
+  { href: `/${t.lang}/projects/`, label: t.nav.projects, current: path === 'projects/' },
+  { href: `/${t.lang}/experience/`, label: t.nav.experience, current: path === 'experience/' },
 ]
 ---
 

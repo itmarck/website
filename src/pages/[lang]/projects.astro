@@ -1,0 +1,241 @@
+---
+import Footer from '../../components/Footer.astro'
+import Base from '../../layouts/Base.astro'
+import { copy, github, type Lang } from '../../i18n'
+
+export const getStaticPaths = () => Object.keys(copy).map((lang) => ({ params: { lang } }))
+
+const t = copy[Astro.params.lang as Lang]
+const p = t.projects
+---
+
+<Base t={t} path="projects/" title={p.title}>
+	<div class="head rise"><h1>{p.title}</h1><p>{p.intro}</p></div>
+	<main class="work">
+		<article class="tile card c-minima rise" id="minima">
+			<div class="minima" aria-hidden="true">
+				<div class="desk">
+					<div class="desk__search">minima — type to launch</div>
+					<ul><li class="on">Notion</li><li>Drafts</li><li>Tasks</li><li>Terminal</li><li>Settings</li></ul>
+				</div>
+				<div class="phone"><div class="phone__clock">09:41</div><ul><li>Notion</li><li>Drafts</li><li>Tasks</li><li>Camera</li></ul></div>
+			</div>
+			<div class="card__foot">
+				<div><span class="meta">{p.minima.meta}</span><h2>Minima</h2><p>{p.minima.text}</p></div>
+				<a class="pill" href={`${github}/minima`}>{p.open} <i aria-hidden="true">→</i></a>
+			</div>
+		</article>
+
+		<article class="window card c-wingman rise" id="wingman" style="--i:1">
+			<div class="log" aria-hidden="true">
+				<div><b>task</b>Review Minima release</div>
+				<div><b>note</b>Ink shader: pause offscreen</div>
+				<div><b>project</b>Website 2026</div>
+			</div>
+			<div class="card__foot">
+				<div><span class="meta">{p.wingman.meta}</span><h2>Wingman</h2><p>{p.wingman.text}</p></div>
+				<a class="pill pill--ghost" href={`${github}/wingman`}>GitHub <i aria-hidden="true">→</i></a>
+			</div>
+		</article>
+
+		<article class="tile card c-tree rise" style="--i:2">
+			<div class="tree" aria-hidden="true"><div>▾ Scaffold</div><div style="--d:1">▾ Column</div><div class="sel" style="--d:2">Text</div><div style="--d:2">Button</div><div>…</div></div>
+			<div class="card__foot">
+				<div><span class="meta">{p.tree.meta}</span><h2>Flutter Tree</h2><p>{p.tree.text}</p></div>
+				<a class="pill pill--ghost" href="https://marketplace.visualstudio.com/items?itemName=marcelovelasquez.flutter-tree">{p.open} <i aria-hidden="true">→</i></a>
+			</div>
+		</article>
+
+		<a class="tile card corner c-lapse rise" href={`${github}/bambulapse`}>
+			<span class="meta">{p.lapse.meta}</span>
+			<div><h2>Bambulapse</h2><p>{p.lapse.text}</p></div>
+		</a>
+
+		<article class="tile card c-disney rise" style="--i:1">
+			<span class="meta">{p.disney.meta}</span>
+			<div><h2>{p.disney.title}</h2><p>{p.disney.text}</p></div>
+		</article>
+
+		<article class="tile card c-lab rise" style="--i:2">
+			<span class="meta">{p.lab.meta}</span>
+			<div><h2>{p.lab.title}</h2><p>{p.lab.text}</p></div>
+		</article>
+	</main>
+	<Footer t={t} />
+</Base>
+
+<style>
+	.work {
+		display: grid;
+		grid-template-columns: repeat(12, minmax(0, 1fr));
+		grid-auto-rows: minmax(300px, auto);
+		gap: var(--gap);
+	}
+	.card {
+		padding: 26px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		gap: 22px;
+		scroll-margin-top: var(--gap);
+	}
+	.card h2 {
+		font-size: var(--step-m);
+		font-weight: 700;
+		letter-spacing: -0.03em;
+		line-height: 1.1;
+	}
+	.card p {
+		color: var(--text-soft);
+		max-width: 46ch;
+		margin-top: 6px;
+	}
+	.card__foot {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-end;
+		gap: 16px;
+		flex-wrap: wrap;
+	}
+	.meta {
+		font-size: 13px;
+		color: var(--text-soft);
+	}
+	.c-minima {
+		grid-column: 1 / 8;
+		grid-row: span 2;
+	}
+	.c-wingman,
+	.c-tree,
+	.c-lab {
+		grid-column: 8 / 13;
+	}
+	.c-wingman p {
+		color: var(--text);
+	}
+	.c-lapse {
+		grid-column: 1 / 5;
+	}
+	.c-disney {
+		grid-column: 5 / 8;
+		background: var(--surface-raised);
+	}
+	.c-disney p {
+		color: #cfd3da;
+	}
+
+	/* project fragments: drawn in HTML, not screenshots */
+	.minima {
+		flex: 1;
+		min-height: 340px;
+		border-radius: var(--radius-sm);
+		background: color-mix(in srgb, var(--ink-1) 40%, #05070c);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8%;
+		padding: 28px;
+	}
+	.desk {
+		width: min(54%, 380px);
+		background: #000;
+		border-radius: 14px;
+		padding: 16px;
+		box-shadow: 0 0 0 1px #23262d;
+	}
+	.desk__search {
+		color: #6b6b6b;
+		font-size: 15px;
+		padding: 8px 10px 14px;
+	}
+	.desk ul,
+	.phone ul {
+		list-style: none;
+		display: grid;
+		gap: 8px;
+		color: #8d8d8d;
+	}
+	.desk li {
+		padding: 6px 10px;
+		border-radius: 8px;
+		font-size: 17px;
+	}
+	.desk li.on {
+		background: #1a1a1a;
+		color: #fff;
+	}
+	.phone {
+		width: 170px;
+		aspect-ratio: 9 / 18.5;
+		background: #000;
+		border-radius: 30px;
+		box-shadow: 0 0 0 6px #1b1e25;
+		padding: 32px 18px 20px;
+		display: flex;
+		flex-direction: column;
+		color: #fff;
+	}
+	.phone__clock {
+		font-size: 38px;
+		letter-spacing: -0.04em;
+		line-height: 1;
+		font-variant-numeric: tabular-nums;
+	}
+	.phone ul {
+		margin-top: auto;
+		font-size: 15px;
+	}
+	.phone li:first-child {
+		color: #fff;
+	}
+	.log {
+		display: grid;
+		gap: 8px;
+		align-self: flex-start;
+		width: min(100%, 360px);
+	}
+	.log div {
+		display: flex;
+		gap: 10px;
+		align-items: center;
+		background: rgba(2, 4, 11, 0.72);
+		border-radius: 12px;
+		padding: 10px 14px;
+		font-size: 14px;
+	}
+	.log b {
+		font-size: 12px;
+		font-weight: 500;
+		padding: 2px 8px;
+		border-radius: 999px;
+		background: var(--text);
+		color: var(--text-on-color);
+	}
+	.tree {
+		background: #1e1e1e;
+		color: #ccc;
+		border-radius: var(--radius-sm);
+		padding: 10px 0;
+		font: 13px/26px var(--font-mono);
+	}
+	.tree div {
+		padding-left: calc(14px + var(--d, 0) * 14px);
+	}
+	.tree .sel {
+		background: #04395e;
+		color: #fff;
+	}
+
+	@media (max-width: 900px) {
+		.work {
+			display: flex;
+			flex-direction: column;
+		}
+		.minima {
+			flex-direction: column;
+		}
+		.desk {
+			width: 100%;
+		}
+	}
+</style>

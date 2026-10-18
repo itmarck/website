@@ -1,0 +1,257 @@
+---
+import Base from '../../layouts/Base.astro'
+import { copy, type Lang } from '../../i18n'
+
+export const getStaticPaths = () => Object.keys(copy).map((lang) => ({ params: { lang } }))
+
+const t = copy[Astro.params.lang as Lang]
+const x = t.experience
+---
+
+<Base t={t} path="experience/" title={x.title}>
+	<div class="cv">
+		<aside class="tile profile rise">
+			<h2>Marcelo Velásquez</h2>
+			<p class="summary">{x.summary}</p>
+			<p class="years"><span class="num">{t.stats[0].n}</span><span>{t.stats[0].label}</span></p>
+			<dl>
+				<div>
+					<dt>{x.skills.title}</dt>
+					{x.skills.groups.map((g) => <dd><b>{g.name}</b>{g.items}</dd>)}
+				</div>
+				<div>
+					<dt>{x.languages.title}</dt>
+					<dd>{x.languages.items}</dd>
+				</div>
+			</dl>
+			<button class="pill" type="button" popovertarget="contact">{x.cta} <i aria-hidden="true">→</i></button>
+		</aside>
+
+		<main>
+			<div class="head rise" style="--i:1"><h1>{x.title}</h1><p>{x.intro}</p></div>
+			<ol class="timeline">
+				<span class="line" aria-hidden="true"><span></span></span>
+				{
+					x.jobs.map((job, i) => (
+						<li class="rise" style={`--i:${i}`}>
+							<span class:list={['node', { now: i === 0 }]} aria-hidden="true" />
+							<article class="tile job">
+								<header>
+									<div>
+										<h2>{job.company}</h2>
+										{job.client && <p class="soft">{job.client}</p>}
+									</div>
+									<span class="when">{job.when}</span>
+								</header>
+								<ul>
+									{job.items.map((item) => <li><h3>{item.title}</h3><p class="soft">{item.text}</p></li>)}
+								</ul>
+							</article>
+						</li>
+					))
+				}
+			</ol>
+		</main>
+	</div>
+</Base>
+
+<style>
+	.cv {
+		display: grid;
+		grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+		gap: var(--gap);
+		align-items: start;
+	}
+	.soft {
+		color: var(--text-soft);
+	}
+	.cv .head {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 16px;
+		padding-top: 28px;
+	}
+	.cv .head p {
+		text-align: left;
+		max-width: 44ch;
+	}
+
+	.profile {
+		position: sticky;
+		top: var(--gap);
+		padding: 36px 32px;
+		display: grid;
+		gap: 24px;
+		justify-items: start;
+	}
+	.profile h2 {
+		font-size: var(--step-m);
+		font-weight: 700;
+		letter-spacing: -0.03em;
+	}
+	.summary {
+		color: var(--text-soft);
+		line-height: 1.6;
+		margin-top: -12px;
+	}
+	.years {
+		display: flex;
+		align-items: baseline;
+		gap: 12px;
+		padding: 18px 22px;
+		width: 100%;
+		border-radius: var(--radius-sm);
+		background: var(--tile-a);
+		color: var(--text-on-color);
+	}
+	.years span:last-child {
+		font-weight: 500;
+	}
+	dl {
+		display: grid;
+		gap: 20px;
+		width: 100%;
+	}
+	dt {
+		font-size: var(--step-xs);
+		color: var(--text-soft);
+		margin-bottom: 8px;
+	}
+	dd {
+		font-size: var(--step-xs);
+		line-height: 1.5;
+	}
+	dd + dd {
+		margin-top: 6px;
+	}
+	dd b {
+		display: block;
+		font-weight: 700;
+	}
+
+	.timeline {
+		position: relative;
+		list-style: none;
+		display: grid;
+		gap: var(--gap);
+		padding-left: 44px;
+	}
+	/* the line fills as the timeline scrolls into view */
+	.line {
+		position: absolute;
+		left: 15px;
+		top: 12px;
+		bottom: 12px;
+		width: 2px;
+		border-radius: 2px;
+		background: var(--hairline);
+		overflow: hidden;
+	}
+	.line span {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(var(--tile-c), var(--tile-b), var(--tile-a));
+		transform-origin: top;
+	}
+	@supports (animation-timeline: view()) {
+		.line span {
+			animation: fill linear both;
+			animation-timeline: view();
+			animation-range: entry 10% cover 70%;
+		}
+		@keyframes fill {
+			from {
+				transform: scaleY(0);
+			}
+		}
+	}
+	.timeline > li {
+		position: relative;
+	}
+	.node {
+		position: absolute;
+		left: -36px;
+		top: 30px;
+		width: 16px;
+		height: 16px;
+		border-radius: 50%;
+		background: var(--ink-0);
+		box-shadow: inset 0 0 0 2px var(--text);
+	}
+	.node.now {
+		background: var(--tile-c);
+		box-shadow: 0 0 0 6px color-mix(in srgb, var(--tile-c) 25%, transparent);
+	}
+	.job {
+		padding: 28px 32px;
+	}
+	.job header {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 16px;
+	}
+	.job h2 {
+		font-size: var(--step-m);
+		font-weight: 700;
+		letter-spacing: -0.03em;
+		line-height: 1.1;
+	}
+	.job header p {
+		margin-top: 4px;
+	}
+	.when {
+		flex: none;
+		font-size: var(--step-xs);
+		font-weight: 500;
+		font-variant-numeric: tabular-nums;
+		padding: 6px 12px;
+		border-radius: 999px;
+		background: var(--surface-glass);
+	}
+	.job ul {
+		list-style: none;
+		display: grid;
+		gap: 18px;
+		margin-top: 24px;
+	}
+	.job ul li {
+		padding-left: 16px;
+		border-left: 2px solid var(--hairline);
+	}
+	.job h3 {
+		font-size: var(--step-s);
+		font-weight: 700;
+	}
+	.job ul p {
+		margin-top: 4px;
+		max-width: 60ch;
+	}
+
+	@media (max-width: 900px) {
+		.cv {
+			grid-template-columns: 1fr;
+		}
+		.profile {
+			position: static;
+			order: 2;
+			padding: 28px 24px;
+		}
+		.timeline {
+			padding-left: 32px;
+		}
+		.line {
+			left: 9px;
+		}
+		.node {
+			left: -30px;
+		}
+		.job {
+			padding: 24px;
+		}
+		.job header {
+			flex-direction: column;
+			gap: 10px;
+		}
+	}
+</style>

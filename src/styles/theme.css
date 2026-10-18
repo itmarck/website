@@ -1,0 +1,260 @@
+/* Design tokens. Every color, size and curve on the site comes from here (see DESIGN.md). */
+:root {
+	/* Ink: the Night palette drawn by ink.js (keep both in sync) */
+	--ink-0: #02040b; /* deepest ground */
+	--ink-1: #0b2a6e;
+	--ink-2: #0f7d88;
+	--ink-3: #2f6bff; /* bright accent */
+	--ink-4: #f6a5d8; /* veins */
+	--ink-5: #ffe14a; /* specks, focus */
+
+	/* Surfaces */
+	--surface: #0a0c11; /* tiles */
+	--surface-raised: #2b2e35; /* neutral tile, e.g. client */
+	--surface-glass: rgba(255, 255, 255, 0.08); /* ghost buttons */
+	--edge: rgba(255, 255, 255, 0.16); /* window outline over ink */
+	--hairline: rgba(255, 255, 255, 0.1);
+
+	/* Text */
+	--text: #f3f4f6;
+	--text-soft: #a3a9b6;
+	--text-on-color: #07080b; /* on pastel and ink-colored tiles */
+
+	/* Colored tiles */
+	--tile-a: #41aae7; /* aqua */
+	--tile-b: #f7b7df; /* pink */
+	--tile-c: #e8ff3a; /* lime */
+
+	/* Type */
+	--font: 'Geist', ui-sans-serif, system-ui, sans-serif;
+	--font-mono: ui-monospace, 'SF Mono', Menlo, monospace;
+	--step-xs: 0.875rem;
+	--step-s: 1rem;
+	--step-m: clamp(1.25rem, 1rem + 0.8vw, 1.75rem);
+	--step-l: clamp(2.5rem, 1.6rem + 3.2vw, 4.75rem);
+	--step-xl: clamp(3.5rem, 1rem + 8.6vw, 10rem);
+	--tracking-tight: -0.05em;
+	--tracking-display: -0.065em;
+
+	/* Shape and space */
+	--radius: 28px;
+	--radius-sm: 16px;
+	--gap: 12px;
+	--pad: 28px;
+	--rail: 72px;
+
+	/* Motion */
+	--ease: cubic-bezier(0.32, 0.72, 0, 1);
+	--dur-fast: 0.3s;
+	--dur: 0.6s;
+	--dur-slow: 0.9s;
+}
+
+@media (max-width: 900px) {
+	:root {
+		--radius: 24px;
+		--pad: 20px;
+		--rail: 0px;
+	}
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+html {
+	scroll-behavior: smooth;
+	background: var(--ink-0);
+}
+body {
+	font-family: var(--font);
+	font-size: var(--step-s);
+	line-height: 1.5;
+	color: var(--text);
+	-webkit-font-smoothing: antialiased;
+}
+a {
+	color: inherit;
+	text-decoration: none;
+}
+button {
+	font: inherit;
+	color: inherit;
+	background: none;
+	border: 0;
+	cursor: pointer;
+}
+:focus-visible {
+	outline: 2px solid var(--ink-5);
+	outline-offset: 3px;
+	border-radius: 8px;
+}
+::selection {
+	background: var(--ink-5);
+	color: var(--text-on-color);
+}
+
+/* Shared components */
+.tile {
+	position: relative;
+	background: var(--surface);
+	border-radius: var(--radius);
+	overflow: hidden;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+.window {
+	position: relative;
+	border-radius: var(--radius);
+	overflow: hidden;
+	box-shadow: inset 0 0 0 1px var(--edge);
+}
+.corner::after {
+	content: '';
+	position: absolute;
+	top: 18px;
+	right: 18px;
+	width: 12px;
+	height: 12px;
+	border-top: 2px solid currentColor;
+	border-right: 2px solid currentColor;
+	opacity: 0.6;
+	transition:
+		width var(--dur) var(--ease),
+		height var(--dur) var(--ease),
+		opacity var(--dur-fast) var(--ease);
+}
+/* hover on a clickable tile: the corner bracket stretches instead of the tile moving */
+a.corner:hover::after {
+	width: 44px;
+	height: 44px;
+	opacity: 1;
+}
+.pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+	height: 52px;
+	padding: 0 6px 0 22px;
+	border-radius: 999px;
+	background: var(--text);
+	color: var(--text-on-color);
+	font-weight: 500;
+	transition: transform var(--dur) var(--ease);
+}
+.pill i {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background: var(--text-on-color);
+	color: var(--text);
+	display: grid;
+	place-items: center;
+	font-style: normal;
+	transition: transform var(--dur) var(--ease);
+}
+.pill:hover i {
+	transform: translate(2px, -2px) rotate(-45deg) scale(1.05);
+}
+.pill:active {
+	transform: scale(0.98);
+}
+.pill--ghost {
+	background: var(--surface-glass);
+	color: var(--text);
+}
+.pill--ghost i {
+	background: var(--text);
+	color: var(--text-on-color);
+}
+.chip {
+	display: inline-flex;
+	align-items: center;
+	height: 36px;
+	padding: 0 14px;
+	border-radius: 999px;
+	background: rgba(2, 4, 11, 0.35);
+	box-shadow: inset 0 0 0 1.5px currentColor;
+	font-size: var(--step-xs);
+	font-weight: 500;
+	text-shadow: none;
+	transition:
+		background var(--dur-fast) var(--ease),
+		color var(--dur-fast) var(--ease);
+}
+.chip:hover {
+	background: var(--text);
+	color: var(--text-on-color);
+	box-shadow: none;
+}
+
+/* Entrance: content rises once as it enters (classes added by the page script) */
+.js .rise {
+	opacity: 0;
+	transform: translateY(40px);
+	filter: blur(6px);
+	transition:
+		opacity var(--dur-slow) var(--ease),
+		transform var(--dur-slow) var(--ease),
+		filter var(--dur-slow) var(--ease);
+	transition-delay: calc(var(--i, 0) * 70ms);
+}
+.js .rise.is-in {
+	opacity: 1;
+	transform: none;
+	filter: none;
+}
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation: none !important;
+		transition-duration: 0.01ms !important;
+	}
+	.js .rise {
+		opacity: 1;
+		transform: none;
+		filter: none;
+	}
+}
+
+/* Big figure (stats) */
+.num {
+	font-size: var(--step-l);
+	font-weight: 700;
+	letter-spacing: var(--tracking-tight);
+	line-height: 0.9;
+	font-variant-numeric: tabular-nums;
+}
+
+/* Page heading: giant word plus a short intro */
+.head {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	gap: 24px;
+	padding: 64px var(--pad) var(--pad);
+}
+.head h1 {
+	font-size: var(--step-xl);
+	font-weight: 800;
+	letter-spacing: var(--tracking-display);
+	line-height: 0.8;
+}
+.head p {
+	max-width: 30ch;
+	color: var(--text-soft);
+	text-align: right;
+}
+@media (max-width: 900px) {
+	.head {
+		flex-direction: column;
+		align-items: flex-start;
+		padding: 56px 8px 20px;
+	}
+	.head p {
+		text-align: left;
+	}
+}

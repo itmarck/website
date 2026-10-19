@@ -16,7 +16,7 @@ The page floats as solid tiles over a WebGL ink field (`src/scripts/ink.js`). Th
 | `--edge` | Outline of window tiles over the ink. |
 | `--text`, `--text-soft` | Text on dark. Body copy in `--text-soft` only when secondary. |
 | `--text-on-color` | Text on pastel tiles and pill buttons. |
-| `--tile-a/b/c` | Stat tiles: aqua, pink, lime. |
+| `--tile-a/b/c` | Stat tiles: aqua, pink, lime. Over the ink they are drawn at `--tile-opacity` (74%) so the ink shows through. |
 
 ## Type
 
@@ -25,6 +25,14 @@ One family, Geist (300/400/500/700/800). Five steps: `--step-xs` (labels), `--st
 ## Shape and space
 
 `--radius` for tiles and windows, `--radius-sm` for fragments inside them, pills fully round. `--gap` between tiles (it is where the ink shows, keep it small). `--pad` inside sections. The about card has a tab with a concave corner and a circular hole for the sphere.
+
+## Logo
+
+The itmarck mark: a hexagon split along a slash into two pieces pushed slightly apart, so they read as `<` and `>` and the whole as `</>`. Soft corners like the cards. One shape everywhere, all SVG, no variants by size.
+- Files: `public/brand/mark.svg` (the mark, light, for the site's dark ground) and `public/favicon/favicon.svg` (the icon). The menu inlines the mark in `Base.astro`.
+- Menu: the mark in `--text` at the menu items' resting opacity, full on hover, like them. Lime is kept for the icon and the cards.
+- Favicon/icon: the mark in near-black filling a lime (`--tile-c`) tile with the card radius. `public/favicon/favicon.svg`, SVG only.
+- Clear space: keep at least a quarter of the mark's width empty around it. Don't rotate, outline, add effects, join the two pieces or recolor outside `--text`, `--text-on-color` and lime.
 
 ## Components (global, in `theme.css`)
 

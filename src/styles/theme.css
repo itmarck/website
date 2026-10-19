@@ -21,9 +21,10 @@
   --text-on-color: #07080b; /* on pastel and ink-colored tiles */
 
   /* Colored tiles */
-  --tile-a: #41aae7; /* aqua */
+  --tile-a: #1db2cf; /* aqua */
   --tile-b: #f7b7df; /* pink */
   --tile-c: #e8ff3a; /* lime */
+  --tile-opacity: 74%; /* colored tiles over the ink let it show through */
 
   /* Type */
   --font: 'Geist', ui-sans-serif, system-ui, sans-serif;

@@ -25,8 +25,8 @@ const nav = [
 		<title>{title ? `${title} — ${t.title}` : t.title}</title>
 		<meta name="description" content={t.description} />
 		<meta name="theme-color" content="#02040b" />
-		<link rel="icon" href="/favicon/favicon.ico" sizes="any" />
-		<link rel="icon" href="/favicon/icon.svg" type="image/svg+xml" />
+		<!-- the itmarck mark: a hexagon split into two pieces along a slash, read as </> (public/brand, see DESIGN.md) -->
+		<link rel="icon" href="/favicon/favicon.svg" type="image/svg+xml" />
 		<link rel="alternate" hreflang="en" href={`${site}en/${path}`} />
 		<link rel="alternate" hreflang="es" href={`${site}es/${path}`} />
 		<link rel="alternate" hreflang="x-default" href={site} />
@@ -45,7 +45,14 @@ const nav = [
 		<canvas id="ink" aria-hidden="true" transition:persist></canvas>
 
 		<aside class="rail">
-			<a class="mark" href={`/${t.lang}/`} aria-label={t.nav.home}>it</a>
+			<a class="mark" href={`/${t.lang}/`} aria-label={t.nav.home}>
+				<svg viewBox="0 0 64 64" aria-hidden="true">
+					<g fill="currentColor" stroke="currentColor" stroke-width="4" stroke-linejoin="round">
+						<path d="M32.59 11.64 L16.72 11.64 L5.38 31.08 L16.72 50.52 L23.52 50.52 Z"></path>
+						<path d="M40.48 13.48 L47.28 13.48 L58.62 32.92 L47.28 52.36 L31.41 52.36 Z"></path>
+					</g>
+				</svg>
+			</a>
 			<nav>
 				{nav.map((l) => <a href={l.href} class:list={{ current: l.current }} aria-current={l.current ? 'page' : undefined}>{l.label}</a>)}
 				<button type="button" popovertarget="contact">{t.nav.contact}</button>
@@ -118,9 +125,18 @@ const nav = [
 		font-size: 15px;
 		letter-spacing: -0.04em;
 	}
+	/* the itmarck mark, one color; same quiet hover as the menu items (lime stays for the icon and the cards) */
 	.mark {
-		background: var(--text);
-		color: var(--text-on-color);
+		color: var(--text);
+		opacity: 0.72;
+		transition: opacity var(--dur-fast) var(--ease-hover);
+	}
+	.mark:hover {
+		opacity: 1;
+	}
+	.mark svg {
+		width: 30px;
+		height: 30px;
 	}
 	.lang {
 		box-shadow: inset 0 0 0 1.5px var(--text);

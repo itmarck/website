@@ -1,0 +1,4 @@
+<!-- itmarck mark: a hexagon split along a slash into two pieces, read as </>. For dark grounds. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <g fill="#f3f4f6" stroke="#f3f4f6" stroke-width="4" stroke-linejoin="round"><path d="M32.59 11.64 L16.72 11.64 L5.38 31.08 L16.72 50.52 L23.52 50.52 Z"/><path d="M40.48 13.48 L47.28 13.48 L58.62 32.92 L47.28 52.36 L31.41 52.36 Z"/></g>
+</svg>

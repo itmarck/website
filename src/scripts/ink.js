@@ -48,6 +48,23 @@ s = max(s, specks(p * 19.0 + r * 3.0, 0.86, 0.2) * smoothstep(0.5, 0.9, f + q.x 
 col = mix(col, u_c5, s);
 return col;
 }
+// lit sphere filled with the same ink, drawn where s (center.xy, radius, enabled) says
+vec3 sphere(vec3 col, vec4 s, vec2 frag, float t) {
+  if (s.w < 0.5) return col;
+  vec2 d = (frag - s.xy) / s.z;
+  float d2 = dot(d, d);
+  float edge = 1.5 / s.z;
+  if (d2 > 1.0 + edge * 2.0) return col;
+  vec3 n = vec3(d, sqrt(max(0.0, 1.0 - d2)));
+  vec2 sp = vec2(n.x + n.z * 0.55, n.y - n.z * 0.25) * 1.5 + u_rot + vec2(u_time * 0.03, 0.0);
+  vec3 sc = ink(sp + 4.0, t * 1.6, 0.0);
+  vec3 L = normalize(vec3(-0.5, 0.65, 0.6));
+  float diff = max(dot(n, L), 0.0);
+  float spec = pow(max(dot(reflect(-L, n), vec3(0, 0, 1)), 0.0), 36.0);
+  float rim = pow(1.0 - n.z, 2.5);
+  vec3 shaded = sc * (0.3 + 0.95 * diff) + spec * 0.55 + rim * u_c3 * 0.45;
+  return mix(col, shaded, smoothstep(1.0 + edge, 1.0 - edge, sqrt(d2)));
+}
 void main() {
 vec2 frag = gl_FragCoord.xy;
 float k = 1.7 / u_res.y;
@@ -60,23 +77,7 @@ vec2 uv = frag / u_res;
 col *= mix(1.0, smoothstep(1.25, 0.25, length(uv - 0.5)), 0.55);
 col *= u_dim;
 
-if (u_sphere.w > 0.5) {
-  vec2 d = (frag - u_sphere.xy) / u_sphere.z;
-  float d2 = dot(d, d);
-  float edge = 1.5 / u_sphere.z;
-  if (d2 < 1.0 + edge * 2.0) {
-    vec3 n = vec3(d, sqrt(max(0.0, 1.0 - d2)));
-    vec2 sp = vec2(n.x + n.z * 0.55, n.y - n.z * 0.25) * 1.5 + u_rot + vec2(u_time * 0.03, 0.0);
-    vec3 sc = ink(sp + 4.0, t * 1.6, 0.0);
-    vec3 L = normalize(vec3(-0.5, 0.65, 0.6));
-    float diff = max(dot(n, L), 0.0);
-    float spec = pow(max(dot(reflect(-L, n), vec3(0, 0, 1)), 0.0), 36.0);
-    float rim = pow(1.0 - n.z, 2.5);
-    vec3 shaded = sc * (0.3 + 0.95 * diff) + spec * 0.55 + rim * u_c3 * 0.45;
-    float a = smoothstep(1.0 + edge, 1.0 - edge, sqrt(d2));
-    col = mix(col, shaded, a);
-  }
-}
+col = sphere(col, u_sphere, frag, t);
 gl_FragColor = vec4(col, 1.0);
 }`
 
@@ -147,9 +148,9 @@ export function start(canvas) {
     gl.uniform1f(U.energy, Math.min(m.energy, 1.2))
     gl.uniform1f(U.drift, (scroller?.scrollTop || scrollY) * 0.0006)
     gl.uniform2f(U.rot, (m.x - 0.5) * 1.2, (m.y - 0.5) * 0.8)
-    const r = orb?.getBoundingClientRect()
     const k = canvas.width / w // exact CSS px → canvas px (scale, after rounding)
-    if (r)
+    const r = orb?.getBoundingClientRect()
+    if (r?.width)
       gl.uniform4f(
         U.sphere,
         (r.left + r.width / 2) * k,

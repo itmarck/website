@@ -307,10 +307,10 @@ const building = [
 		justify-content: flex-end;
 	}
 	.stats > div:first-child {
-		background: var(--tile-a);
+		background: color-mix(in srgb, var(--tile-a) var(--tile-opacity), transparent);
 	}
 	.stats > div:last-child {
-		background: var(--tile-b);
+		background: color-mix(in srgb, var(--tile-b) var(--tile-opacity), transparent);
 	}
 	.stats span:not(.num),
 	.lime span:not(.num) {
@@ -437,7 +437,7 @@ const building = [
 		grid-column: 10 / 13;
 		grid-row: 3 / 5;
 		border-radius: var(--radius);
-		background: var(--tile-c);
+		background: color-mix(in srgb, var(--tile-c) var(--tile-opacity), transparent);
 		color: var(--text-on-color);
 	}
 	.lime small {

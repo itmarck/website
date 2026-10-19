@@ -1,11 +1,8 @@
-/* Design tokens. Every color, size and curve on the site comes from here (see DESIGN.md). */
+/* Design tokens. Every color, size and curve on the site comes from here (see README). */
 :root {
-  /* Ink: the Night palette drawn by ink.js (keep both in sync) */
+  /* Ink: the colors CSS needs from the Night palette (the full palette is COLORS in ink.js) */
   --ink-0: #02040b; /* deepest ground */
-  --ink-1: #0b2a6e;
-  --ink-2: #0f7d88;
-  --ink-3: #2f6bff; /* bright accent */
-  --ink-4: #f6a5d8; /* veins */
+  --ink-1: #0b2a6e; /* deep blue */
   --ink-5: #ffe14a; /* specks, focus */
 
   /* Surfaces */

@@ -14,7 +14,6 @@ uniform float u_drift;
 uniform vec3 u_c0, u_c1, u_c2, u_c3, u_c4, u_c5;
 uniform vec4 u_sphere;
 uniform vec2 u_rot;
-uniform float u_dim;
 
 float hash(vec2 p) { p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y); }
 float noise(vec2 p) {
@@ -75,7 +74,6 @@ float swirl = exp(-dot(p - m, p - m) * 3.0) * (0.35 + u_energy);
 vec3 col = ink(p, t, swirl);
 vec2 uv = frag / u_res;
 col *= mix(1.0, smoothstep(1.25, 0.25, length(uv - 0.5)), 0.55);
-col *= u_dim;
 
 col = sphere(col, u_sphere, frag, t);
 gl_FragColor = vec4(col, 1.0);
@@ -127,10 +125,8 @@ export function start(canvas) {
     'c5',
     'sphere',
     'rot',
-    'dim',
   ])
     U[n] = gl.getUniformLocation(prog, `u_${n}`)
-  gl.uniform1f(U.dim, 1)
 
   const m = { x: 0.6, y: 0.5, tx: 0.6, ty: 0.5, energy: 0 }
   // Visible canvas size in CSS px. Not innerWidth/innerHeight: those include the scrollbar

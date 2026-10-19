@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Minima | Privacy</title>
+  <title>itmarck | Privacy</title>
   <style>
     :root {
       --bg: #000000;
@@ -124,135 +124,87 @@
 <body>
   <div class="container">
     <nav>
-      <a href="/">Minima</a>
+      <a href="/">itmarck</a>
     </nav>
 
     <h1>Privacy Policy</h1>
-    <p class="last-updated">Last updated: March 21, 2026</p>
+    <p class="last-updated">Last updated: October 19, 2026</p>
 
     <p>
-      This policy describes how the applications developed by itmarck
-      (<strong>Minima</strong> and <strong>Wingman</strong>) handle your information.
-      We are committed to respecting your privacy and being transparent about
-      how our apps work.
+      This policy applies to everything published by itmarck (Marcelo Velásquez):
+      this website and the applications listed below. The general rules come first;
+      each product then adds only what is specific to it.
     </p>
 
-    <h2>Minima</h2>
-
-    <p>
-      Minima is a minimalist launcher for Android. It operates with an
-      offline-first architecture: your data is stored locally on your device
-      and only synced with external services when you choose to configure it.
-    </p>
-
-    <h2>Data Minima stores</h2>
-
-    <ul>
-      <li>
-        <strong>Drafts and tasks</strong> — saved in a local SQLite database
-        on your device. They are only synced with Notion if you voluntarily
-        provide an integration token.
-      </li>
-      <li>
-        <strong>App preferences</strong> — the configuration of favorite apps,
-        hidden apps, and their order is stored exclusively on-device. It is
-        never sent to any server.
-      </li>
-      <li>
-        <strong>Notion token</strong> — if you choose to connect Notion, the
-        token is stored encrypted on your device using the operating system's
-        secure storage. It is never shared with third parties.
-      </li>
-      <li>
-        <strong>Installed app list</strong> — Minima reads the apps installed
-        on your device to display them. This list is not transmitted or stored
-        outside your device.
-      </li>
-    </ul>
-
-    <h2>Notion sync</h2>
-
-    <p>
-      Syncing with Notion is <strong>optional</strong> and requires you to
-      manually configure an integration token. When active:
-    </p>
-
-    <ul>
-      <li>Drafts created locally are sent to your Notion database.</li>
-      <li>Tasks and subtasks are fetched from your Notion and cached locally.</li>
-      <li>Progress updates are synced back to Notion.</li>
-    </ul>
-
-    <p>
-      Communication happens directly between your device and the Notion API.
-      There is no intermediary server operated by us.
-    </p>
-
-    <h2>What we do not collect</h2>
+    <h2>General rules</h2>
 
     <ul>
       <li>We do not collect personal or identifying data.</li>
-      <li>We do not use analytics, trackers, or third-party SDKs.</li>
-      <li>We do not show ads.</li>
-      <li>We do not share data with third parties (except the direct Notion sync you configure).</li>
-      <li>We do not store data on our own servers.</li>
+      <li>We do not use analytics, trackers, or advertising SDKs, and we do not show ads.</li>
+      <li>We do not sell or share data with third parties, except services you choose to connect yourself.</li>
+      <li>Your data stays on your device unless a product says otherwise below.</li>
+      <li>Apps request only the permissions they need to work.</li>
+      <li>Sensitive data, such as access tokens, is kept in the secure storage provided by the operating system.</li>
     </ul>
-
-    <hr class="divider">
-
-    <h2>Wingman</h2>
-
-    <p>
-      Wingman is a companion application developed by itmarck.
-      Like Minima, Wingman is designed with privacy as a priority.
-    </p>
-
-    <p>
-      Wingman does not collect personal data, does not use analytics or trackers,
-      and does not share information with third parties. All information handled
-      by the app stays on your device.
-    </p>
-
-    <hr class="divider">
-
-    <h2>Permissions</h2>
-
-    <p>
-      Our applications only request the permissions strictly necessary for their
-      operation. In the case of Minima as a launcher, this includes access to
-      the list of installed apps and the ability to launch them.
-    </p>
-
-    <h2>Storage and security</h2>
-
-    <p>
-      All sensitive data (such as the Notion token) is stored using secure
-      storage mechanisms provided by the operating system. Local data (drafts,
-      tasks, preferences) resides in a SQLite database within the app's private
-      storage, inaccessible to other apps.
-    </p>
 
     <h2>Your rights</h2>
 
     <p>
-      You can delete all local data at any time from the settings screen in
-      Minima. When you uninstall any of our apps, all locally stored data is
-      automatically removed.
+      You can delete local data at any time from each app's settings, or by uninstalling it,
+      which removes everything stored on your device.
     </p>
+
+    <hr class="divider">
+
+    <h2>This website</h2>
+
+    <ul>
+      <li><strong>No cookies, accounts or forms.</strong> Contact happens by email, from your own mail app.</li>
+      <li><strong>Language choice</strong> — if you switch language, it is remembered in your browser's local storage. It never leaves your device.</li>
+      <li><strong>Fonts</strong> — the typeface is loaded from Google Fonts, which receives your IP address as part of that request.</li>
+      <li><strong>Hosting</strong> — the site is served by Cloudflare, which may keep standard request logs.</li>
+    </ul>
+
+    <h2>Minima</h2>
+
+    <p>
+      Minima is a minimalist launcher for Android. It works offline first: your data is stored
+      on your device and only synced with external services you configure.
+    </p>
+
+    <ul>
+      <li><strong>Drafts and tasks</strong> — saved in a local database on your device. Synced with Notion only if you provide an integration token.</li>
+      <li><strong>App preferences</strong> — favorite, hidden and ordered apps are stored only on your device.</li>
+      <li><strong>Notion token</strong> — if you connect Notion, the token is stored encrypted in the system's secure storage.</li>
+      <li><strong>Installed apps</strong> — Minima reads the list of installed apps to show and launch them. The list never leaves your device.</li>
+    </ul>
+
+    <p>
+      <strong>Notion sync</strong> is optional. When active, drafts are sent to your Notion database,
+      tasks are fetched and cached locally, and progress is synced back. Your device talks directly
+      to the Notion API; there is no server of ours in between.
+    </p>
+
+    <h2>Wingman</h2>
+
+    <p>
+      Wingman is a companion application to Minima. It follows the general rules above
+      and adds no data collection of its own.
+    </p>
+
+    <hr class="divider">
 
     <h2>Changes to this policy</h2>
 
     <p>
-      If we update this policy, we will publish the revised version on this
-      page with a new update date. No changes that reduce your privacy rights
-      will be made without prior notice.
+      If this policy changes, the new version is published on this page with a new date.
+      Changes that reduce your privacy are never made without notice.
     </p>
 
     <h2>Contact</h2>
 
     <p>
-      If you have questions about this privacy policy, you can reach us
-      at <a href="mailto:minima@itmarck.com">minima@itmarck.com</a>.
+      Questions about this policy: <a href="mailto:contact@itmarck.com">contact@itmarck.com</a>.
     </p>
 
     <div class="footer">

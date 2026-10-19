@@ -25,7 +25,7 @@ const nav = [
 		<title>{title ? `${title} — ${t.title}` : t.title}</title>
 		<meta name="description" content={t.description} />
 		<meta name="theme-color" content="#02040b" />
-		<!-- the itmarck mark: a hexagon split into two pieces along a slash, read as </> (public/brand, see DESIGN.md) -->
+		<!-- the itmarck mark: a hexagon split into two pieces along a slash, read as </> (see README) -->
 		<link rel="icon" href="/favicon/favicon.svg" type="image/svg+xml" />
 		<link rel="alternate" hreflang="en" href={`${site}en/${path}`} />
 		<link rel="alternate" hreflang="es" href={`${site}es/${path}`} />
@@ -121,9 +121,6 @@ const nav = [
 		border-radius: 50%;
 		display: grid;
 		place-items: center;
-		font-weight: 800;
-		font-size: 15px;
-		letter-spacing: -0.04em;
 	}
 	/* the itmarck mark, one color; same quiet hover as the menu items (lime stays for the icon and the cards) */
 	.mark {
@@ -141,6 +138,8 @@ const nav = [
 	.lang {
 		box-shadow: inset 0 0 0 1.5px var(--text);
 		font-size: 13px;
+		font-weight: 800;
+		letter-spacing: -0.04em;
 		transition:
 			background var(--dur-fast) var(--ease-hover),
 			color var(--dur-fast) var(--ease-hover);
@@ -163,8 +162,7 @@ const nav = [
 		transition: opacity var(--dur-fast) var(--ease-hover);
 	}
 	.rail nav > :hover,
-	.rail nav .current,
-	.rail nav button[aria-expanded='true'] {
+	.rail nav .current {
 		opacity: 1;
 	}
 
@@ -270,13 +268,11 @@ const nav = [
 	.contact__links span {
 		font-size: var(--step-xs);
 		color: var(--text-soft);
+		transition: color var(--dur-fast) var(--ease-hover);
 	}
 	.contact__links i {
 		font-style: normal;
 		color: var(--text-soft);
-		transition: color var(--dur-fast) var(--ease-hover);
-	}
-	.contact__links span {
 		transition: color var(--dur-fast) var(--ease-hover);
 	}
 	.contact__links a:hover i,

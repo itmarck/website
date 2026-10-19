@@ -11,12 +11,12 @@
     "lint": "biome check --write"
   },
   "dependencies": {
-    "@astrojs/check": "0.9.10",
     "@astrojs/sitemap": "3.7.4",
-    "astro": "7.4.0",
-    "typescript": "6.0.3"
+    "astro": "7.4.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.15"
+    "@astrojs/check": "0.9.10",
+    "@biomejs/biome": "2.5.15",
+    "typescript": "6.0.3"
   }
 }

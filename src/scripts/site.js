@@ -48,11 +48,11 @@ document.addEventListener('astro:page-load', () => {
 
   document.querySelectorAll('[data-copy]').forEach((b) => {
     b.addEventListener('click', async () => {
-      const label = b.firstChild.textContent
+      b.dataset.label ??= b.firstChild.textContent // read once, so a second click can't save "Copied"
       try {
         await navigator.clipboard.writeText(b.dataset.copy)
         b.firstChild.textContent = `${b.dataset.done} `
-        setTimeout(() => (b.firstChild.textContent = label), 1600)
+        setTimeout(() => (b.firstChild.textContent = b.dataset.label), 1600)
       } catch {
         location.href = `mailto:${b.dataset.copy}`
       }

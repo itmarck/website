@@ -1,80 +1,39 @@
 # itmarck.com
 
-## Features
+Personal site of Marcelo Velásquez, software developer in Peru: projects, experience and contact. Static Astro site, English and Spanish, deployed on Cloudflare.
 
-- Astro v4
-- TailwindCSS utility classes
-- ESLint / Prettier pre-installed and pre-configured
-- Accessible, semantic HTML markup
-- Responsive & SEO-friendly
-- Dark / Light mode, using Tailwind and CSS variables (referenced from shadcn)
-- [Astro Assets Integration](https://docs.astro.build/en/guides/assets/) for optimised images
-- MD & [MDX](https://docs.astro.build/en/guides/markdown-content/#mdx-only-features) posts
-- Pagination
-- [Automatic RSS feed](https://docs.astro.build/en/guides/rss)
-- Auto-generated [sitemap](https://docs.astro.build/en/guides/integrations-guide/sitemap/)
-- [Expressive Code](https://expressive-code.com/) source code and syntax highlighter
+## Commands
 
-## Credits
+| Command | Does |
+| --- | --- |
+| `npm start` | Dev server |
+| `npm run build` | Type check and build to `dist/` |
+| `npm run preview` | Serve the build |
+| `npm run lint` | Format and lint (Biome) |
 
-- [astro-theme-resume](https://github.com/srleom/astro-theme-resume) for website template
-- [astro-theme-cactus](https://github.com/chrismwilliams/astro-theme-cactus) for blog design
-- [minirezume-framer](https://minirezume.framer.website/) for resume homepage design
+## Structure
 
-## Project Structure
+- `src/i18n.ts` — all copy, one object per language. Pages are generated per language: `/{lang}/`, `/{lang}/projects/`, `/{lang}/experience/`. `/` redirects by saved choice or browser language.
+- `src/layouts/Base.astro` — head, menu, contact popover and page shell.
+- `src/scripts/ink.js` — the WebGL ink background and the home's sphere. `site.js` wires each page.
+- `src/styles/theme.css` — design tokens and shared components.
+- `public/brand/mark.svg`, `public/favicon/favicon.svg` — the logo. `public/privacy.html` — privacy policy for the site and every app.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Design
 
-```text
-├── public/
-├── src/
-    ├── assets/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-|   ├── pages/
-|   ├── styles/
-|   ├── utils/
-|   ├── site.config.ts
-│   └── types.ts
-├── .elintrc.cjs
-├── .gitignore
-├── .prettierignore
-├── package.json
-├── prettier.config.cjs
-├── README.md
-├── tailwind.config.js
-└── tsconfig.json
-```
+Dark bento over a field of live ink: solid tiles float on a WebGL canvas that shows through the gaps, inside outlined "window" tiles and as a lit sphere in place of a portrait. The canvas persists across pages, so the ink never restarts.
 
-## Editing guide
+- **Tokens only.** Colors, type steps, radii, spacing and motion come from `theme.css`; the full ink palette is `COLORS` in `ink.js`.
+- **Color.** Ground `--ink-0`; tiles `--surface`; text `--text` / `--text-soft`. Accent tiles aqua, pink and lime (`--tile-a/b/c`) at `--tile-opacity` so the ink shows through. Lime is the brand accent.
+- **Type.** One family, Geist. Five steps from `--step-xs` to `--step-xl`.
+- **Hover.** Never moves or resizes anything: linked tiles turn translucent, text and outlines change color, pill arrows rotate in place. Hovers use `--ease-hover`.
+- **Motion.** Transform and opacity only. Everything stops under `prefers-reduced-motion`; the ink draws one still frame.
+- **Layout.** Fluid first (container queries, `min()`), media queries only where the layout really changes.
 
-### Site info
+## Logo
 
-To edit site info such as site title and description, edit the `src/site.config.ts` file.
+A hexagon split along a slash into two pieces, read as `</>`. One shape everywhere, SVG only. The menu shows it in `--text`; the favicon is the mark in near-black on a lime tile. Don't rotate it, outline it, join its pieces or recolor it outside text, near-black and lime.
 
-### Page contents
+## Deploy
 
-To edit the homepage content and design, edit the `src/pages/index.astro` file.
-
-### Page components
-
-To edit page components found site-wide such as the card used in the homepage, edit the files found in the `src/components/` directory.
-
-### Layouts
-
-To edit the base layouts of all pages, edit the `src/layouts/BaseLayout.astro` file.
-
-To edit the layout of a blog article, edit the `src/layouts/BlogPost.astro` file.
-
-### Blog content
-
-To add blog content, insert `.md` files in the `src/content/` directory.
-
-To add images in blog articles, insert a folder in the `src/content/` directory, add both the `.md` and image files into the new folder, and reference the image in your `.md` file.
-
-## Theming
-
-To change the theme colours of the site, edit the `src/styles/app.css` file.
-
-To change the fonts of the site, add your font files into `/public`, add it as a `@font-face` in the `src/styles/app.css` file, as a `fontFamily` in the `tailwind.config.js` file, and apply the new font class to the `body` tag in the `src/layouts/BaseLayout.astro` file.
+`wrangler.jsonc` serves `dist/` as static assets on Cloudflare Workers. Connect the repo in Cloudflare → Workers & Pages → Workers Builds, production branch `main`, build command `npm run build`, deploy command `npx wrangler deploy`. Every merge to `main` deploys.

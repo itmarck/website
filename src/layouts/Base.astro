@@ -48,8 +48,8 @@ const nav = [
 			<a class="mark" href={`/${t.lang}/`} aria-label={t.nav.home}>
 				<svg viewBox="0 0 64 64" aria-hidden="true">
 					<g fill="currentColor" stroke="currentColor" stroke-width="4" stroke-linejoin="round">
-						<path d="M32.59 11.64 L16.72 11.64 L5.38 31.08 L16.72 50.52 L23.52 50.52 Z"></path>
-						<path d="M40.48 13.48 L47.28 13.48 L58.62 32.92 L47.28 52.36 L31.41 52.36 Z"></path>
+						<path d="M31.44 12.27 L15.33 12.27 L3.83 32 L15.33 51.73 L22.24 51.73 Z"></path>
+						<path d="M41.76 14.67 L48.67 14.67 L60.17 34.4 L48.67 54.13 L32.56 54.13 Z"></path>
 					</g>
 				</svg>
 			</a>
@@ -114,21 +114,19 @@ const nav = [
 		justify-content: space-between;
 		padding: 22px 0;
 	}
+	/* the mark and the language switch sit quietly, like the menu items: dimmed, full on hover */
 	.mark,
 	.lang {
 		width: 40px;
 		height: 40px;
-		border-radius: 50%;
 		display: grid;
 		place-items: center;
-	}
-	/* the itmarck mark, one color; same quiet hover as the menu items (lime stays for the icon and the cards) */
-	.mark {
 		color: var(--text);
 		opacity: 0.72;
 		transition: opacity var(--dur-fast) var(--ease-hover);
 	}
-	.mark:hover {
+	.mark:hover,
+	.lang:hover {
 		opacity: 1;
 	}
 	.mark svg {
@@ -136,17 +134,8 @@ const nav = [
 		height: 30px;
 	}
 	.lang {
-		box-shadow: inset 0 0 0 1.5px var(--text);
-		font-size: 13px;
-		font-weight: 800;
-		letter-spacing: -0.04em;
-		transition:
-			background var(--dur-fast) var(--ease-hover),
-			color var(--dur-fast) var(--ease-hover);
-	}
-	.lang:hover {
-		background: var(--text);
-		color: var(--text-on-color);
+		font-size: var(--step-xs);
+		font-weight: 500;
 	}
 	.rail nav {
 		display: flex;

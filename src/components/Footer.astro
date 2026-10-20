@@ -4,49 +4,23 @@ import type { Copy } from '../i18n'
 const { t } = Astro.props as { t: Copy }
 ---
 
-<div class="marquee window" aria-hidden="true">
-	<div class="marquee__track">{[0, 1, 2, 3].map(() => <span>{t.marquee}</span>)}</div>
-</div>
 <footer>
 	<div class="wordmark" aria-hidden="true">itmarck</div>
 	<div class="legal"><span>© {new Date().getFullYear()} Marcelo Velásquez · {t.place}</span><a href="/privacy.html">Privacy</a></div>
 </footer>
 
 <style>
-	.marquee {
-		padding: 30px 0;
-		margin-top: var(--gap);
-	}
-	.marquee__track {
-		display: flex;
-		width: max-content;
-		animation: slide 40s linear infinite;
-	}
-	.marquee span {
-		font-size: var(--step-xl);
-		font-weight: 800;
-		letter-spacing: -0.06em;
-		line-height: 0.9;
-		white-space: nowrap;
-		padding-right: 0.4em;
-		text-shadow: 0 2px 30px rgba(0, 0, 0, 0.25);
-	}
-	@keyframes slide {
-		to {
-			transform: translateX(-50%);
-		}
-	}
 	footer {
-		margin-top: var(--gap);
-		padding: 28px var(--pad) 10px;
+		margin-top: 96px;
+		padding: 0 var(--pad) 20px;
 		display: grid;
-		gap: 10px;
+		gap: 20px;
 	}
 	.wordmark {
-		font-size: clamp(5rem, 1rem + 19vw, 20rem);
+		font-size: clamp(2.5rem, 1.5rem + 4vw, 5rem);
 		font-weight: 800;
-		letter-spacing: -0.075em;
-		line-height: 0.78;
+		letter-spacing: -0.065em;
+		line-height: 0.8;
 	}
 	.legal {
 		display: flex;
@@ -55,5 +29,11 @@ const { t } = Astro.props as { t: Copy }
 		flex-wrap: wrap;
 		font-size: 13px;
 		color: var(--text-soft);
+	}
+	.legal a {
+		transition: color var(--dur-fast) var(--ease-hover);
+	}
+	.legal a:hover {
+		color: var(--text);
 	}
 </style>

@@ -17,6 +17,33 @@ function placeOrb() {
 // The orb follows its card (container queries), not the window: re-measure whenever it or its slot resizes.
 const orbSize = new ResizeObserver(placeOrb)
 
+// Projects: Minima writes to Wingman. Each log entry is typed into Minima's field, sent, arrives in
+// Wingman and gets its kind a moment later; then the log empties and it plays again. Without JS or
+// under reduced motion the log simply shows its entries.
+const wait = (ms) => new Promise((r) => setTimeout(r, ms))
+async function sync(field, log) {
+  const rows = [...log.children]
+  log.classList.add('live')
+  while (log.isConnected) {
+    for (const row of rows) {
+      const text = row.firstElementChild.textContent
+      await wait(900)
+      for (let i = 1; i <= text.length; i++) {
+        field.textContent = text.slice(0, i)
+        await wait(55)
+      }
+      await wait(700)
+      field.textContent = ''
+      row.classList.add('in')
+      await wait(800)
+      row.classList.add('labeled')
+    }
+    await wait(3200)
+    for (const row of rows) row.classList.remove('in', 'labeled')
+    await wait(900)
+  }
+}
+
 document.addEventListener('astro:page-load', () => {
   ink ??= start(document.getElementById('ink'))
   const app = document.querySelector('.app')
@@ -31,6 +58,10 @@ document.addEventListener('astro:page-load', () => {
   document
     .getElementById('contact')
     ?.addEventListener('toggle', (e) => ink?.pause(e.newState === 'open'))
+
+  const field = document.querySelector('[data-typed]')
+  const log = document.querySelector('[data-log]')
+  if (field && log && !matchMedia('(prefers-reduced-motion: reduce)').matches) sync(field, log)
 
   const rise = new IntersectionObserver(
     (entries) => {

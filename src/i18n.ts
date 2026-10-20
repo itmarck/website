@@ -38,14 +38,17 @@ const en = {
     title: 'Projects',
     intro: 'My own products, designed, built and hosted by me, plus the daily work for Disney.',
     minima: {
+      status: 'In development · since 2025',
       meta: 'Flutter · Android and desktop',
-      text: 'A launcher that doesn’t ask for attention: apps as plain text, drafts and tasks synced with Notion. Your data stays on your device.',
+      text: 'A launcher that doesn’t ask for attention: one field for whatever is on your mind, and your apps as plain text. What you write goes to Wingman.',
     },
     wingman: {
+      status: 'In development · since 2026',
       meta: 'TypeScript · PostgreSQL',
-      text: 'A personal log with its own database and API. Notes, tasks and projects, classified in the background.',
+      text: 'A personal log with its own database and API. Notes, tasks and projects arrive from Minima and are classified in the background.',
     },
     tree: {
+      status: 'Published · since 2019',
       meta: 'VS Code extension · 34 ★',
       text: 'Build Flutter widget trees with a short, readable syntax.',
     },
@@ -64,6 +67,19 @@ const en = {
       text: 'No libraries, below your screen’s resolution and paused when you can’t see it. More experiments will live here.',
     },
     open: 'Open',
+    more: {
+      title: 'More on GitHub',
+      all: 'All repositories',
+      items: [
+        { name: 'Gitspace', text: 'Mobile client for GitHub and GitLab.', meta: 'Flutter · 2022' },
+        { name: 'Booked', text: 'Booking system for small businesses.', meta: 'TypeScript · 2025' },
+        {
+          name: 'Spot',
+          text: 'Authentication service with basic storage, plus its npm package.',
+          meta: 'JavaScript · 2022',
+        },
+      ],
+    },
   },
   experience: {
     title: 'Experience',
@@ -115,7 +131,6 @@ const en = {
     languages: { title: 'Languages', items: 'Spanish · English' },
     cta: 'Write to me',
   },
-  marquee: 'from pixel to server ·',
   notFound: { title: 'This page doesn’t exist', back: 'Back home' },
 }
 
@@ -158,14 +173,17 @@ const es: Copy = {
     intro:
       'Mis propios productos, diseñados, programados y hospedados por mí, y el trabajo de cada día para Disney.',
     minima: {
+      status: 'En desarrollo · desde 2025',
       meta: 'Flutter · Android y escritorio',
-      text: 'Un launcher que no pide atención: tus apps en texto, borradores y tareas sincronizados con Notion. Tus datos se quedan en tu dispositivo.',
+      text: 'Un launcher que no pide atención: un campo para lo que tengas en mente y tus apps en texto. Lo que escribes llega a Wingman.',
     },
     wingman: {
+      status: 'En desarrollo · desde 2026',
       meta: 'TypeScript · PostgreSQL',
-      text: 'Un registro personal con su propia base de datos y API. Notas, tareas y proyectos, clasificados en segundo plano.',
+      text: 'Un registro personal con su propia base de datos y API. Notas, tareas y proyectos llegan desde Minima y se clasifican en segundo plano.',
     },
     tree: {
+      status: 'Publicado · desde 2019',
       meta: 'Extensión de VS Code · 34 ★',
       text: 'Construye árboles de widgets de Flutter con una sintaxis corta y legible.',
     },
@@ -184,6 +202,23 @@ const es: Copy = {
       text: 'Sin librerías, a menos resolución que tu pantalla y en pausa cuando no la ves. Aquí irán más experimentos.',
     },
     open: 'Abrir',
+    more: {
+      title: 'Más en GitHub',
+      all: 'Todos los repositorios',
+      items: [
+        { name: 'Gitspace', text: 'Cliente móvil para GitHub y GitLab.', meta: 'Flutter · 2022' },
+        {
+          name: 'Booked',
+          text: 'Sistema de reservas para pequeños negocios.',
+          meta: 'TypeScript · 2025',
+        },
+        {
+          name: 'Spot',
+          text: 'Servicio de autenticación con almacenamiento básico, y su paquete de npm.',
+          meta: 'JavaScript · 2022',
+        },
+      ],
+    },
   },
   experience: {
     title: 'Experiencia',
@@ -235,7 +270,6 @@ const es: Copy = {
     languages: { title: 'Idiomas', items: 'Español · Inglés' },
     cta: 'Escríbeme',
   },
-  marquee: 'del pixel al servidor ·',
   notFound: { title: 'Esta página no existe', back: 'Volver al inicio' },
 }
 

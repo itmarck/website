@@ -35,7 +35,7 @@ const x = t.experience
 					x.jobs.map((job, i) => (
 						<li class="rise" style={`--i:${i}`}>
 							<span class:list={['node', { now: i === 0 }]} aria-hidden="true" />
-							<article class="tile job">
+							<article class:list={['tile job', { now: i === 0 }]}>
 								<header>
 									<div>
 										<h2>{job.company}</h2>
@@ -76,6 +76,11 @@ const x = t.experience
 		max-width: 44ch;
 	}
 
+	/* cards over the ink are slightly translucent, like on the other pages */
+	.profile,
+	.job {
+		background-color: color-mix(in srgb, var(--surface) 86%, transparent);
+	}
 	.profile {
 		position: sticky;
 		top: var(--sticky-top, var(--gap));
@@ -101,7 +106,7 @@ const x = t.experience
 		padding: 18px 22px;
 		width: 100%;
 		border-radius: var(--radius-sm);
-		background: var(--tile-a);
+		background: color-mix(in srgb, var(--tile-a) var(--tile-opacity), transparent);
 		color: var(--text-on-color);
 	}
 	.years span:last-child {
@@ -185,8 +190,34 @@ const x = t.experience
 		background: var(--tile-c);
 		box-shadow: 0 0 0 6px color-mix(in srgb, var(--tile-c) 25%, transparent);
 	}
+	/* "now" breathes: a lime ring widens and fades */
+	.node.now::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: 50%;
+		box-shadow: 0 0 0 2px var(--tile-c);
+		animation: ping 2.4s var(--ease) infinite;
+	}
+	@keyframes ping {
+		from {
+			opacity: 0.8;
+		}
+		to {
+			opacity: 0;
+			transform: scale(2.6);
+		}
+	}
 	.job {
 		padding: 28px 32px;
+	}
+	/* the current job: white with transparency, the one card that stands apart */
+	.job.now {
+		background-color: rgba(255, 255, 255, 0.08);
+		box-shadow: inset 0 0 0 1px var(--edge);
+	}
+	.job.now .soft {
+		color: var(--text);
 	}
 	.job header {
 		display: flex;
@@ -210,7 +241,8 @@ const x = t.experience
 		font-variant-numeric: tabular-nums;
 		padding: 6px 12px;
 		border-radius: 999px;
-		background: var(--surface-glass);
+		background: rgba(255, 255, 255, 0.14);
+		box-shadow: inset 0 0 0 1px var(--hairline);
 	}
 	.job ul {
 		list-style: none;

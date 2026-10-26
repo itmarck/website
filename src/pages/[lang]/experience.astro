@@ -11,26 +11,25 @@ const x = t.experience
 <Base t={t} path="experience/" title={x.title}>
 	<div class="cv">
 		<aside class="tile profile rise">
-			<h2>Marcelo Velásquez</h2>
+			<header>
+				<h2>Marcelo Velásquez</h2>
+				<!-- contact is also in the menu, so here it only needs a quiet corner icon -->
+				<button class="write" type="button" popovertarget="contact" aria-label={x.cta} title={x.cta}>
+					<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"></rect><path d="m4 7 8 6 8-6"></path></svg>
+				</button>
+			</header>
 			<p class="summary">{x.summary}</p>
-			<p class="years"><span class="num">{t.stats[0].n}</span><span>{t.stats[0].label}</span></p>
-			<dl>
-				<div>
-					<dt>{x.skills.title}</dt>
-					{x.skills.groups.map((g) => <dd><b>{g.name}</b>{g.items}</dd>)}
-				</div>
-				<div>
-					<dt>{x.languages.title}</dt>
-					<dd>{x.languages.items}</dd>
-				</div>
-			</dl>
-			<button class="pill" type="button" popovertarget="contact">{x.cta} <i aria-hidden="true">→</i></button>
+			<dl class="facts">{x.facts.map((f) => <div><dt>{f.label}</dt><dd>{f.value}</dd></div>)}</dl>
+			<section class="stack">
+				<h3>{x.skills.title}</h3>
+				<dl>{x.skills.groups.map((g) => <div><dt>{g.name}</dt><dd>{g.items.split(' · ').map((tool) => <Fragment><span>{tool}</span>{' '}</Fragment>)}</dd></div>)}</dl>
+			</section>
 		</aside>
 
 		<main>
 			<div class="head rise" style="--i:1"><h1>{x.title}</h1><p>{x.intro}</p></div>
 			<ol class="timeline">
-				<span class="line" aria-hidden="true"><span></span></span>
+				<span class="line" aria-hidden="true"></span>
 				{
 					x.jobs.map((job, i) => (
 						<li class="rise" style={`--i:${i}`}>
@@ -58,7 +57,7 @@ const x = t.experience
 <style>
 	.cv {
 		display: grid;
-		grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+		grid-template-columns: minmax(min(440px, 45%), 5fr) minmax(0, 7fr);
 		gap: var(--gap);
 		align-items: start;
 	}
@@ -70,6 +69,13 @@ const x = t.experience
 		align-items: flex-start;
 		gap: 16px;
 		padding-top: 28px;
+	}
+	/* the title follows its column, not the window, so a wider profile never pushes it out */
+	.cv main {
+		container-type: inline-size;
+	}
+	.cv .head h1 {
+		font-size: min(var(--step-xl), 17cqi);
 	}
 	.cv .head p {
 		text-align: left;
@@ -89,49 +95,121 @@ const x = t.experience
 		gap: 24px;
 		justify-items: start;
 	}
+	.profile header {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 16px;
+		width: 100%;
+	}
 	.profile h2 {
 		font-size: var(--step-m);
 		font-weight: 700;
 		letter-spacing: -0.03em;
+	}
+	.write {
+		flex: none;
+		width: 44px;
+		height: 44px;
+		margin: -6px -8px 0 0;
+		border-radius: 50%;
+		display: grid;
+		place-items: center;
+		color: var(--text);
+		background: rgba(255, 255, 255, 0.08);
+		box-shadow: inset 0 0 0 1px var(--hairline);
+		transition:
+			background-color var(--dur-fast) var(--ease-hover),
+			color var(--dur-fast) var(--ease-hover);
+	}
+	.write:hover {
+		background-color: var(--text);
+		color: var(--text-on-color);
+	}
+	.write svg {
+		width: 20px;
+		height: 20px;
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 1.6;
+		stroke-linejoin: round;
+		stroke-linecap: round;
 	}
 	.summary {
 		color: var(--text-soft);
 		line-height: 1.6;
 		margin-top: -12px;
 	}
-	.years {
-		display: flex;
-		align-items: baseline;
-		gap: 12px;
-		padding: 18px 22px;
+
+	/* facts: the highlight, as three figures side by side (value large, label under it), split by
+	   thin dividers so every column starts at the same edge */
+	.facts {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
 		width: 100%;
+		padding: 22px 0;
 		border-radius: var(--radius-sm);
 		background: color-mix(in srgb, var(--tile-a) var(--tile-opacity), transparent);
 		color: var(--text-on-color);
+		container-type: inline-size;
 	}
-	.years span:last-child {
-		font-weight: 500;
+	.facts div {
+		display: flex;
+		flex-direction: column-reverse;
+		justify-content: flex-end;
+		gap: 6px;
+		padding: 0 clamp(12px, 4cqi, 20px);
 	}
-	dl {
-		display: grid;
-		gap: 20px;
+	.facts div + div {
+		box-shadow: inset 1px 0 0 color-mix(in srgb, var(--text-on-color) 18%, transparent);
+	}
+	.facts dt {
+		font-size: 13px;
+		color: color-mix(in srgb, var(--text-on-color) 72%, transparent);
+	}
+	/* values scale with the tile so the three always fit on one line */
+	.facts dd {
+		font-size: min(var(--step-m), 5.6cqi);
+		white-space: nowrap;
+		font-weight: 700;
+		letter-spacing: -0.03em;
+		line-height: 1;
+	}
+
+	/* stack: the detail, as a quiet two-column list on the card itself */
+	.stack {
 		width: 100%;
 	}
-	dt {
-		font-size: var(--step-xs);
-		color: var(--text-soft);
-		margin-bottom: 8px;
+	.stack dl div {
+		display: grid;
+		grid-template-columns: 7rem 1fr;
+		gap: 4px 16px;
+		align-items: baseline;
+		padding: 12px 0;
 	}
-	dd {
+	.stack dl div + div {
+		box-shadow: inset 0 1px 0 var(--hairline);
+	}
+	.stack dt {
 		font-size: var(--step-xs);
+	}
+	.stack h3 {
+		font-size: var(--step-xs);
+		font-weight: 500;
+		margin-bottom: 4px;
+	}
+	.stack dt {
+		color: var(--text-soft);
+	}
+	.stack dd {
 		line-height: 1.5;
 	}
-	dd + dd {
-		margin-top: 6px;
+	/* wrap between tools, never inside one or before its separator */
+	.stack dd span {
+		white-space: nowrap;
 	}
-	dd b {
-		display: block;
-		font-weight: 700;
+	.stack dd span:not(:last-child)::after {
+		content: ' ·';
 	}
 
 	.timeline {
@@ -141,7 +219,7 @@ const x = t.experience
 		gap: var(--gap);
 		padding-left: 44px;
 	}
-	/* the line fills as the timeline scrolls into view */
+	/* one continuous gradient through every job, fading out toward the oldest */
 	.line {
 		position: absolute;
 		left: 15px;
@@ -149,29 +227,12 @@ const x = t.experience
 		bottom: 12px;
 		width: 2px;
 		border-radius: 2px;
-		background: var(--hairline);
-		overflow: hidden;
-	}
-	.line span {
-		position: absolute;
-		inset: 0;
-		background: linear-gradient(var(--tile-c), var(--tile-b), var(--tile-a));
-		transform-origin: top;
-	}
-	@supports (animation-timeline: view()) {
-		.line span {
-			/* Longhands: Lightning CSS would fold view() into the shorthand, which browsers reject. */
-			animation-name: fill;
-			animation-timing-function: linear;
-			animation-fill-mode: both;
-			animation-timeline: view();
-			animation-range: entry 10% cover 70%;
-		}
-		@keyframes fill {
-			from {
-				transform: scaleY(0);
-			}
-		}
+		background: linear-gradient(
+			var(--tile-c),
+			var(--tile-b) 45%,
+			color-mix(in srgb, var(--tile-a) 70%, transparent) 75%,
+			color-mix(in srgb, var(--tile-a) 10%, transparent)
+		);
 	}
 	.timeline > li {
 		position: relative;

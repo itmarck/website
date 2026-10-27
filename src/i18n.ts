@@ -7,26 +7,27 @@ const en = {
   lang: 'en',
   locale: 'en-US',
   title: 'Marcelo Velásquez — Software developer',
-  description: 'Marcelo Velásquez, software developer in Peru. Projects, experience and contact.',
+  description:
+    'Marcelo Velásquez, a software developer from Peru. Projects, work and how to reach me.',
   nav: { projects: 'Projects', experience: 'Experience', contact: 'Contact', home: 'Home' },
   place: 'Peru',
   switchTo: { label: 'Español', href: '/es/' },
   about: {
     tab: 'About me',
     hello: 'Hi, I’m',
-    role: 'I build software that is quick to use and calm to look at, from the first screen to the server behind it. Lately, tools for my own day: a launcher and a personal log.',
+    role: 'I make software that’s quick to use and easy on the eyes, from the first screen all the way to the server. Lately I’ve been building tools for my own day: a launcher and a personal log.',
     copy: 'Copy',
     copied: 'Copied',
     badge: 'DEVELOPER · PERU · SINCE 2020 ·',
   },
   portfolio: 'Portfolio',
-  building: { title: 'Building now', more: 'All projects' },
-  path: { title: 'Experience', note: 'Through Globant, since 2021', more: 'See more' },
+  building: { title: 'Currently building', more: 'All projects' },
+  path: { title: 'Experience', note: 'With Globant since 2021', more: 'See more' },
   stack: { title: 'Stack', items: 'TypeScript · Flutter · Node · Linux' },
-  reach: { title: 'Get in touch', mail: 'Open email app', close: 'Close' },
+  reach: { title: 'Say hi', mail: 'Write an email', close: 'Close' },
   modal: {
     title: 'Let’s talk',
-    text: 'A project, a role or a question about something you saw here. Write to me and I’ll get back to you.',
+    text: 'Got a project, a job offer or a question about something here? Drop me a line and I’ll get back to you.',
     also: 'Also on',
   },
   stats: [
@@ -36,46 +37,46 @@ const en = {
   networks: { n: '5', label: 'TV networks running my code' },
   projects: {
     title: 'Projects',
-    intro: 'My own products, designed, built and hosted by me, plus the daily work for Disney.',
+    intro: 'Things I design, build and host myself, plus my day job for Disney.',
     minima: {
       status: 'In development · since 2025',
       meta: 'Flutter · Android and desktop',
-      text: 'A launcher that doesn’t ask for attention: one field for whatever is on your mind, and your apps as plain text. What you write goes to Wingman.',
+      text: 'A launcher that stays out of your way: one box for whatever’s on your mind, and your apps as plain text. Whatever you type ends up in Wingman.',
     },
     wingman: {
       status: 'In development · since 2026',
       meta: 'TypeScript · PostgreSQL',
-      text: 'A personal log with its own database and API. Notes, tasks and projects arrive from Minima and are classified in the background.',
+      text: 'My personal log, with its own database and API. Notes, tasks and projects come in from Minima and get sorted in the background.',
     },
     tree: {
       status: 'Published · since 2019',
       meta: 'VS Code extension · 34 ★',
-      text: 'Build Flutter widget trees with a short, readable syntax.',
+      text: 'Write Flutter widget trees with a short syntax that’s easy to read.',
     },
     lapse: {
       meta: 'Python',
-      text: 'Timelapses of a Bambu Lab 3D printer, shot with a Sony ZV-E10.',
+      text: 'Timelapses of a Bambu Lab 3D printer, shot on a Sony ZV-E10.',
     },
     disney: {
       meta: 'Globant · Disney',
       title: 'ABC.com and Universal Player',
-      text: 'Sites for five networks and the video player used across the group’s pages.',
+      text: 'Sites for five networks, plus the video player the whole group uses.',
     },
     lab: {
       meta: 'Lab · soon',
       title: 'This ink is a 5 KB shader',
-      text: 'No libraries, below your screen’s resolution and paused when you can’t see it. More experiments will live here.',
+      text: 'No libraries, rendered below your screen’s resolution and paused when you can’t see it. More experiments coming.',
     },
     open: 'Open',
     more: {
       title: 'More on GitHub',
       all: 'All repositories',
       items: [
-        { name: 'Gitspace', text: 'Mobile client for GitHub and GitLab.', meta: 'Flutter · 2022' },
-        { name: 'Booked', text: 'Booking system for small businesses.', meta: 'TypeScript · 2025' },
+        { name: 'Gitspace', text: 'A mobile app for GitHub and GitLab.', meta: 'Flutter · 2022' },
+        { name: 'Booked', text: 'Bookings for small businesses.', meta: 'TypeScript · 2025' },
         {
           name: 'Spot',
-          text: 'Authentication service with basic storage, plus its npm package.',
+          text: 'A simple auth service with storage, plus its npm package.',
           meta: 'JavaScript · 2022',
         },
       ],
@@ -83,9 +84,9 @@ const en = {
   },
   experience: {
     title: 'Experience',
-    intro: 'Six years across frontend, backend and the infrastructure in between.',
+    intro: 'Six years of frontend, backend and everything in between.',
     summary:
-      'Software developer in Peru. I started in frontend, moved down the stack to APIs, databases and networks, and now run my own servers.',
+      'Software developer from Peru. I started on the frontend, worked my way down to APIs, databases and networks, and these days I run my own servers.',
     jobs: [
       {
         company: 'Globant',
@@ -94,11 +95,11 @@ const en = {
         items: [
           {
             title: 'ABC.com and network sites',
-            text: 'Development and deployment for ABC, Freeform, National Geographic, FX and Disney Now.',
+            text: 'Building and shipping the sites for ABC, Freeform, National Geographic, FX and Disney Now.',
           },
           {
             title: 'Video Universal Player',
-            text: 'JavaScript package for video playback across the group’s pages.',
+            text: 'The JavaScript package that plays video across the group’s sites.',
           },
         ],
       },
@@ -109,7 +110,7 @@ const en = {
         items: [
           {
             title: 'Communications platform',
-            text: 'Built with Vue.js and Django, with telephony on Asterisk.',
+            text: 'Built with Vue.js and Django, with Asterisk handling the calls.',
           },
         ],
       },
@@ -117,7 +118,9 @@ const en = {
         company: 'Fertilidad Gestar',
         client: '',
         when: 'Oct – Dec 2020',
-        items: [{ title: 'Reporting system', text: 'Automated reports in Excel and PDF.' }],
+        items: [
+          { title: 'Reporting system', text: 'Reports that build themselves, in Excel and PDF.' },
+        ],
       },
     ],
     skills: {
@@ -135,7 +138,7 @@ const en = {
     ],
     cta: 'Write to me',
   },
-  notFound: { title: 'This page does not exist', back: 'Back home' },
+  notFound: { title: 'Oops, this page does not exist', back: 'Back home' },
 }
 
 export type Copy = typeof en
@@ -145,51 +148,50 @@ const es: Copy = {
   locale: 'es-PE',
   title: 'Marcelo Velásquez — Desarrollador de software',
   description:
-    'Marcelo Velásquez, desarrollador de software en Perú. Proyectos, experiencia y contacto.',
+    'Marcelo Velásquez, desarrollador de software en Perú. Proyectos, experiencia y cómo contactarme.',
   nav: { projects: 'Proyectos', experience: 'Experiencia', contact: 'Contacto', home: 'Inicio' },
   place: 'Perú',
   switchTo: { label: 'English', href: '/en/' },
   about: {
     tab: 'Sobre mí',
     hello: 'Hola, soy',
-    role: 'Construyo software rápido de usar y tranquilo de mirar, desde la primera pantalla hasta el servidor que lo sostiene. Últimamente, herramientas para mi propio día: un launcher y un registro personal.',
+    role: 'Hago software rápido de usar y agradable a la vista, desde la primera pantalla hasta el servidor. Últimamente estoy armando herramientas para mi día a día de código abierto.',
     copy: 'Copiar',
     copied: 'Copiado',
     badge: 'DESARROLLADOR · PERÚ · DESDE 2020 ·',
   },
   portfolio: 'Portafolio',
-  building: { title: 'Construyendo ahora', more: 'Todos los proyectos' },
-  path: { title: 'Experiencia', note: 'Vía Globant, desde 2021', more: 'Ver más' },
+  building: { title: 'En lo que trabajo ahora', more: 'Todos los proyectos' },
+  path: { title: 'Experiencia', note: 'Con Globant desde 2021', more: 'Ver más' },
   stack: { title: 'Stack', items: 'TypeScript · Flutter · Node · Linux' },
-  reach: { title: 'Hablemos', mail: 'Abrir correo', close: 'Cerrar' },
+  reach: { title: 'Escríbeme', mail: 'Escribir un correo', close: 'Cerrar' },
   modal: {
     title: 'Hablemos',
-    text: 'Un proyecto, un puesto o una pregunta sobre algo que viste aquí. Escríbeme y te respondo.',
+    text: '¿Tienes un proyecto, una propuesta de trabajo o alguna pregunta sobre algo de aquí? Escríbeme y te respondo.',
     also: 'También en',
   },
   stats: [
-    { n: '6', label: 'años escribiendo código' },
-    { n: '34', label: 'estrellas en GitHub para Flutter Tree' },
+    { n: '6', label: 'años programando' },
+    { n: '34', label: 'estrellas de Flutter Tree en GitHub' },
   ],
-  networks: { n: '5', label: 'canales de TV con código mío' },
+  networks: { n: '5', label: 'canales de TV que usan mi código' },
   projects: {
     title: 'Proyectos',
-    intro:
-      'Mis propios productos, diseñados, programados y hospedados por mí, y el trabajo de cada día para Disney.',
+    intro: 'Cosas que diseño, programo y hospedo yo mismo, y mi trabajo del día a día para Disney.',
     minima: {
       status: 'En desarrollo · desde 2025',
       meta: 'Flutter · Android y escritorio',
-      text: 'Un launcher que no pide atención: un campo para lo que tengas en mente y tus apps en texto. Lo que escribes llega a Wingman.',
+      text: 'Un launcher que no te distrae: un solo campo para lo que tengas en mente y tus apps como texto. Todo lo que escribes termina en Wingman.',
     },
     wingman: {
       status: 'En desarrollo · desde 2026',
       meta: 'TypeScript · PostgreSQL',
-      text: 'Un registro personal con su propia base de datos y API. Notas, tareas y proyectos llegan desde Minima y se clasifican en segundo plano.',
+      text: 'Mi registro personal, con su propia base de datos y API. Las notas, tareas y proyectos llegan desde Minima y se ordenan solos en segundo plano.',
     },
     tree: {
       status: 'Publicado · desde 2019',
       meta: 'Extensión de VS Code · 34 ★',
-      text: 'Construye árboles de widgets de Flutter con una sintaxis corta y legible.',
+      text: 'Arma árboles de widgets de Flutter con una sintaxis corta y fácil de leer.',
     },
     lapse: {
       meta: 'Python',
@@ -198,27 +200,27 @@ const es: Copy = {
     disney: {
       meta: 'Globant · Disney',
       title: 'ABC.com y Universal Player',
-      text: 'Sitios de cinco canales y el reproductor de video que usan las páginas del grupo.',
+      text: 'Sitios de cinco canales y el reproductor de video que usa todo el grupo.',
     },
     lab: {
       meta: 'Laboratorio · pronto',
       title: 'Esta tinta es un shader de 5 KB',
-      text: 'Sin librerías, a menos resolución que tu pantalla y en pausa cuando no la ves. Aquí irán más experimentos.',
+      text: 'Sin librerías, a menor resolución que tu pantalla y en pausa cuando no la estás viendo. Pronto habrá más experimentos.',
     },
     open: 'Abrir',
     more: {
       title: 'Más en GitHub',
       all: 'Todos los repositorios',
       items: [
-        { name: 'Gitspace', text: 'Cliente móvil para GitHub y GitLab.', meta: 'Flutter · 2022' },
+        { name: 'Gitspace', text: 'App móvil para GitHub y GitLab.', meta: 'Flutter · 2022' },
         {
           name: 'Booked',
-          text: 'Sistema de reservas para pequeños negocios.',
+          text: 'Reservas para pequeños negocios.',
           meta: 'TypeScript · 2025',
         },
         {
           name: 'Spot',
-          text: 'Servicio de autenticación con almacenamiento básico, y su paquete de npm.',
+          text: 'Un servicio de autenticación simple, con almacenamiento y su paquete de npm.',
           meta: 'JavaScript · 2022',
         },
       ],
@@ -226,9 +228,9 @@ const es: Copy = {
   },
   experience: {
     title: 'Experiencia',
-    intro: 'Seis años entre frontend, backend y la infraestructura que los une.',
+    intro: 'Seis años entre frontend, backend y todo lo que hay en medio.',
     summary:
-      'Desarrollador de software en Perú. Empecé en el frontend, bajé por la pila hacia APIs, bases de datos y redes, y hoy mantengo mis propios servidores.',
+      'Desarrollador de software en Perú. Empecé en el frontend, fui bajando hacia APIs, bases de datos y redes, y hoy mantengo mis propios servidores.',
     jobs: [
       {
         company: 'Globant',
@@ -237,11 +239,11 @@ const es: Copy = {
         items: [
           {
             title: 'ABC.com y sitios de canales',
-            text: 'Desarrollo y despliegue para ABC, Freeform, National Geographic, FX y Disney Now.',
+            text: 'Desarrollo y despliegue de los sitios de ABC, Freeform, National Geographic, FX y Disney Now.',
           },
           {
             title: 'Video Universal Player',
-            text: 'Paquete de JavaScript para reproducir video en las páginas del grupo.',
+            text: 'El paquete de JavaScript que reproduce video en los sitios del grupo.',
           },
         ],
       },
@@ -252,7 +254,7 @@ const es: Copy = {
         items: [
           {
             title: 'Plataforma de comunicaciones',
-            text: 'Hecha con Vue.js y Django, con telefonía sobre Asterisk.',
+            text: 'Hecha con Vue.js y Django, con Asterisk para las llamadas.',
           },
         ],
       },
@@ -260,7 +262,9 @@ const es: Copy = {
         company: 'Fertilidad Gestar',
         client: '',
         when: 'Oct – Dic 2020',
-        items: [{ title: 'Sistema de reportes', text: 'Reportes automáticos en Excel y PDF.' }],
+        items: [
+          { title: 'Sistema de reportes', text: 'Reportes que se generan solos en Excel y PDF.' },
+        ],
       },
     ],
     skills: {
@@ -278,7 +282,7 @@ const es: Copy = {
     ],
     cta: 'Escríbeme',
   },
-  notFound: { title: 'Esta página no existe', back: 'Volver al inicio' },
+  notFound: { title: 'Ups, esta página no existe', back: 'Volver al inicio' },
 }
 
 export const copy = { en, es }

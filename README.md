@@ -28,7 +28,10 @@ Dark bento over a field of live ink: solid tiles float on a WebGL canvas that sh
 - **Type.** One family, Geist. Five steps from `--step-xs` to `--step-xl`.
 - **Hover.** Never moves or resizes anything: linked tiles turn translucent, text and outlines change color, pill arrows rotate in place. Hovers use `--ease-hover`.
 - **Motion.** Transform and opacity only. Everything stops under `prefers-reduced-motion`; the ink draws one still frame.
-- **Layout.** Fluid first (container queries, `min()`), media queries only where the layout really changes.
+- **Layout.** Fluid first: grid, flex, `clamp()`, container queries. Content and menu stay within `--max` (96rem). The ink still fills the window.
+- **Breakpoints.** Three widths: wide (default), medium (`< 64em`) and small (`< 48em`). Each one has a single media query in `theme.css` that only changes variables (`--home-*`, `--work-*`, `--rail-*`…). Pages read them, for example `grid-template-areas: var(--home-areas)`. Don't add media queries in components.
+- **Units.** `rem`/`em`/`%`. `px` only for borders, outlines, shadows and blurs.
+- **Text size.** Body text keeps the browser's size. Only titles scale. Never shrink text to make it fit: make room or cut it with an ellipsis.
 
 ## Logo
 

@@ -35,11 +35,15 @@
   --tracking-display: -0.065em;
 
   /* Shape and space */
-  --radius: 28px;
-  --radius-sm: 16px;
-  --gap: 12px;
-  --pad: 28px;
-  --rail: 72px;
+  --radius: 1.75rem;
+  --radius-sm: 1rem;
+  --gap: 0.75rem;
+  --pad: 1.75rem;
+  --rail: 4.5rem;
+
+  /* page width, menu included; --side is the margin left over on each side */
+  --max: 96rem;
+  --side: max(0px, (100vw - var(--max)) / 2);
 
   /* Motion */
   --ease: cubic-bezier(0.32, 0.72, 0, 1);
@@ -52,13 +56,129 @@
   --dur-fast: 0.45s;
   --dur: 0.6s;
   --dur-slow: 0.9s;
+
+  /* Layout: wide by default; the two breakpoints below only change these variables (see README) */
+
+  /* page heading */
+  --head-dir: row;
+  --head-align: flex-end;
+  --head-text: right;
+  --head-top: 4rem;
+  --head-x: var(--pad);
+
+  /* menu: a column on the left, or a bar at the bottom */
+  --rail-inset: 0 auto 0 var(--side);
+  --rail-width: var(--rail);
+  --rail-height: auto;
+  --rail-shift: none;
+  --rail-dir: column;
+  --rail-padding: 1.375rem 0;
+  --rail-nav-gap: 2.125rem;
+  --rail-writing: vertical-rl;
+  --rail-turn: rotate(180deg);
+  --rail-bg: transparent;
+  --rail-blur: none;
+  --rail-edge: none;
+  --app-bottom: var(--gap);
+
+  /* home: four tracks (about, then the bento) */
+  --home-cols: minmax(0, 5fr) minmax(0, 2fr) minmax(0, 2fr) minmax(0, 3fr);
+  --home-rows: minmax(min-content, 1fr) minmax(min-content, 1.3fr) minmax(min-content, 0.45fr)
+    minmax(min-content, 0.65fr);
+  /* biome-ignore format: aligned grid map */
+  --home-areas:
+    'about title    title    title'
+    'about building building stats'
+    'about path     stack    lime'
+    'about path     reach    lime';
+  --hero-height: max(43.75rem, 100svh - var(--gap) * 2);
+
+  /* projects: Wingman and Flutter Tree beside Minima, three small cards below */
+  --work-cols: minmax(0, 4fr) minmax(0, 3fr) minmax(0, 5fr);
+  --work-rows: auto auto minmax(18.75rem, auto);
+  /* biome-ignore format: aligned grid map */
+  --work-areas:
+    'wingman wingman minima'
+    'tree    tree    minima'
+    'lapse   disney  lab';
+  --more-cols: 8.75rem 1fr auto;
+  --more-areas: 'name text meta';
+
+  /* experience: profile beside the timeline */
+  --cv-cols: minmax(min(27.5rem, 45%), 5fr) minmax(0, 7fr);
+  --profile-position: sticky;
+  --profile-order: 0;
 }
 
-@media (max-width: 900px) {
+@media (width < 64em) {
   :root {
-    --radius: 24px;
-    --pad: 20px;
+    --home-cols: repeat(6, minmax(0, 1fr));
+    --home-rows: auto auto minmax(17rem, auto) auto auto;
+    /* biome-ignore format: aligned grid map */
+    --home-areas:
+      'about about about title    title    title'
+      'about about about building building building'
+      'about about about stats    stats    stats'
+      'path  path  stack stack    lime     lime'
+      'path  path  reach reach    lime     lime';
+    --hero-height: auto;
+
+    --head-dir: column;
+    --head-align: flex-start;
+    --head-text: left;
+
+    --cv-cols: minmax(0, 1fr);
+    --profile-position: static;
+    --profile-order: 2;
+
+    /* Disney moves down so Wingman and Minima keep two columns */
+    --work-rows: auto auto minmax(16rem, auto) minmax(12rem, auto);
+    /* biome-ignore format: aligned grid map */
+    --work-areas:
+      'wingman wingman minima'
+      'tree    tree    minima'
+      'lapse   lapse   disney'
+      'lab     lab     lab';
+  }
+}
+
+@media (width < 48em) {
+  :root {
+    --radius: 1.5rem;
+    --gap: 0.625rem;
+    --pad: 1.25rem;
     --rail: 0px;
+
+    --head-dir: column;
+    --head-align: flex-start;
+    --head-text: left;
+    --head-top: 3.5rem;
+    --head-x: 0.5rem;
+
+    --rail-inset: auto auto 0.875rem 50%;
+    --rail-width: auto;
+    --rail-height: 3.5rem;
+    --rail-shift: translateX(-50%);
+    --rail-dir: row;
+    --rail-padding: 0 0.5rem;
+    --rail-nav-gap: clamp(0.625rem, 3.5vw, 1rem);
+    --rail-writing: horizontal-tb;
+    --rail-turn: none;
+    --rail-bg: rgba(10, 12, 17, 0.72);
+    --rail-blur: blur(16px);
+    --rail-edge: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+    --app-bottom: 6rem;
+
+    --home-cols: minmax(0, 1fr);
+    --home-rows: minmax(88svh, auto) auto auto minmax(18.75rem, auto) minmax(11.25rem, auto) auto
+      auto minmax(11.25rem, auto);
+    --home-areas: 'about' 'title' 'building' 'stats' 'path' 'stack' 'reach' 'lime';
+
+    --work-cols: minmax(0, 1fr);
+    --work-rows: auto auto auto minmax(14rem, auto) minmax(14rem, auto) minmax(14rem, auto);
+    --work-areas: 'minima' 'wingman' 'tree' 'lapse' 'disney' 'lab';
+    --more-cols: 1fr auto;
+    --more-areas: 'name meta' 'text text';
   }
 }
 
@@ -148,14 +268,14 @@ button {
 .go {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 0.625rem;
   white-space: nowrap;
   font-size: var(--step-xs);
   font-weight: 500;
 }
 .go i {
-  width: 32px;
-  height: 32px;
+  width: 2rem;
+  height: 2rem;
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -172,9 +292,9 @@ a.tile:hover {
 .pill {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  height: 52px;
-  padding: 0 6px 0 22px;
+  gap: 0.75rem;
+  height: 3.25rem;
+  padding: 0 0.375rem 0 1.375rem;
   border-radius: 999px;
   background: var(--text);
   color: var(--text-on-color);
@@ -183,8 +303,8 @@ a.tile:hover {
   transition: transform var(--dur) var(--ease);
 }
 .pill i {
-  width: 40px;
-  height: 40px;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 50%;
   background: var(--text-on-color);
   color: var(--text);
@@ -210,8 +330,8 @@ a.tile:hover {
 .chip {
   display: inline-flex;
   align-items: center;
-  height: 36px;
-  padding: 0 14px;
+  height: 2.25rem;
+  padding: 0 0.875rem;
   border-radius: 999px;
   background: rgba(2, 4, 11, 0.35);
   box-shadow: inset 0 0 0 1.5px currentColor;
@@ -232,7 +352,7 @@ a.tile:hover {
 /* Entrance: content rises once as it enters (classes added by the page script) */
 .js .rise {
   opacity: 0;
-  transform: translateY(40px);
+  transform: translateY(2.5rem);
   filter: blur(6px);
   /* staggered entrance; background-color is listed (with no delay) so linked tiles keep their hover fade */
   --rise-delay: calc(var(--i, 0) * 70ms);
@@ -273,10 +393,11 @@ a.tile:hover {
 /* Page heading: giant word plus a short intro */
 .head {
   display: flex;
+  flex-direction: var(--head-dir);
   justify-content: space-between;
-  align-items: flex-end;
-  gap: 24px;
-  padding: 64px var(--pad) var(--pad);
+  align-items: var(--head-align);
+  gap: 1.5rem;
+  padding: var(--head-top) var(--head-x) var(--pad);
 }
 .head h1 {
   font-size: var(--step-xl);
@@ -287,15 +408,5 @@ a.tile:hover {
 .head p {
   max-width: 30ch;
   color: var(--text-soft);
-  text-align: right;
-}
-@media (max-width: 900px) {
-  .head {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 56px 8px 20px;
-  }
-  .head p {
-    text-align: left;
-  }
+  text-align: var(--head-text);
 }

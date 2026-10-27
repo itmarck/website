@@ -57,7 +57,7 @@ const x = t.experience
 <style>
 	.cv {
 		display: grid;
-		grid-template-columns: minmax(min(440px, 45%), 5fr) minmax(0, 7fr);
+		grid-template-columns: var(--cv-cols);
 		gap: var(--gap);
 		align-items: start;
 	}
@@ -67,8 +67,8 @@ const x = t.experience
 	.cv .head {
 		flex-direction: column;
 		align-items: flex-start;
-		gap: 16px;
-		padding-top: 28px;
+		gap: 1rem;
+		padding-top: 1.75rem;
 	}
 	/* the title follows its column, not the window, so a wider profile never pushes it out */
 	.cv main {
@@ -88,18 +88,19 @@ const x = t.experience
 		background-color: color-mix(in srgb, var(--surface) 86%, transparent);
 	}
 	.profile {
-		position: sticky;
+		position: var(--profile-position);
+		order: var(--profile-order);
 		top: var(--sticky-top, var(--gap));
-		padding: 36px 32px;
+		padding: clamp(1.75rem, 3vw, 2.25rem) clamp(1.5rem, 3vw, 2rem);
 		display: grid;
-		gap: 24px;
+		gap: 1.5rem;
 		justify-items: start;
 	}
 	.profile header {
 		display: flex;
 		justify-content: space-between;
 		align-items: flex-start;
-		gap: 16px;
+		gap: 1rem;
 		width: 100%;
 	}
 	.profile h2 {
@@ -109,9 +110,9 @@ const x = t.experience
 	}
 	.write {
 		flex: none;
-		width: 44px;
-		height: 44px;
-		margin: -6px -8px 0 0;
+		width: 2.75rem;
+		height: 2.75rem;
+		margin: -0.375rem -0.5rem 0 0;
 		border-radius: 50%;
 		display: grid;
 		place-items: center;
@@ -127,8 +128,8 @@ const x = t.experience
 		color: var(--text-on-color);
 	}
 	.write svg {
-		width: 20px;
-		height: 20px;
+		width: 1.25rem;
+		height: 1.25rem;
 		fill: none;
 		stroke: currentColor;
 		stroke-width: 1.6;
@@ -138,7 +139,7 @@ const x = t.experience
 	.summary {
 		color: var(--text-soft);
 		line-height: 1.6;
-		margin-top: -12px;
+		margin-top: -0.75rem;
 	}
 
 	/* facts: the highlight, as three figures side by side (value large, label under it), split by
@@ -147,7 +148,7 @@ const x = t.experience
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 		width: 100%;
-		padding: 22px 0;
+		padding: 1.375rem 0;
 		border-radius: var(--radius-sm);
 		background: color-mix(in srgb, var(--tile-a) var(--tile-opacity), transparent);
 		color: var(--text-on-color);
@@ -157,20 +158,21 @@ const x = t.experience
 		display: flex;
 		flex-direction: column-reverse;
 		justify-content: flex-end;
-		gap: 6px;
-		padding: 0 clamp(8px, 3cqi, 20px);
+		gap: 0.375rem;
+		padding: 0 clamp(0.375rem, 2.5cqi, 1.25rem);
 	}
 	.facts div + div {
 		box-shadow: inset 1px 0 0 color-mix(in srgb, var(--text-on-color) 18%, transparent);
 	}
 	.facts dt {
-		font-size: min(13px, 4.4cqi);
+		font-size: 0.8125rem;
 		color: color-mix(in srgb, var(--text-on-color) 72%, transparent);
 	}
-	/* values scale with the tile so the three always fit on one line */
 	.facts dd {
-		font-size: min(var(--step-m), 6.4cqi);
+		font-size: var(--step-m);
 		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 		font-weight: 700;
 		letter-spacing: -0.03em;
 		line-height: 1;
@@ -179,13 +181,14 @@ const x = t.experience
 	/* stack: the detail, as a quiet two-column list on the card itself */
 	.stack {
 		width: 100%;
+		container-type: inline-size;
 	}
 	.stack dl div {
 		display: grid;
 		grid-template-columns: 7rem 1fr;
-		gap: 4px 16px;
+		gap: 0.25rem 1rem;
 		align-items: baseline;
-		padding: 12px 0;
+		padding: 0.75rem 0;
 	}
 	.stack dl div + div {
 		box-shadow: inset 0 1px 0 var(--hairline);
@@ -196,10 +199,15 @@ const x = t.experience
 	.stack h3 {
 		font-size: var(--step-xs);
 		font-weight: 500;
-		margin-bottom: 4px;
+		margin-bottom: 0.25rem;
 	}
 	.stack dt {
 		color: var(--text-soft);
+	}
+	@container (width < 22rem) {
+		.stack dl div {
+			grid-template-columns: 1fr;
+		}
 	}
 	.stack dd {
 		line-height: 1.5;
@@ -217,14 +225,14 @@ const x = t.experience
 		list-style: none;
 		display: grid;
 		gap: var(--gap);
-		padding-left: 44px;
+		padding-left: 2rem;
 	}
 	/* one continuous gradient through every job, fading out toward the oldest */
 	.line {
 		position: absolute;
-		left: 15px;
-		top: 12px;
-		bottom: 12px;
+		left: 0.5625rem;
+		top: 0.75rem;
+		bottom: 0.75rem;
 		width: 2px;
 		border-radius: 2px;
 		background: linear-gradient(
@@ -239,10 +247,10 @@ const x = t.experience
 	}
 	.node {
 		position: absolute;
-		left: -36px;
-		top: 30px;
-		width: 16px;
-		height: 16px;
+		left: -1.875rem;
+		top: 1.875rem;
+		width: 1rem;
+		height: 1rem;
 		border-radius: 50%;
 		background: var(--ink-0);
 		box-shadow: inset 0 0 0 2px var(--text);
@@ -270,7 +278,7 @@ const x = t.experience
 		}
 	}
 	.job {
-		padding: 28px 32px;
+		padding: 1.5rem clamp(1.5rem, 3vw, 2rem);
 	}
 	/* the current job: white with transparency, the one card that stands apart */
 	.job.now {
@@ -282,9 +290,10 @@ const x = t.experience
 	}
 	.job header {
 		display: flex;
+		flex-wrap: wrap;
 		justify-content: space-between;
 		align-items: flex-start;
-		gap: 16px;
+		gap: 0.625rem 1rem;
 	}
 	.job h2 {
 		font-size: var(--step-m);
@@ -293,14 +302,14 @@ const x = t.experience
 		line-height: 1.1;
 	}
 	.job header p {
-		margin-top: 4px;
+		margin-top: 0.25rem;
 	}
 	.when {
 		flex: none;
 		font-size: var(--step-xs);
 		font-weight: 500;
 		font-variant-numeric: tabular-nums;
-		padding: 6px 12px;
+		padding: 0.375rem 0.75rem;
 		border-radius: 999px;
 		background: rgba(255, 255, 255, 0.14);
 		box-shadow: inset 0 0 0 1px var(--hairline);
@@ -308,11 +317,11 @@ const x = t.experience
 	.job ul {
 		list-style: none;
 		display: grid;
-		gap: 18px;
-		margin-top: 24px;
+		gap: 1.125rem;
+		margin-top: 1.5rem;
 	}
 	.job ul li {
-		padding-left: 16px;
+		padding-left: 1rem;
 		border-left: 2px solid var(--hairline);
 	}
 	.job h3 {
@@ -320,40 +329,8 @@ const x = t.experience
 		font-weight: 700;
 	}
 	.job ul p {
-		margin-top: 4px;
+		margin-top: 0.25rem;
 		max-width: 60ch;
 	}
 
-	@media (max-width: 900px) {
-		.cv {
-			grid-template-columns: 1fr;
-		}
-		.profile {
-			position: static;
-			order: 2;
-			padding: 28px 24px;
-		}
-		.timeline {
-			padding-left: 32px;
-		}
-		.line {
-			left: 9px;
-		}
-		.node {
-			left: -30px;
-		}
-		.job {
-			padding: 24px;
-		}
-		.job header {
-			flex-direction: column;
-			gap: 10px;
-		}
-	}
-	/* small phones: the stack group sits above its tools instead of beside them */
-	@media (max-width: 480px) {
-		.stack dl div {
-			grid-template-columns: 1fr;
-		}
-	}
 </style>

@@ -88,17 +88,14 @@ const building = [
 </Base>
 
 <style>
+	/* named areas swapped per width (--home-*); wide fills one screen but never clips its content */
 	.hero {
 		display: grid;
-		grid-template-columns: repeat(12, minmax(0, 1fr));
-		/* rows fill the screen but grow when their content needs it */
-		grid-template-rows:
-			minmax(min-content, 1fr) minmax(min-content, 1.3fr)
-			minmax(min-content, 0.45fr) minmax(min-content, 0.65fr);
+		grid-template-columns: var(--home-cols);
+		grid-template-rows: var(--home-rows);
+		grid-template-areas: var(--home-areas);
 		gap: var(--gap);
-		/* one screen tall so the fr rows share it, but never shorter than its content: when the window is
-		   short the rows would otherwise spill out of the box and get clipped (no scroll to reach them) */
-		height: max(700px, calc(100svh - var(--gap) * 2));
+		height: var(--hero-height);
 		min-height: min-content;
 	}
 	.small {
@@ -111,8 +108,7 @@ const building = [
 
 	.about {
 		position: relative;
-		grid-column: 1 / 6;
-		grid-row: 1 / 5;
+		grid-area: about;
 		display: flex;
 		flex-direction: column;
 	}
@@ -120,13 +116,13 @@ const building = [
 		position: relative;
 		align-self: flex-start;
 		width: 48%;
-		height: 56px;
+		height: 3.5rem;
 		background: var(--surface);
 		border-radius: var(--radius) var(--radius) 0 0;
 		display: flex;
 		align-items: center;
-		gap: 10px;
-		padding: 0 24px;
+		gap: 0.625rem;
+		padding: 0 1.5rem;
 		font-size: var(--step-xs);
 		font-weight: 500;
 	}
@@ -141,15 +137,15 @@ const building = [
 		background: radial-gradient(circle at 100% 0, transparent calc(var(--radius) - 0.5px), var(--surface) var(--radius));
 	}
 	.about__tab svg {
-		width: 16px;
-		height: 16px;
+		width: 1rem;
+		height: 1rem;
 	}
 	.about__body {
 		position: relative;
 		flex: 1;
 		background: var(--surface);
 		border-radius: 0 var(--radius) var(--radius) var(--radius);
-		padding: 40px 44px 44px;
+		padding: clamp(2rem, 4vw, 2.5rem) clamp(1.5rem, 4vw, 2.75rem) clamp(2rem, 4vw, 2.75rem);
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-end;
@@ -159,25 +155,25 @@ const building = [
 	}
 	/* the orb takes whatever height the card has left and shrinks first when space runs out */
 	/* The slot takes the card's free height; the orb is the largest circle that fits in it.
-	   24px leaves room for the ring (8px gap + 3px stroke per side), so the ring never
+	   1.5rem (24px) leaves room for the ring (8px gap + 3px stroke per side), so the ring never
 	   gets closer to the card edge than the text. Fluid at any size, no breakpoints. */
 	.orb-slot {
 		flex: 1 1 0;
-		min-height: 96px;
+		min-height: 6rem;
 		container-type: size;
 		display: grid;
 		place-items: center;
 	}
 	/* the white ring is the orb's own outline: it sits just past the hole, so the mask keeps it */
 	.orb {
-		width: min(100cqw - 24px, 100cqh - 24px);
+		width: min(100cqw - 1.5rem, 100cqh - 1.5rem);
 		aspect-ratio: 1;
 		border-radius: 50%;
 		outline: 3px solid var(--text);
 		outline-offset: 8px;
 	}
 	h1 {
-		margin-top: 24px;
+		margin-top: 1.5rem;
 		font-size: clamp(3rem, 1.2rem + 3.6vw, 5.25rem);
 		font-weight: 700;
 		line-height: 0.95;
@@ -189,7 +185,7 @@ const building = [
 		letter-spacing: -0.04em;
 	}
 	.about__role {
-		margin-top: 32px;
+		margin-top: 2rem;
 		line-height: 1.6;
 		color: var(--text-soft);
 	}
@@ -198,9 +194,9 @@ const building = [
 	.badge {
 		position: relative;
 		float: right;
-		width: min(112px, 30%);
+		width: min(7rem, 30%);
 		aspect-ratio: 1;
-		margin: 0 0 8px 12px;
+		margin: 0 0 0.5rem 0.75rem;
 		shape-outside: circle(50%);
 	}
 	.badge svg {
@@ -223,26 +219,26 @@ const building = [
 
 	.title {
 		position: relative;
-		grid-column: 6 / 13;
-		grid-row: 1;
+		grid-area: title;
+		container-type: inline-size;
 		display: flex;
 		align-items: flex-end;
-		padding: 0 28px 10px;
+		padding: 1.75rem var(--head-x) 0.625rem;
 	}
+	/* sized by its column so it never overflows */
 	.title h2 {
-		font-size: var(--step-xl);
+		font-size: min(var(--step-xl), 24cqi);
 		font-weight: 800;
 		letter-spacing: var(--tracking-display);
 		line-height: 0.78;
 	}
 
 	.building {
-		grid-column: 6 / 10;
-		grid-row: 2;
-		padding: 22px;
+		grid-area: building;
+		padding: 1.375rem;
 		display: flex;
 		flex-direction: column;
-		gap: 14px;
+		gap: 0.875rem;
 	}
 	.building h2 {
 		font-size: var(--step-xs);
@@ -251,15 +247,15 @@ const building = [
 	.building ul {
 		list-style: none;
 		display: grid;
-		gap: 8px;
+		gap: 0.5rem;
 		margin-bottom: auto;
 	}
 	.building li a {
 		display: flex;
 		justify-content: space-between;
 		align-items: baseline;
-		gap: 16px;
-		padding: 14px 18px;
+		gap: 1rem;
+		padding: 0.875rem 1.125rem;
 		border-radius: var(--radius-sm);
 		background: rgba(2, 4, 11, 0.62);
 		transition:
@@ -280,7 +276,7 @@ const building = [
 		letter-spacing: -0.03em;
 	}
 	.building span {
-		font-size: 13px;
+		font-size: 0.8125rem;
 		color: var(--text-soft);
 		text-align: right;
 		transition: color var(--dur-fast) var(--ease-hover);
@@ -290,8 +286,7 @@ const building = [
 	}
 
 	.stats {
-		grid-column: 10 / 13;
-		grid-row: 2;
+		grid-area: stats;
 		display: grid;
 		grid-template-rows: 1fr 1fr;
 		border-radius: var(--radius);
@@ -301,7 +296,7 @@ const building = [
 	.stats > div,
 	.lime {
 		position: relative;
-		padding: 22px 24px;
+		padding: 1.375rem 1.5rem;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-end;
@@ -317,18 +312,17 @@ const building = [
 		font-size: var(--step-m);
 		letter-spacing: -0.02em;
 		line-height: 1.15;
-		margin-top: 6px;
+		margin-top: 0.375rem;
 	}
 
-	/* vertical tile beside the Stack/contact column */
+	/* tall tile beside the Stack/contact column */
 	.path {
-		grid-column: 6 / 8;
-		grid-row: 3 / 5;
+		grid-area: path;
 		background: var(--surface-raised);
-		padding: 22px;
+		padding: 1.375rem;
 		display: flex;
 		flex-direction: column;
-		gap: 4px;
+		gap: 0.25rem;
 	}
 	.path:hover {
 		background-color: color-mix(in srgb, var(--surface-raised) 72%, transparent);
@@ -345,33 +339,31 @@ const building = [
 	.path__more {
 		display: flex;
 		flex-wrap: wrap;
-		height: 32px;
-		margin-top: 12px;
+		height: 2rem;
+		margin-top: 0.75rem;
 		overflow: hidden;
 	}
 	.path__more::before {
 		content: '';
-		height: 32px;
+		height: 2rem;
 	}
 
 	.stack {
-		grid-column: 8 / 10;
-		grid-row: 3;
-		padding: 18px 22px;
+		grid-area: stack;
+		padding: 1.125rem 1.375rem;
 	}
 	.stack p {
-		margin-top: 4px;
+		margin-top: 0.25rem;
 		font-weight: 500;
 		line-height: 1.35;
 	}
 	.reach {
-		grid-column: 8 / 10;
-		grid-row: 4;
-		padding: 18px 22px;
+		grid-area: reach;
+		padding: 1.125rem 1.375rem;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		gap: 10px;
+		gap: 0.625rem;
 	}
 	/* same trick for "Copy": when the title leaves it no room it wraps to a clipped second line */
 	.reach__top {
@@ -379,7 +371,7 @@ const building = [
 		flex-wrap: wrap;
 		justify-content: space-between;
 		align-items: baseline;
-		column-gap: 12px;
+		column-gap: 0.75rem;
 		height: 1.5em;
 		overflow: hidden;
 	}
@@ -400,7 +392,7 @@ const building = [
 		white-space: nowrap;
 	}
 	.reach__copy {
-		font-size: 13px;
+		font-size: 0.8125rem;
 		color: var(--text-soft);
 		transition: color var(--dur-fast);
 	}
@@ -410,27 +402,27 @@ const building = [
 	/* icons only; the names join them when the row itself has room (container query, not viewport) */
 	.reach__links {
 		display: flex;
-		gap: 6px;
+		gap: 0.375rem;
 		container-type: inline-size;
 	}
 	.chip.icon span {
 		display: none;
 	}
 	.chip.icon {
-		width: 40px;
-		height: 40px;
+		width: 2.5rem;
+		height: 2.5rem;
 		padding: 0;
 		justify-content: center;
 	}
 	.chip.icon svg {
-		width: 17px;
-		height: 17px;
+		width: 1.0625rem;
+		height: 1.0625rem;
 	}
-	@container (min-width: 230px) {
+	@container (min-width: 14.375rem) {
 		.chip.icon {
 			width: auto;
-			gap: 8px;
-			padding: 0 16px 0 13px;
+			gap: 0.5rem;
+			padding: 0 1rem 0 0.8125rem;
 		}
 		.chip.icon span {
 			display: inline;
@@ -438,40 +430,15 @@ const building = [
 	}
 
 	.lime {
-		grid-column: 10 / 13;
-		grid-row: 3 / 5;
+		grid-area: lime;
 		border-radius: var(--radius);
 		background: color-mix(in srgb, var(--tile-c) var(--tile-opacity), transparent);
 		color: var(--text-on-color);
 	}
 	.lime small {
-		font-size: 13px;
-		margin-top: 8px;
+		font-size: 0.8125rem;
+		margin-top: 0.5rem;
 		opacity: 0.8;
 	}
 
-	@media (max-width: 900px) {
-		.hero {
-			display: flex;
-			flex-direction: column;
-			height: auto;
-			min-height: 0;
-		}
-		.about {
-			min-height: 88svh;
-		}
-		.title {
-			padding: 28px 8px 8px;
-		}
-		.stats {
-			min-height: 300px;
-		}
-		.path,
-		.lime {
-			min-height: 180px;
-		}
-		.about__body {
-			padding: 32px 24px;
-		}
-	}
 </style>

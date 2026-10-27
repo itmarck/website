@@ -20,7 +20,7 @@ const p = t.projects
 			</div>
 			<div class="screen" aria-hidden="true">
 				<ul><li>Phone</li><li>Messages</li><li>Camera</li></ul>
-				<div class="field"><span class="field__typed" data-typed></span><span class="field__hint">What is on your mind?</span></div>
+				<div class="field"><span class="field__typed" data-typed></span><i class="field__caret"></i><span class="field__hint">What is on your mind?</span></div>
 				<i class="screen__bar"></i>
 			</div>
 		</article>
@@ -82,10 +82,12 @@ const p = t.projects
 </Base>
 
 <style>
+	/* named areas swapped per width (--work-*) */
 	.work {
 		display: grid;
-		grid-template-columns: repeat(12, minmax(0, 1fr));
-		grid-auto-rows: auto;
+		grid-template-columns: var(--work-cols);
+		grid-template-rows: var(--work-rows);
+		grid-template-areas: var(--work-areas);
 		gap: var(--gap);
 	}
 	/* Cards over the ink: all slightly translucent except Minima, the one solid black card */
@@ -94,15 +96,15 @@ const p = t.projects
 		border-radius: var(--radius);
 		overflow: hidden;
 		background-color: color-mix(in srgb, var(--surface) 86%, transparent);
-		padding: 26px;
+		padding: 1.625rem;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		gap: 22px;
+		gap: 1.375rem;
 		scroll-margin-top: var(--gap);
 	}
 	.card__foot .meta {
-		margin-bottom: 8px;
+		margin-bottom: 0.5rem;
 	}
 	.card h2 {
 		font-size: var(--step-m);
@@ -113,32 +115,28 @@ const p = t.projects
 	.card p {
 		color: var(--text-soft);
 		max-width: 46ch;
-		margin-top: 6px;
+		margin-top: 0.375rem;
 	}
 	.card__foot {
 		display: flex;
 		justify-content: space-between;
 		align-items: flex-end;
-		gap: 16px;
+		gap: 1rem;
 		flex-wrap: wrap;
 	}
 	.meta {
 		display: block;
-		font-size: 13px;
+		font-size: 0.8125rem;
 		color: var(--text-soft);
 	}
 	.c-minima {
-		grid-column: 8 / 13;
-		grid-row: 1 / 3;
+		grid-area: minima;
 		background: #000;
-		padding-bottom: 12px;
-	}
-	.c-wingman,
-	.c-tree {
-		grid-column: 1 / 8;
+		padding-bottom: 0.75rem;
 	}
 	/* white with transparency */
 	.c-wingman {
+		grid-area: wingman;
 		background-color: rgba(255, 255, 255, 0.08);
 		box-shadow: inset 0 0 0 1px var(--edge);
 	}
@@ -147,6 +145,7 @@ const p = t.projects
 	}
 	/* a home color with transparency: the aqua tile */
 	.c-tree {
+		grid-area: tree;
 		background-color: color-mix(in srgb, var(--tile-a) var(--tile-opacity), transparent);
 		color: var(--text-on-color);
 		justify-content: flex-end;
@@ -164,22 +163,17 @@ const p = t.projects
 		color: var(--text-on-color);
 	}
 	.c-lab {
-		grid-column: 8 / 13;
-	}
-	.c-lapse,
-	.c-disney,
-	.c-lab {
-		min-height: 300px;
+		grid-area: lab;
 	}
 	.c-lapse {
-		grid-column: 1 / 5;
+		grid-area: lapse;
 		transition: background-color var(--dur-fast) var(--ease-hover);
 	}
 	.c-lapse:hover {
 		background-color: color-mix(in srgb, var(--surface) 64%, transparent);
 	}
 	.c-disney {
-		grid-column: 5 / 8;
+		grid-area: disney;
 		background-color: color-mix(in srgb, var(--surface-raised) 86%, transparent);
 	}
 	.c-disney p {
@@ -192,50 +186,52 @@ const p = t.projects
 	/* Minima: the launcher's bottom edge, in the card itself: a few apps as plain text, the field, the home bar */
 	.screen {
 		display: grid;
-		gap: 32px;
+		gap: 2rem;
 	}
 	.screen ul {
 		list-style: none;
 		display: grid;
-		gap: 10px;
-		padding: 0 4px;
-		font-size: 15px;
+		gap: 0.625rem;
+		padding: 0 0.25rem;
+		font-size: 0.9375rem;
 		color: var(--text-soft);
 	}
 	.field {
 		display: flex;
 		align-items: center;
-		min-height: 52px;
-		padding: 0 18px 0 14px;
+		min-height: 3.25rem;
+		padding: 0 1.125rem 0 0.875rem;
 		border-radius: 999px;
 		background: rgba(255, 255, 255, 0.08);
-		font-size: 16px;
 		white-space: nowrap;
-		overflow: hidden;
 	}
+	/* a long entry ends in "…" instead of leaving the field */
 	.field__typed {
+		min-width: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
 		color: var(--text);
 	}
-	.field__typed::after {
-		content: '';
-		display: inline-block;
+	.field__caret {
+		flex: none;
 		width: 2px;
 		height: 1.1em;
 		margin: 0 2px 0 1px;
-		vertical-align: -0.2em;
 		background: var(--tile-c);
 		animation: blink 1.1s steps(1) infinite;
 	}
 	.field__hint {
+		overflow: hidden;
+		text-overflow: ellipsis;
 		color: var(--text-soft);
 	}
-	.field__typed:not(:empty) + .field__hint {
+	.field__typed:not(:empty) ~ .field__hint {
 		display: none;
 	}
 	.screen__bar {
 		justify-self: center;
-		width: 120px;
-		height: 5px;
+		width: 7.5rem;
+		height: 0.3125rem;
 		border-radius: 3px;
 		background: var(--text);
 		opacity: 0.6;
@@ -249,26 +245,26 @@ const p = t.projects
 	/* Wingman: the rows, and one quiet chip color */
 	.log {
 		display: grid;
-		gap: 8px;
+		gap: 0.5rem;
 		align-self: stretch;
 	}
 	.log div {
 		display: flex;
 		justify-content: space-between;
-		gap: 12px;
+		gap: 0.75rem;
 		align-items: center;
 		background: rgba(2, 4, 11, 0.72);
-		border-radius: 12px;
-		padding: 10px 10px 10px 14px;
-		font-size: 14px;
+		border-radius: 0.75rem;
+		padding: 0.625rem 0.625rem 0.625rem 0.875rem;
+		font-size: 0.875rem;
 		transition:
 			opacity var(--dur) var(--ease),
 			transform var(--dur) var(--ease);
 	}
 	.log b {
-		font-size: 12px;
+		font-size: 0.75rem;
 		font-weight: 500;
-		padding: 3px 10px;
+		padding: 3px 0.625rem;
 		border-radius: 999px;
 		background: rgba(255, 255, 255, 0.14);
 		box-shadow: inset 0 0 0 1px var(--hairline);
@@ -277,7 +273,7 @@ const p = t.projects
 	/* while site.js plays the sync, rows wait hidden until Minima sends them */
 	.log.live div:not(.in) {
 		opacity: 0;
-		transform: translateY(10px);
+		transform: translateY(0.625rem);
 	}
 	.log.live div:not(.labeled) b {
 		opacity: 0;
@@ -287,15 +283,15 @@ const p = t.projects
 	.more {
 		background-color: color-mix(in srgb, var(--surface) 86%, transparent);
 		margin-top: var(--gap);
-		padding: 26px;
+		padding: 1.625rem;
 	}
 	.more header {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;
 		align-items: center;
-		gap: 16px;
-		margin-bottom: 10px;
+		gap: 1rem;
+		margin-bottom: 0.625rem;
 	}
 	.more h2 {
 		white-space: nowrap;
@@ -311,15 +307,21 @@ const p = t.projects
 	}
 	.more li a {
 		display: grid;
-		grid-template-columns: 140px 1fr auto;
-		gap: 24px;
+		grid-template-columns: var(--more-cols);
+		grid-template-areas: var(--more-areas);
+		gap: 0.25rem 1.5rem;
 		align-items: baseline;
-		padding: 16px 0;
+		padding: 1rem 0;
 	}
 	.more b {
+		grid-area: name;
 		font-weight: 700;
 	}
+	.more .meta {
+		grid-area: meta;
+	}
 	.more__text {
+		grid-area: text;
 		color: var(--text-soft);
 		transition: color var(--dur-fast) var(--ease-hover);
 	}
@@ -327,18 +329,4 @@ const p = t.projects
 		color: var(--text);
 	}
 
-	@media (max-width: 900px) {
-		.work {
-			display: flex;
-			flex-direction: column;
-		}
-		.more li a {
-			grid-template-columns: 1fr auto;
-			gap: 4px 16px;
-		}
-		.more__text {
-			grid-column: 1 / -1;
-			grid-row: 2;
-		}
-	}
 </style>

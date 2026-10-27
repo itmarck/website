@@ -18,11 +18,13 @@ function placeOrb() {
 const orbSize = new ResizeObserver(placeOrb)
 
 // Projects: Minima writes to Wingman. Each log entry is typed into Minima's field, sent, arrives in
-// Wingman and gets its kind a moment later; then the log empties and it plays again. Without JS or
-// under reduced motion the log simply shows its entries.
+// Wingman and gets its kind a moment later; then the log empties back to its first entry and plays
+// again. Without JS or under reduced motion the log simply shows its entries.
 const wait = (ms) => new Promise((r) => setTimeout(r, ms))
 async function sync(field, log) {
-  const rows = [...log.children]
+  // the first entry is already there, so the log never starts empty
+  const [first, ...rows] = log.children
+  first.classList.add('in', 'labeled')
   log.classList.add('live')
   while (log.isConnected) {
     for (const row of rows) {

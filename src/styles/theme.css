@@ -179,6 +179,7 @@ a.tile:hover {
   background: var(--text);
   color: var(--text-on-color);
   font-weight: 500;
+  white-space: nowrap;
   transition: transform var(--dur) var(--ease);
 }
 .pill i {
@@ -216,6 +217,7 @@ a.tile:hover {
   box-shadow: inset 0 0 0 1.5px currentColor;
   font-size: var(--step-xs);
   font-weight: 500;
+  white-space: nowrap;
   text-shadow: none;
   transition:
     background var(--dur-fast) var(--ease-hover),

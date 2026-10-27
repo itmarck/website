@@ -135,7 +135,7 @@ const en = {
     ],
     cta: 'Write to me',
   },
-  notFound: { title: 'This page doesn’t exist', back: 'Back home' },
+  notFound: { title: 'This page does not exist', back: 'Back home' },
 }
 
 export type Copy = typeof en

@@ -210,6 +210,8 @@ const p = t.projects
 		border-radius: 999px;
 		background: rgba(255, 255, 255, 0.08);
 		font-size: 16px;
+		white-space: nowrap;
+		overflow: hidden;
 	}
 	.field__typed {
 		color: var(--text);
@@ -289,12 +291,14 @@ const p = t.projects
 	}
 	.more header {
 		display: flex;
+		flex-wrap: wrap;
 		justify-content: space-between;
 		align-items: center;
 		gap: 16px;
 		margin-bottom: 10px;
 	}
 	.more h2 {
+		white-space: nowrap;
 		font-size: var(--step-m);
 		font-weight: 700;
 		letter-spacing: -0.03em;

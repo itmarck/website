@@ -373,11 +373,15 @@ const building = [
 		justify-content: space-between;
 		gap: 10px;
 	}
+	/* same trick for "Copy": when the title leaves it no room it wraps to a clipped second line */
 	.reach__top {
 		display: flex;
+		flex-wrap: wrap;
 		justify-content: space-between;
 		align-items: baseline;
-		gap: 12px;
+		column-gap: 12px;
+		height: 1.5em;
+		overflow: hidden;
 	}
 	/* the email hides itself when it doesn't fit: a zero-width first item keeps line one,
 	   so a too-long email wraps to line two, which the fixed height clips away */

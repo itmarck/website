@@ -348,4 +348,18 @@ const nav = [
 			padding: 28px 22px;
 		}
 	}
+	/* the smallest phones: a tighter menu so the bar still fits inside the screen */
+	@media (max-width: 360px) {
+		.rail,
+		.rail nav {
+			gap: 10px;
+		}
+		.mark,
+		.lang {
+			width: 32px;
+		}
+		.rail nav > * {
+			font-size: 13px;
+		}
+	}
 </style>

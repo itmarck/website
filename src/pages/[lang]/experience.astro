@@ -158,18 +158,18 @@ const x = t.experience
 		flex-direction: column-reverse;
 		justify-content: flex-end;
 		gap: 6px;
-		padding: 0 clamp(12px, 4cqi, 20px);
+		padding: 0 clamp(8px, 3cqi, 20px);
 	}
 	.facts div + div {
 		box-shadow: inset 1px 0 0 color-mix(in srgb, var(--text-on-color) 18%, transparent);
 	}
 	.facts dt {
-		font-size: 13px;
+		font-size: min(13px, 4.4cqi);
 		color: color-mix(in srgb, var(--text-on-color) 72%, transparent);
 	}
 	/* values scale with the tile so the three always fit on one line */
 	.facts dd {
-		font-size: min(var(--step-m), 5.6cqi);
+		font-size: min(var(--step-m), 6.4cqi);
 		white-space: nowrap;
 		font-weight: 700;
 		letter-spacing: -0.03em;
@@ -348,6 +348,12 @@ const x = t.experience
 		.job header {
 			flex-direction: column;
 			gap: 10px;
+		}
+	}
+	/* small phones: the stack group sits above its tools instead of beside them */
+	@media (max-width: 480px) {
+		.stack dl div {
+			grid-template-columns: 1fr;
 		}
 	}
 </style>

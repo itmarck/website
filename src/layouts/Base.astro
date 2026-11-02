@@ -98,6 +98,23 @@ const nav = [
 			<div class="page"><slot /></div>
 		</div>
 
+		<!-- Inline, so cards don't wait for the bundle to appear. Rerun: every navigation brings new cards. -->
+		<script is:inline data-astro-rerun>
+			{
+				const rise = new IntersectionObserver(
+					(entries) => {
+						for (const e of entries) {
+							if (!e.isIntersecting) continue
+							e.target.classList.add('is-in')
+							rise.unobserve(e.target)
+						}
+					},
+					{ threshold: 0.12 },
+				)
+				for (const el of document.querySelectorAll('.rise')) rise.observe(el)
+			}
+		</script>
+
 		<script>
 			import '../scripts/site.js'
 		</script>
@@ -135,7 +152,6 @@ const nav = [
 		padding: var(--rail-padding);
 		border-radius: 999px;
 		background: var(--rail-bg);
-		backdrop-filter: var(--rail-blur);
 		box-shadow: var(--rail-edge);
 	}
 	/* the mark and the language switch sit quietly, like the menu items: dimmed, full on hover */

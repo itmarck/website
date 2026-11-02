@@ -84,7 +84,6 @@
   --rail-writing: vertical-rl;
   --rail-turn: rotate(180deg);
   --rail-bg: transparent;
-  --rail-blur: none;
   --rail-edge: none;
   --app-bottom: var(--gap);
 
@@ -174,8 +173,7 @@
     --rail-nav-gap: clamp(0.375rem, 5vw - 0.625rem, 1rem);
     --rail-writing: horizontal-tb;
     --rail-turn: none;
-    --rail-bg: rgba(10, 12, 17, 0.72);
-    --rail-blur: blur(16px);
+    --rail-bg: rgba(10, 12, 17, 0.9);
     --rail-edge: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
     --app-bottom: 6rem;
 
@@ -363,19 +361,16 @@ a.tile:hover {
 .js .rise {
   opacity: 0;
   transform: translateY(2.5rem);
-  filter: blur(6px);
   /* staggered entrance; background-color is listed (with no delay) so linked tiles keep their hover fade */
   --rise-delay: calc(var(--i, 0) * 70ms);
   transition:
     opacity var(--dur-slow) var(--ease) var(--rise-delay),
     transform var(--dur-slow) var(--ease) var(--rise-delay),
-    filter var(--dur-slow) var(--ease) var(--rise-delay),
     background-color var(--dur-fast) var(--ease-hover);
 }
 .js .rise.is-in {
   opacity: 1;
   transform: none;
-  filter: none;
 }
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -387,7 +382,6 @@ a.tile:hover {
   .js .rise {
     opacity: 1;
     transform: none;
-    filter: none;
   }
 }
 

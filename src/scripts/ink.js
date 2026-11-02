@@ -1,6 +1,7 @@
 // Living ink: one WebGL field drawn behind the page (fixed canvas). No dependencies.
-// Cheap by design: renders below screen resolution (ink is soft anyway), lowers it when
-// frames run slow, pauses in hidden tabs and draws one still frame under reduced motion.
+// Cheap by design: renders below screen resolution (ink is soft anyway), at 30 fps unless something
+// is moving it, lowers its resolution when frames run slow, compiles without blocking the page,
+// pauses in hidden tabs and draws one still frame under reduced motion.
 // Night palette, same values as --ink-0…5 in theme.css
 const COLORS = ['#02040b', '#0b2a6e', '#0f7d88', '#2f6bff', '#f6a5d8', '#ffe14a']
 
@@ -79,6 +80,7 @@ col = sphere(col, u_sphere, frag, t);
 gl_FragColor = vec4(col, 1.0);
 }`
 
+const MAX_PIXELS = 700000 // past this, big screens only cost more: the ink looks the same
 const VERT = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}'
 const rgb = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255)
 
@@ -90,6 +92,7 @@ export function start(canvas) {
   const gl = canvas.getContext('webgl', {
     antialias: false,
     alpha: false,
+    depth: false,
     powerPreference: 'low-power',
   })
   if (!gl) return null
@@ -104,29 +107,10 @@ export function start(canvas) {
   gl.attachShader(prog, shader(gl.VERTEX_SHADER, VERT))
   gl.attachShader(prog, shader(gl.FRAGMENT_SHADER, FRAG))
   gl.linkProgram(prog)
-  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return null
-  gl.useProgram(prog)
-  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer())
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW)
-  gl.enableVertexAttribArray(0)
-  gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0)
+  // asking for the link status blocks until the compile ends, so where the browser allows it, wait first
+  const parallel = gl.getExtension('KHR_parallel_shader_compile')
   const U = {}
-  for (const n of [
-    'res',
-    'time',
-    'mouse',
-    'energy',
-    'drift',
-    'c0',
-    'c1',
-    'c2',
-    'c3',
-    'c4',
-    'c5',
-    'sphere',
-    'rot',
-  ])
-    U[n] = gl.getUniformLocation(prog, `u_${n}`)
+  let ready = false
 
   const m = { x: 0.6, y: 0.5, tx: 0.6, ty: 0.5, energy: 0 }
   // Visible canvas size in CSS px. Not innerWidth/innerHeight: those include the scrollbar
@@ -161,6 +145,7 @@ export function start(canvas) {
   function resize() {
     w = canvas.clientWidth || 1
     h = canvas.clientHeight || 1
+    scale = Math.min(scale, Math.sqrt(MAX_PIXELS / (w * h)))
     canvas.width = Math.round(w * scale)
     canvas.height = Math.round(h * scale)
     gl.viewport(0, 0, canvas.width, canvas.height)
@@ -173,9 +158,14 @@ export function start(canvas) {
   let raf = 0
   let last = 0
   let slow = 0
+  let lastY = 0
   function loop(t) {
     raf = requestAnimationFrame(loop)
-    slow = t - last > 26 ? slow + 1 : Math.max(0, slow - 1)
+    // full rate only while scrolling or stirring: the sphere has to stay on its ring
+    const y = scroller?.scrollTop || scrollY
+    if (t - last < 30 && y === lastY && m.energy < 0.05) return
+    lastY = y
+    slow = t - last > 45 ? slow + 1 : Math.max(0, slow - 1)
     last = t
     if (slow > 50 && scale > 0.28) {
       scale *= 0.8
@@ -187,32 +177,64 @@ export function start(canvas) {
   let held = false
   const play = () => {
     cancelAnimationFrame(raf)
-    if (!reduced && !held) raf = requestAnimationFrame(loop)
+    if (ready && !reduced && !held) raf = requestAnimationFrame(loop)
   }
 
-  addEventListener(
-    'pointermove',
-    (e) => {
-      const x = e.clientX / w
-      const y = 1 - e.clientY / h
-      m.energy += Math.min(0.25, Math.hypot(x - m.tx, y - m.ty) * 4)
-      m.tx = x
-      m.ty = y
-    },
-    { passive: true },
-  )
-  // follows the canvas itself, so a scrollbar or URL bar appearing also resizes the field
-  new ResizeObserver(resize).observe(canvas)
-  // capture: scroll doesn't bubble, and the page may scroll inside an element
-  if (reduced) document.addEventListener('scroll', () => draw(0), { passive: true, capture: true })
-  document.addEventListener('visibilitychange', () =>
-    document.hidden ? cancelAnimationFrame(raf) : play(),
-  )
+  function begin() {
+    if (parallel && !gl.getProgramParameter(prog, parallel.COMPLETION_STATUS_KHR)) {
+      requestAnimationFrame(begin)
+      return
+    }
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return
+    gl.useProgram(prog)
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer())
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW)
+    gl.enableVertexAttribArray(0)
+    gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0)
+    for (const n of [
+      'res',
+      'time',
+      'mouse',
+      'energy',
+      'drift',
+      'c0',
+      'c1',
+      'c2',
+      'c3',
+      'c4',
+      'c5',
+      'sphere',
+      'rot',
+    ])
+      U[n] = gl.getUniformLocation(prog, `u_${n}`)
+    COLORS.forEach((c, i) => {
+      gl.uniform3fv(U[`c${i}`], rgb(c))
+    })
+    ready = true
 
-  COLORS.forEach((c, i) => {
-    gl.uniform3fv(U[`c${i}`], rgb(c))
-  })
-  play()
+    addEventListener(
+      'pointermove',
+      (e) => {
+        const x = e.clientX / w
+        const y = 1 - e.clientY / h
+        m.energy += Math.min(0.25, Math.hypot(x - m.tx, y - m.ty) * 4)
+        m.tx = x
+        m.ty = y
+      },
+      { passive: true },
+    )
+    // follows the canvas itself, so a scrollbar or URL bar appearing also resizes the field
+    new ResizeObserver(resize).observe(canvas)
+    // capture: scroll doesn't bubble, and the page may scroll inside an element
+    if (reduced)
+      document.addEventListener('scroll', () => draw(0), { passive: true, capture: true })
+    document.addEventListener('visibilitychange', () =>
+      document.hidden ? cancelAnimationFrame(raf) : play(),
+    )
+    play()
+  }
+  begin()
+
   return {
     // stop drawing while something covers the page (e.g. a blurred modal), resume after
     pause: (paused) => {
@@ -224,7 +246,7 @@ export function start(canvas) {
     },
     setOrb: (el) => {
       orb = el
-      draw(performance.now())
+      if (ready) draw(performance.now())
     },
   }
 }

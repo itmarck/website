@@ -1,7 +1,10 @@
 // Page behavior. Runs once; astro:page-load re-wires each page after client-side navigation.
 import { start } from './ink.js'
 
-let ink
+// Starts after the first paint: creating a WebGL context blocks the page, and text shouldn't wait for it.
+const ink = new Promise((ready) =>
+  requestAnimationFrame(() => setTimeout(() => ready(start(document.getElementById('ink'))))),
+)
 
 // The about card is cut (mask) around the orb plus its 8px gap, so the shader's sphere shows through.
 function placeOrb() {
@@ -22,12 +25,23 @@ const orbSize = new ResizeObserver(placeOrb)
 // again. Without JS or under reduced motion the log simply shows its entries.
 const wait = (ms) => new Promise((r) => setTimeout(r, ms))
 async function sync(field, log) {
+  // plays only while its cards are on screen and the tab is open: every letter costs a layout
+  const seen = new Set()
+  const watch = new IntersectionObserver((entries) => {
+    for (const e of entries) e.isIntersecting ? seen.add(e.target) : seen.delete(e.target)
+  })
+  watch.observe(field.parentElement)
+  watch.observe(log)
+  const onScreen = async () => {
+    while (log.isConnected && (!seen.size || document.hidden)) await wait(400)
+  }
   // the first entry is already there, so the log never starts empty
   const [first, ...rows] = log.children
   first.classList.add('in', 'labeled')
   log.classList.add('live')
   while (log.isConnected) {
     for (const row of rows) {
+      await onScreen()
       const text = row.firstElementChild.textContent
       await wait(900)
       for (let i = 1; i <= text.length; i++) {
@@ -47,37 +61,24 @@ async function sync(field, log) {
 }
 
 document.addEventListener('astro:page-load', () => {
-  ink ??= start(document.getElementById('ink'))
   const app = document.querySelector('.app')
-  ink?.setScroller(app)
   // keyboard scrolling (arrows, space, page keys) follows focus; the page scrolls inside .app now
   if (document.activeElement === document.body) app.focus({ preventScroll: true })
-  ink?.setOrb(document.querySelector('.orb'))
   orbSize.disconnect()
   const orb = document.querySelector('.orb')
+  ink.then((i) => {
+    i?.setScroller(app)
+    i?.setOrb(orb)
+  })
   // the slot too: the orb can re-center in a taller slot without changing its own size
   if (orb) for (const el of [orb, orb.parentElement]) orbSize.observe(el)
   document
     .getElementById('contact')
-    ?.addEventListener('toggle', (e) => ink?.pause(e.newState === 'open'))
+    ?.addEventListener('toggle', (e) => ink.then((i) => i?.pause(e.newState === 'open')))
 
   const field = document.querySelector('[data-typed]')
   const log = document.querySelector('[data-log]')
   if (field && log && !matchMedia('(prefers-reduced-motion: reduce)').matches) sync(field, log)
-
-  const rise = new IntersectionObserver(
-    (entries) => {
-      for (const e of entries) {
-        if (!e.isIntersecting) continue
-        e.target.classList.add('is-in')
-        rise.unobserve(e.target)
-      }
-    },
-    { threshold: 0.12 },
-  )
-  document.querySelectorAll('.rise').forEach((el) => {
-    rise.observe(el)
-  })
 
   document.querySelectorAll('[data-copy]').forEach((b) => {
     b.addEventListener('click', async () => {

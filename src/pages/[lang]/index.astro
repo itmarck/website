@@ -37,7 +37,7 @@ const profile = {
 				<div class="orb-slot"><div class="orb" aria-hidden="true"></div></div>
 				<h1><span>{t.about.hello}</span> Marcelo Velásquez</h1>
 				<p class="about__role">
-					<span class="badge" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><path id="ring" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"></path></defs><circle cx="60" cy="60" r="58" fill="var(--surface)"></circle><text font-size="11" font-weight="500" letter-spacing="2" fill="currentColor"><textPath href="#ring">{t.about.badge}</textPath></text></svg></span>
+					<span class="badge" aria-hidden="true"><span class="badge__ring"><svg viewBox="0 0 120 120"><defs><path id="ring" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"></path></defs><circle cx="60" cy="60" r="58" fill="var(--surface)"></circle><text font-size="11" font-weight="500" letter-spacing="2" fill="currentColor"><textPath href="#ring">{t.about.badge}</textPath></text></svg></span></span>
 					{t.about.role}
 				</p>
 			</div>
@@ -214,10 +214,16 @@ const profile = {
 		margin: 0 0 0.5rem 0.75rem;
 		shape-outside: circle(50%);
 	}
-	.badge svg {
-		width: 100%;
+	/* spins a wrapper: animating the <svg> itself forces a layout on every frame */
+	.badge__ring {
+		display: block;
 		height: 100%;
 		animation: spin 22s linear infinite;
+	}
+	.badge svg {
+		display: block;
+		width: 100%;
+		height: 100%;
 	}
 	.badge::after {
 		content: '';

@@ -1,0 +1,39 @@
+---
+import type { Copy } from '../i18n'
+
+const { t } = Astro.props as { t: Copy }
+---
+
+<footer>
+	<div class="wordmark" aria-hidden="true">itmarck</div>
+	<div class="legal"><span>© {new Date().getFullYear()} Marcelo Velásquez · {t.place}</span><a href="/privacy/">Privacy</a></div>
+</footer>
+
+<style>
+	footer {
+		margin-top: 6rem;
+		padding: 0 var(--pad) 1.25rem;
+		display: grid;
+		gap: 1.25rem;
+	}
+	.wordmark {
+		font-size: clamp(2.5rem, 1.5rem + 4vw, 5rem);
+		font-weight: 800;
+		letter-spacing: -0.065em;
+		line-height: 0.8;
+	}
+	.legal {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+		flex-wrap: wrap;
+		font-size: 0.8125rem;
+		color: var(--text-soft);
+	}
+	.legal a {
+		transition: color var(--dur-fast) var(--ease-hover);
+	}
+	.legal a:hover {
+		color: var(--text);
+	}
+</style>

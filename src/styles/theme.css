@@ -1,0 +1,412 @@
+/* Design tokens. Every color, size and curve on the site comes from here (see README). */
+:root {
+  /* Ink: the colors CSS needs from the Night palette (the full palette is COLORS in ink.js) */
+  --ink-0: #02040b; /* deepest ground */
+  --ink-1: #0b2a6e; /* deep blue */
+  --ink-5: #ffe14a; /* specks, focus */
+
+  /* Surfaces */
+  --surface: #0a0c11; /* tiles */
+  --surface-raised: #2b2e35; /* neutral tile, e.g. client */
+  --surface-glass: rgba(255, 255, 255, 0.08); /* ghost buttons */
+  --edge: rgba(255, 255, 255, 0.16); /* window outline over ink */
+  --hairline: rgba(255, 255, 255, 0.1);
+
+  /* Text */
+  --text: #f3f4f6;
+  --text-soft: #a3a9b6;
+  --text-on-color: #07080b; /* on pastel and ink-colored tiles */
+
+  /* Colored tiles */
+  --tile-a: #1db2cf; /* aqua */
+  --tile-b: #f7b7df; /* pink */
+  --tile-c: #e8ff3a; /* lime */
+  --tile-opacity: 74%; /* colored tiles over the ink let it show through */
+
+  /* Type */
+  --font: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, monospace;
+  --step-xs: 0.875rem;
+  --step-s: 1rem;
+  --step-m: clamp(1.25rem, 1rem + 0.8vw, 1.75rem);
+  --step-l: clamp(2.5rem, 1.6rem + 3.2vw, 4.75rem);
+  --step-xl: clamp(3.5rem, 1rem + 8.6vw, 10rem);
+  --tracking-tight: -0.05em;
+  --tracking-display: -0.065em;
+
+  /* Shape and space */
+  --radius: 1.75rem;
+  --radius-sm: 1rem;
+  --gap: 0.75rem;
+  --pad: 1.75rem;
+  --rail: 4.5rem;
+
+  /* page width, menu included; --side is the margin left over on each side */
+  --max: 96rem;
+  --side: max(0px, (100vw - var(--max)) / 2);
+
+  /* Motion */
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-hover: cubic-bezier(
+    0.4,
+    0,
+    0.2,
+    1
+  ); /* gentle in and out, so hovers fade instead of snapping */
+  --dur-fast: 0.45s;
+  --dur: 0.6s;
+  --dur-slow: 0.9s;
+
+  /* Layout: wide by default; the two breakpoints below only change these variables (see README) */
+
+  /* page heading */
+  --head-dir: row;
+  --head-align: flex-end;
+  --head-text: right;
+  --head-top: 4rem;
+  --head-x: var(--pad);
+
+  /* menu: a column on the left, or a bar at the bottom */
+  --rail-inset: 0 auto 0 var(--side);
+  --rail-width: var(--rail);
+  --rail-height: auto;
+  --rail-shift: none;
+  --rail-dir: column;
+  --rail-padding: 1.375rem 0;
+  --rail-nav-gap: 2.125rem;
+  --rail-writing: vertical-rl;
+  --rail-turn: rotate(180deg);
+  --rail-bg: transparent;
+  --rail-blur: none;
+  --rail-edge: none;
+  --app-bottom: var(--gap);
+
+  /* home: four tracks (about, then the bento) */
+  --home-cols: minmax(0, 5fr) minmax(0, 2fr) minmax(0, 2fr) minmax(0, 3fr);
+  --home-rows: minmax(min-content, 1fr) minmax(min-content, 1.3fr) minmax(min-content, 0.45fr)
+    minmax(min-content, 0.65fr);
+  /* biome-ignore format: aligned grid map */
+  --home-areas:
+    'about title    title    title'
+    'about building building stats'
+    'about path     stack    lime'
+    'about path     reach    lime';
+  --hero-height: max(43.75rem, 100svh - var(--gap) * 2);
+
+  /* projects: Wingman and Flutter Tree beside Minima, three small cards below */
+  --work-cols: minmax(0, 4fr) minmax(0, 3fr) minmax(0, 5fr);
+  --work-rows: auto auto minmax(18.75rem, auto);
+  /* biome-ignore format: aligned grid map */
+  --work-areas:
+    'wingman wingman minima'
+    'tree    tree    minima'
+    'lapse   disney  lab';
+  --more-cols: 8.75rem 1fr auto;
+  --more-areas: 'name text meta';
+
+  /* experience: profile beside the timeline */
+  --cv-cols: minmax(min(27.5rem, 45%), 5fr) minmax(0, 7fr);
+  --profile-position: sticky;
+  --profile-order: 0;
+}
+
+@media (width < 64em) {
+  :root {
+    --home-cols: repeat(6, minmax(0, 1fr));
+    --home-rows: auto auto minmax(17rem, auto) auto auto;
+    /* biome-ignore format: aligned grid map */
+    --home-areas:
+      'about about about title    title    title'
+      'about about about building building building'
+      'about about about stats    stats    stats'
+      'path  path  stack stack    lime     lime'
+      'path  path  reach reach    lime     lime';
+    --hero-height: auto;
+
+    --head-dir: column;
+    --head-align: flex-start;
+    --head-text: left;
+
+    --cv-cols: minmax(0, 1fr);
+    --profile-position: static;
+    --profile-order: 2;
+
+    /* Disney moves down so Wingman and Minima keep two columns */
+    --work-rows: auto auto minmax(16rem, auto) minmax(12rem, auto);
+    /* biome-ignore format: aligned grid map */
+    --work-areas:
+      'wingman wingman minima'
+      'tree    tree    minima'
+      'lapse   lapse   disney'
+      'lab     lab     lab';
+  }
+}
+
+@media (width < 48em) {
+  :root {
+    --radius: 1.5rem;
+    --gap: 0.625rem;
+    --pad: 1.25rem;
+    --rail: 0px;
+
+    --head-dir: column;
+    --head-align: flex-start;
+    --head-text: left;
+    --head-top: 3.5rem;
+    --head-x: 0.5rem;
+
+    --rail-inset: auto auto 0.875rem 50%;
+    --rail-width: auto;
+    --rail-height: 3.5rem;
+    --rail-shift: translateX(-50%);
+    --rail-dir: row;
+    --rail-padding: 0 0.5rem;
+    --rail-nav-gap: clamp(0.625rem, 3.5vw, 1rem);
+    --rail-writing: horizontal-tb;
+    --rail-turn: none;
+    --rail-bg: rgba(10, 12, 17, 0.72);
+    --rail-blur: blur(16px);
+    --rail-edge: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+    --app-bottom: 6rem;
+
+    --home-cols: minmax(0, 1fr);
+    --home-rows: minmax(88svh, auto) auto auto minmax(18.75rem, auto) minmax(11.25rem, auto) auto
+      auto minmax(11.25rem, auto);
+    --home-areas: 'about' 'title' 'building' 'stats' 'path' 'stack' 'reach' 'lime';
+
+    --work-cols: minmax(0, 1fr);
+    --work-rows: auto auto auto minmax(14rem, auto) minmax(14rem, auto) minmax(14rem, auto);
+    --work-areas: 'minima' 'wingman' 'tree' 'lapse' 'disney' 'lab';
+    --more-cols: 1fr auto;
+    --more-areas: 'name meta' 'text text';
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html {
+  scroll-behavior: smooth;
+  background: var(--ink-0);
+}
+
+/* Scrollbar: a translucent pill with a faint light edge, like the window tiles, floating on the ink
+   (on pointer devices the page scrolls inside .app, so the ink runs behind the gutter, see Base.astro).
+   Chromium/Safari use the pseudo-elements; Firefox gets the standard properties. */
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14) padding-box;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.26);
+}
+@supports not selector(::-webkit-scrollbar) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.24) transparent;
+  }
+}
+body {
+  font-family: var(--font);
+  font-size: var(--step-s);
+  line-height: 1.5;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+:focus-visible {
+  outline: 2px solid var(--ink-5);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+::selection {
+  background: var(--ink-5);
+  color: var(--text-on-color);
+}
+
+/* Shared components */
+.tile {
+  position: relative;
+  background: var(--surface);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+.window {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px var(--edge);
+}
+
+/* Hovers never resize or move an element: they change color, or rotate an arrow in place. */
+
+/* "Go" cue for tiles that are links: a ringed arrow that fills and turns when the tile is hovered */
+.go {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  white-space: nowrap;
+  font-size: var(--step-xs);
+  font-weight: 500;
+}
+.go i {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-style: normal;
+  box-shadow: inset 0 0 0 1.5px currentColor;
+}
+/* Tiles that are links: on hover the surface turns slightly translucent and the ink shows through. */
+a.tile {
+  transition: background-color var(--dur-fast) var(--ease-hover);
+}
+a.tile:hover {
+  background-color: color-mix(in srgb, var(--surface) 72%, transparent);
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  height: 3.25rem;
+  padding: 0 0.375rem 0 1.375rem;
+  border-radius: 999px;
+  background: var(--text);
+  color: var(--text-on-color);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: transform var(--dur) var(--ease);
+}
+.pill i {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--text-on-color);
+  color: var(--text);
+  display: grid;
+  place-items: center;
+  font-style: normal;
+  transition: transform var(--dur) var(--ease-hover);
+}
+.pill:hover i {
+  transform: rotate(-45deg);
+}
+.pill:active {
+  transform: scale(0.98);
+}
+.pill--ghost {
+  background: var(--surface-glass);
+  color: var(--text);
+}
+.pill--ghost i {
+  background: var(--text);
+  color: var(--text-on-color);
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  height: 2.25rem;
+  padding: 0 0.875rem;
+  border-radius: 999px;
+  background: rgba(2, 4, 11, 0.35);
+  box-shadow: inset 0 0 0 1.5px currentColor;
+  font-size: var(--step-xs);
+  font-weight: 500;
+  white-space: nowrap;
+  text-shadow: none;
+  transition:
+    background var(--dur-fast) var(--ease-hover),
+    color var(--dur-fast) var(--ease-hover);
+}
+.chip:hover {
+  background: var(--text);
+  color: var(--text-on-color);
+  box-shadow: none;
+}
+
+/* Entrance: content rises once as it enters (classes added by the page script) */
+.js .rise {
+  opacity: 0;
+  transform: translateY(2.5rem);
+  filter: blur(6px);
+  /* staggered entrance; background-color is listed (with no delay) so linked tiles keep their hover fade */
+  --rise-delay: calc(var(--i, 0) * 70ms);
+  transition:
+    opacity var(--dur-slow) var(--ease) var(--rise-delay),
+    transform var(--dur-slow) var(--ease) var(--rise-delay),
+    filter var(--dur-slow) var(--ease) var(--rise-delay),
+    background-color var(--dur-fast) var(--ease-hover);
+}
+.js .rise.is-in {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+  .js .rise {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+/* Big figure (stats) */
+.num {
+  font-size: var(--step-l);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  line-height: 0.9;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Page heading: giant word plus a short intro */
+.head {
+  display: flex;
+  flex-direction: var(--head-dir);
+  justify-content: space-between;
+  align-items: var(--head-align);
+  gap: 1.5rem;
+  padding: var(--head-top) var(--head-x) var(--pad);
+}
+.head h1 {
+  font-size: var(--step-xl);
+  font-weight: 800;
+  letter-spacing: var(--tracking-display);
+  line-height: 0.8;
+}
+.head p {
+  max-width: 30ch;
+  color: var(--text-soft);
+  text-align: var(--head-text);
+}

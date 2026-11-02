@@ -1,7 +1,14 @@
 # build output
 dist/
-# generated types
+
+# generated
 .astro/
+
+# skills
+.agents
+.claude
+.codex
+skills-lock.json
 
 # dependencies
 node_modules/

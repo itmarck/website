@@ -1,7 +1,12 @@
+// Cloudflare Worker that serves the built site (dist/) as static assets, no server code.
+// Deploy: Workers Builds connected to the GitHub repo, production branch main,
+// build command `npm run build`, deploy command `npx wrangler deploy`.
 {
   "name": "website",
-  "compatibility_date": "2025-06-24",
+  "compatibility_date": "2026-10-01",
   "assets": {
-    "directory": "./dist"
+    "directory": "./dist",
+    // unknown paths get dist/404.html with a real 404 status
+    "not_found_handling": "404-page"
   }
 }

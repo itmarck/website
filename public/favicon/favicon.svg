@@ -1,0 +1,7 @@
+<!-- itmarck icon: the mark in near-black filling a lime tile (the site's lime, the card radius) -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="15" fill="#e8ff3a"/>
+  <g transform="translate(3 3) scale(.90625)">
+    <g fill="#07080b" stroke="#07080b" stroke-width="4" stroke-linejoin="round"><path d="M31.44 12.27 L15.33 12.27 L3.83 32 L15.33 51.73 L22.24 51.73 Z"/><path d="M41.76 14.67 L48.67 14.67 L60.17 34.4 L48.67 54.13 L32.56 54.13 Z"/></g>
+  </g>
+</svg>

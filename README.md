@@ -18,6 +18,8 @@ Personal site of Marcelo Velásquez, software developer in Peru: projects, exper
 - `src/scripts/ink.js` — the WebGL ink background and the home's sphere. `site.js` wires each page.
 - `src/styles/theme.css` — design tokens and shared components.
 - `public/brand/mark.svg`, `public/favicon/favicon.svg` — the logo. `src/pages/privacy.astro` — privacy policy for the website, English only.
+- `public/_headers` — cache and security headers. `public/robots.txt` — points to the sitemap.
+- Metadata lives in `Base.astro` (per-page `title` and `description` props). JSON-LD for Google is on the home pages only: `WebSite` and `ProfilePage`.
 
 ## Design
 

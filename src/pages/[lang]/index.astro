@@ -1,5 +1,5 @@
 ---
-import { copy, email, github, type Lang, linkedin } from '../../i18n'
+import { copy, email, github, type Lang, linkedin, website } from '../../i18n'
 import Base from '../../layouts/Base.astro'
 
 export const getStaticPaths = () => Object.keys(copy).map((lang) => ({ params: { lang } }))
@@ -9,9 +9,24 @@ const building = [
   { name: 'Minima', meta: t.projects.minima.meta },
   { name: 'Wingman', meta: t.projects.wingman.meta },
 ]
+const profile = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  mainEntity: {
+    '@type': 'Person',
+    name: website.name,
+    alternateName: website.alternateName,
+    url: website.url,
+    jobTitle: t.jobTitle,
+    description: t.description,
+    sameAs: [github, linkedin],
+  },
+}
 ---
 
 <Base t={t}>
+	<script slot="head" is:inline type="application/ld+json" set:html={JSON.stringify(website)} />
+	<script slot="head" is:inline type="application/ld+json" set:html={JSON.stringify(profile)} />
 	<main class="hero">
 		<article class="about rise">
 			<div class="about__tab">
@@ -20,7 +35,7 @@ const building = [
 			</div>
 			<div class="about__body">
 				<div class="orb-slot"><div class="orb" aria-hidden="true"></div></div>
-				<h1><span>{t.about.hello}</span>Marcelo Velásquez</h1>
+				<h1><span>{t.about.hello}</span> Marcelo Velásquez</h1>
 				<p class="about__role">
 					<span class="badge" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><path id="ring" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"></path></defs><circle cx="60" cy="60" r="58" fill="var(--surface)"></circle><text font-size="11" font-weight="500" letter-spacing="2" fill="currentColor"><textPath href="#ring">{t.about.badge}</textPath></text></svg></span>
 					{t.about.role}

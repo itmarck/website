@@ -1,16 +1,21 @@
 ---
 import { ClientRouter } from 'astro:transitions'
 import '../styles/theme.css'
-import { type Copy, email, github, linkedin } from '../i18n'
+import { type Copy, email, github, linkedin, website } from '../i18n'
 
 interface Props {
   t: Copy
   path?: '' | 'projects/' | 'experience/'
   title?: string
+  description?: string
 }
-const { t, path = '', title } = Astro.props
+const { t, path = '', title, description = t.description } = Astro.props
 const site = Astro.site?.href ?? '/'
 const other = t.switchTo.href.slice(1, 3)
+const pageTitle = title ? `${title} — ${t.title}` : t.title
+const canonical = Astro.url.pathname.startsWith('/404')
+  ? undefined
+  : new URL(Astro.url.pathname, site).href
 const nav = [
   { href: `/${t.lang}/projects/`, label: t.nav.projects, current: path === 'projects/' },
   { href: `/${t.lang}/experience/`, label: t.nav.experience, current: path === 'experience/' },
@@ -22,16 +27,27 @@ const nav = [
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>{title ? `${title} — ${t.title}` : t.title}</title>
-		<meta name="description" content={t.description} />
+		<title>{pageTitle}</title>
+		<meta name="description" content={description} />
 		<meta name="theme-color" content="#02040b" />
 		<!-- the itmarck mark: a hexagon split into two pieces along a slash, read as </> (see README) -->
 		<link rel="icon" href="/favicon/favicon.svg" type="image/svg+xml" />
-		<link rel="alternate" hreflang="en" href={`${site}en/${path}`} />
-		<link rel="alternate" hreflang="es" href={`${site}es/${path}`} />
-		<link rel="alternate" hreflang="x-default" href={site} />
-		<meta property="og:title" content={t.title} />
-		<meta property="og:description" content={t.description} />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		{canonical && <link rel="canonical" href={canonical} />}
+		{
+			Astro.params.lang && (
+				<Fragment>
+					<link rel="alternate" hreflang="en" href={`${site}en/${path}`} />
+					<link rel="alternate" hreflang="es" href={`${site}es/${path}`} />
+					{!path && <link rel="alternate" hreflang="x-default" href={site} />}
+				</Fragment>
+			)
+		}
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content={website.name} />
+		{canonical && <meta property="og:url" content={canonical} />}
+		<meta property="og:title" content={pageTitle} />
+		<meta property="og:description" content={description} />
 		<meta property="og:image" content={site + 'social-card.png'} />
 		<meta property="og:locale" content={t.locale.replace('-', '_')} />
 		<meta name="twitter:card" content="summary_large_image" />
@@ -40,6 +56,7 @@ const nav = [
 		<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
 		<script is:inline>document.documentElement.classList.add('js')</script>
 		<ClientRouter />
+		<slot name="head" />
 	</head>
 	<body>
 		<canvas id="ink" aria-hidden="true" transition:persist></canvas>

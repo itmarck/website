@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://itmarck.com/sitemap-index.xml

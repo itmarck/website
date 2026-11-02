@@ -1,0 +1,72 @@
+---
+import { copy, email } from '../i18n'
+import Base from '../layouts/Base.astro'
+---
+
+<Base t={copy.en} title="Privacy">
+	<main class="tile privacy rise">
+		<h1>Privacy</h1>
+		<p class="updated">Last updated: November 1, 2026</p>
+		<p>This is my personal website. It has no accounts, forms, cookies, analytics or ads, and I don’t collect data about you.</p>
+
+		<h2>What the site uses</h2>
+		<ul>
+			<li><b>Language.</b> If you switch language, your choice is saved in your browser’s local storage. It never leaves your device, and clearing your browser’s site data removes it.</li>
+			<li><b>Fonts.</b> The Geist typeface loads from Google Fonts, so Google receives your IP address when you open a page. See <a href="https://policies.google.com/privacy">Google’s privacy policy</a>.</li>
+			<li><b>Hosting.</b> Cloudflare serves the site and may process technical data, like your IP address, to deliver and protect it. See <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare’s privacy policy</a>.</li>
+		</ul>
+
+		<h2>If you email me</h2>
+		<p>I receive your address and whatever you write. I only use them to reply, and you can ask me to delete them at any time.</p>
+
+		<h2>Links to other sites</h2>
+		<p>Links to GitHub, LinkedIn and other sites take you outside this one, where their own privacy policies apply.</p>
+
+		<h2>Changes</h2>
+		<p>If anything changes, I’ll update this page and the date above.</p>
+
+		<h2>Contact</h2>
+		<p>Questions? Write to <a href={`mailto:${email}`}>{email}</a>.</p>
+	</main>
+</Base>
+
+<style>
+	.privacy {
+		max-width: 44rem;
+		background-color: color-mix(in srgb, var(--surface) 86%, transparent);
+		padding: clamp(1.75rem, 5vw, 3rem) clamp(1.5rem, 5vw, 3rem);
+		color: var(--text-soft);
+		line-height: 1.6;
+	}
+	h1 {
+		font-size: var(--step-l);
+		font-weight: 700;
+		letter-spacing: var(--tracking-tight);
+		line-height: 1;
+		color: var(--text);
+	}
+	.updated {
+		margin: 0.75rem 0 2rem;
+		font-size: var(--step-xs);
+	}
+	h2 {
+		margin: 2rem 0 0.5rem;
+		font-size: var(--step-s);
+		font-weight: 700;
+		color: var(--text);
+	}
+	ul {
+		display: grid;
+		gap: 0.75rem;
+		padding-left: 1.25rem;
+	}
+	b {
+		font-weight: 500;
+		color: var(--text);
+	}
+	a {
+		color: var(--text);
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+</style>

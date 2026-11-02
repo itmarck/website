@@ -17,7 +17,7 @@ Personal site of Marcelo Velásquez, software developer in Peru: projects, exper
 - `src/layouts/Base.astro` — head, menu, contact popover and page shell.
 - `src/scripts/ink.js` — the WebGL ink background and the home's sphere. `site.js` wires each page.
 - `src/styles/theme.css` — design tokens and shared components.
-- `public/brand/mark.svg`, `public/favicon/favicon.svg` — the logo. `public/privacy.html` — privacy policy for the site and every app.
+- `public/brand/mark.svg`, `public/favicon/favicon.svg` — the logo. `src/pages/privacy.astro` — privacy policy for the website, English only.
 
 ## Design
 

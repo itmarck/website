@@ -9,7 +9,7 @@ const t = copy[Astro.params.lang as Lang]
 const p = t.projects
 ---
 
-<Base t={t} path="projects/" title={p.title}>
+<Base t={t} path="projects/" title={p.title} description={p.description}>
 	<div class="head rise"><h1>{p.title}</h1><p>{p.intro}</p></div>
 	<main class="work">
 		<!-- Minima: the card is the phone; below the text, the launcher's one field. What gets typed there is sent to Wingman (site.js). -->

@@ -1,14 +1,20 @@
 ---
 // Static hosting can't read Accept-Language, so the browser picks: saved choice, then its own language.
+import { copy, website } from '../i18n'
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title>Marcelo Velásquez</title>
-		<link rel="alternate" hreflang="en" href="/en/" />
-		<link rel="alternate" hreflang="es" href="/es/" />
+		<title>{copy.en.title}</title>
+		<meta name="description" content={copy.en.description} />
+		<meta property="og:site_name" content={website.name} />
+		<link rel="canonical" href={website.url} />
+		<link rel="alternate" hreflang="en" href={`${website.url}en/`} />
+		<link rel="alternate" hreflang="es" href={`${website.url}es/`} />
+		<link rel="alternate" hreflang="x-default" href={website.url} />
+		<script is:inline type="application/ld+json" set:html={JSON.stringify(website)} />
 		<script is:inline>
 			var saved = null
 			try { saved = localStorage.getItem('lang') } catch (e) {}

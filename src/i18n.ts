@@ -2,11 +2,20 @@
 export const email = 'contact@itmarck.com'
 export const github = 'https://github.com/itmarck'
 export const linkedin = 'https://www.linkedin.com/in/marceloovelasquez'
+// Google reads this for the name it shows above results, so it must be on the home pages
+export const website = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Marcelo Velásquez',
+  alternateName: 'itmarck',
+  url: 'https://itmarck.com/',
+}
 
 const en = {
   lang: 'en',
   locale: 'en-US',
   title: 'Marcelo Velásquez — Software developer',
+  jobTitle: 'Software developer',
   description:
     'Marcelo Velásquez, a software developer from Peru. Projects, work and how to reach me.',
   nav: { projects: 'Projects', experience: 'Experience', contact: 'Contact', home: 'Home' },
@@ -37,6 +46,8 @@ const en = {
   networks: { n: '5', label: 'TV networks running my code' },
   projects: {
     title: 'Projects',
+    description:
+      'Minima, Wingman, Flutter Tree and other things I’ve built, plus my work for Disney.',
     intro: 'Things I design, build and host myself, plus my day job for Disney.',
     minima: {
       status: 'In development · since 2025',
@@ -84,6 +95,8 @@ const en = {
   },
   experience: {
     title: 'Experience',
+    description:
+      'Six years of frontend, backend and everything in between, from Globant and Disney to my own servers.',
     intro: 'Six years of frontend, backend and everything in between.',
     summary:
       'Software developer from Peru. I started on the frontend, worked my way down to APIs, databases and networks, and these days I run my own servers.',
@@ -147,6 +160,7 @@ const es: Copy = {
   lang: 'es',
   locale: 'es-PE',
   title: 'Marcelo Velásquez — Desarrollador de software',
+  jobTitle: 'Desarrollador de software',
   description:
     'Marcelo Velásquez, desarrollador de software en Perú. Proyectos, experiencia y cómo contactarme.',
   nav: { projects: 'Proyectos', experience: 'Experiencia', contact: 'Contacto', home: 'Inicio' },
@@ -177,6 +191,8 @@ const es: Copy = {
   networks: { n: '5', label: 'canales de TV que usan mi código' },
   projects: {
     title: 'Proyectos',
+    description:
+      'Minima, Wingman, Flutter Tree y otras cosas que he hecho, además de mi trabajo para Disney.',
     intro: 'Cosas que diseño, programo y hospedo yo mismo, y mi trabajo del día a día para Disney.',
     minima: {
       status: 'En desarrollo · desde 2025',
@@ -228,6 +244,8 @@ const es: Copy = {
   },
   experience: {
     title: 'Experiencia',
+    description:
+      'Seis años entre frontend, backend y todo lo que hay en medio, de Globant y Disney a mis propios servidores.',
     intro: 'Seis años entre frontend, backend y todo lo que hay en medio.',
     summary:
       'Desarrollador de software en Perú. Empecé en el frontend, fui bajando hacia APIs, bases de datos y redes, y hoy mantengo mis propios servidores.',

@@ -8,7 +8,13 @@ export const website = {
   '@type': 'WebSite',
   name: 'Marcelo Velásquez',
   alternateName: 'itmarck',
-  url: 'https://itmarck.com/',
+  url: new URL('/', import.meta.env.SITE).href,
+}
+export const socialCard = {
+  // link previews only accept absolute URLs; the domain comes from `site` in astro.config.mjs
+  url: new URL('/social-card.jpg', import.meta.env.SITE).href,
+  width: '1200',
+  height: '630',
 }
 
 const en = {

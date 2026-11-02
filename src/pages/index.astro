@@ -1,6 +1,6 @@
 ---
 // Static hosting can't read Accept-Language, so the browser picks: saved choice, then its own language.
-import { copy, website } from '../i18n'
+import { copy, socialCard, website } from '../i18n'
 ---
 
 <!doctype html>
@@ -9,7 +9,16 @@ import { copy, website } from '../i18n'
 		<meta charset="utf-8" />
 		<title>{copy.en.title}</title>
 		<meta name="description" content={copy.en.description} />
+		<!-- link previews don't run JS, so they stop here instead of following the redirect -->
+		<meta property="og:type" content="website" />
 		<meta property="og:site_name" content={website.name} />
+		<meta property="og:url" content={website.url} />
+		<meta property="og:title" content={copy.en.title} />
+		<meta property="og:description" content={copy.en.description} />
+		<meta property="og:image" content={socialCard.url} />
+		<meta property="og:image:width" content={socialCard.width} />
+		<meta property="og:image:height" content={socialCard.height} />
+		<meta name="twitter:card" content="summary_large_image" />
 		<link rel="canonical" href={website.url} />
 		<link rel="alternate" hreflang="en" href={`${website.url}en/`} />
 		<link rel="alternate" hreflang="es" href={`${website.url}es/`} />

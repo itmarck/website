@@ -108,6 +108,7 @@
   --cv-cols: minmax(min(27.5rem, 45%), 5fr) minmax(0, 7fr);
   --profile-position: sticky;
   --profile-order: 0;
+  --profile-margin: 0;
 }
 
 @media (width < 64em) {
@@ -130,6 +131,8 @@
     --cv-cols: minmax(0, 1fr);
     --profile-position: static;
     --profile-order: 2;
+    /* below the timeline: lines up with the job cards (the timeline's padding) */
+    --profile-margin: 1.5rem 0 0 2rem;
 
     /* Disney moves down so Wingman and Minima keep two columns */
     --work-rows: auto auto minmax(16rem, auto) minmax(12rem, auto);
@@ -160,8 +163,8 @@
     --rail-height: 3.5rem;
     --rail-shift: translateX(-50%);
     --rail-dir: row;
-    --rail-padding: 0 0.5rem;
-    --rail-nav-gap: clamp(0.625rem, 3.5vw, 1rem);
+    --rail-padding: 0 0.375rem;
+    --rail-nav-gap: clamp(0.375rem, 5vw - 0.625rem, 1rem);
     --rail-writing: horizontal-tb;
     --rail-turn: none;
     --rail-bg: rgba(10, 12, 17, 0.72);

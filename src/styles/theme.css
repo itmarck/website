@@ -1,4 +1,11 @@
 /* Design tokens. Every color, size and curve on the site comes from here (see README). */
+@font-face {
+  font-family: 'Geist';
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../assets/fonts/geist.woff2') format('woff2');
+}
+
 :root {
   /* Ink: the colors CSS needs from the Night palette (the full palette is COLORS in ink.js) */
   --ink-0: #02040b; /* deepest ground */

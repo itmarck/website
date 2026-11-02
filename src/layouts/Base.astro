@@ -1,5 +1,6 @@
 ---
 import { ClientRouter } from 'astro:transitions'
+import geist from '../assets/fonts/geist.woff2?url'
 import '../styles/theme.css'
 import { type Copy, email, github, linkedin, socialCard, website } from '../i18n'
 
@@ -33,7 +34,7 @@ const nav = [
 		<!-- the itmarck mark: a hexagon split into two pieces along a slash, read as </> (see README) -->
 		<link rel="icon" href="/favicon/favicon.svg" type="image/svg+xml" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-		{canonical && <link rel="canonical" href={canonical} />}
+		{canonical ? <link rel="canonical" href={canonical} /> : <meta name="robots" content="noindex" />}
 		{
 			Astro.params.lang && (
 				<Fragment>
@@ -53,9 +54,7 @@ const nav = [
 		<meta property="og:image:height" content={socialCard.height} />
 		<meta property="og:locale" content={t.locale.replace('-', '_')} />
 		<meta name="twitter:card" content="summary_large_image" />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
+		<link rel="preload" href={geist} as="font" type="font/woff2" crossorigin />
 		<script is:inline>document.documentElement.classList.add('js')</script>
 		<ClientRouter />
 		<slot name="head" />

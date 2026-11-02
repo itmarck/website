@@ -27,7 +27,7 @@ Dark bento over a field of live ink: solid tiles float on a WebGL canvas that sh
 
 - **Tokens only.** Colors, type steps, radii, spacing and motion come from `theme.css`; the full ink palette is `COLORS` in `ink.js`.
 - **Color.** Ground `--ink-0`; tiles `--surface`; text `--text` / `--text-soft`. Accent tiles aqua, pink and lime (`--tile-a/b/c`) at `--tile-opacity` so the ink shows through. Lime is the brand accent.
-- **Type.** One family, Geist. Five steps from `--step-xs` to `--step-xl`.
+- **Type.** One family, Geist, served from `src/assets/fonts/` (variable, Latin subset). Five steps from `--step-xs` to `--step-xl`.
 - **Hover.** Never moves or resizes anything: linked tiles turn translucent, text and outlines change color, pill arrows rotate in place. Hovers use `--ease-hover`.
 - **Motion.** Transform and opacity only. Everything stops under `prefers-reduced-motion`; the ink draws one still frame.
 - **Layout.** Fluid first: grid, flex, `clamp()`, container queries. Content and menu stay within `--max` (96rem). The ink still fills the window.

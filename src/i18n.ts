@@ -175,7 +175,7 @@ const es: Copy = {
   about: {
     tab: 'Sobre mí',
     hello: 'Hola, soy',
-    role: 'Hago software rápido de usar y agradable a la vista, desde la primera pantalla hasta el servidor. Últimamente estoy armando herramientas para mi día a día de código abierto.',
+    role: 'Hago software rápido de usar y agradable a la vista, desde la primera pantalla hasta el servidor. Últimamente estoy armando herramientas de código abierto para mi día a día.',
     copy: 'Copiar',
     copied: 'Copiado',
     badge: 'DESARROLLADOR · PERÚ · DESDE 2020 ·',
